@@ -5,6 +5,7 @@ export type AgentId =
   | "health"
   | "nutrition"
   | "disease"
+  | "natural-medicine"
   | "synthesis";
 
 export interface DataSource {
@@ -60,11 +61,37 @@ export interface NutritionInsight {
   avoid: string[];
 }
 
+export interface DiseaseProfile {
+  name: string;
+  howItSpreads: string[];
+  earlySymptoms: string[];
+  precautions: string[];
+  whenToSeeDoctor: string;
+}
+
 export interface DiseaseInsight {
   risk: RiskLevel;
   conditions: string[];
   symptoms: string[];
   prevention: string[];
+  profiles: DiseaseProfile[];
+  transmissionSummary: string[];
+  precautionarySteps: string[];
+}
+
+export interface NaturalRemedy {
+  forCondition: string;
+  remedy: string;
+  howItHelps: string;
+  adultSupervision: string;
+  cautions: string[];
+  evidenceNote: string;
+}
+
+export interface NaturalMedicineInsight {
+  risk: RiskLevel;
+  remedies: NaturalRemedy[];
+  generalCautions: string[];
 }
 
 export interface ChildGuidance {
@@ -72,6 +99,10 @@ export interface ChildGuidance {
   emoji: string;
   ageBand: "5-8" | "9-12" | "13-17";
   simpleExplanation: string;
+  howClimateAffectsYou: string;
+  beatingTheDisruption: string[];
+  stayHealthyFromGerms: string[];
+  naturalHelpFromHome: string[];
   prepareToday: string[];
   askAdultFor: string[];
   funFact?: string;
@@ -87,6 +118,7 @@ export interface SynthesisReport {
   health: HealthInsight[];
   nutrition: NutritionInsight;
   disease: DiseaseInsight;
+  naturalMedicine: NaturalMedicineInsight;
   childGuidance: ChildGuidance[];
   correlations: string[];
   dataProvenance: DataSource[];

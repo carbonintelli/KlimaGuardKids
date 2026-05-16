@@ -43,7 +43,7 @@ export default function PitchPage() {
 
       <Section icon={Cpu} title="Solution — Agentic AI platform">
         <p>
-          KlimaGuard Kids deploys five cooperating AI agents that ingest
+          KlimaGuard Kids deploys six cooperating AI agents that ingest
           authenticated public feeds (Open-Meteo weather & air quality, aligned
           with WHO and UNICEF safeguarding principles), correlate signals across
           health, nutrition, and disease domains, and output inference-ready
@@ -63,12 +63,16 @@ export default function PitchPage() {
             scarcity patterns
           </li>
           <li>
-            <strong>Disease Agent</strong> — waterborne, vector, heat illness
-            prevention
+            <strong>Disease Agent</strong> — transmission pathways, precautions,
+            and illness profiles
           </li>
           <li>
-            <strong>Synthesis Agent</strong> — cross-correlation + age-banded
-            guidance
+            <strong>Natural Medicine Agent</strong> — evidence-tagged supportive
+            remedies under caregiver supervision
+          </li>
+          <li>
+            <strong>Synthesis Agent</strong> — orchestrated cross-correlation +
+            age-banded climate & health guidance
           </li>
         </ul>
       </Section>

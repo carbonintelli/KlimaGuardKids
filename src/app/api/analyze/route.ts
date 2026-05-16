@@ -58,7 +58,14 @@ export async function GET() {
   return NextResponse.json({
     service: "KlimaGuard Kids Agent API",
     version: "0.1.0",
-    agents: ["climate", "health", "nutrition", "disease", "synthesis"],
+    agents: [
+      "climate",
+      "health",
+      "nutrition",
+      "disease",
+      "natural-medicine",
+      "synthesis",
+    ],
     countries: COUNTRIES.length,
   });
 }

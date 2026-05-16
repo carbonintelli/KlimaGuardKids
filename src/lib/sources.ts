@@ -26,4 +26,10 @@ export const TRUSTED_SOURCES: DataSource[] = [
     url: "https://www.unicef.org/climate-and-environment",
     authenticated: false,
   },
+  {
+    id: "who-traditional-medicine",
+    name: "WHO Traditional, Complementary and Integrative Medicine",
+    url: "https://www.who.int/health-topics/traditional-complementary-and-integrative-medicine",
+    authenticated: false,
+  },
 ];
