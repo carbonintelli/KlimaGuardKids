@@ -31,7 +31,7 @@ export default function HomePage() {
             href="/pitch"
             className="rounded-full border-2 border-ocean px-8 py-4 text-lg font-bold text-ocean hover:bg-ocean/5 transition-colors"
           >
-            View UNICEF-aligned pitch
+            Learn how it works
           </Link>
         </div>
       </section>
@@ -45,7 +45,7 @@ export default function HomePage() {
         <Feature
           icon={Globe2}
           title="195+ countries ready"
-          text="Demo registry covers UNICEF programme countries; extend with any lat/lon via API."
+          text="Demo registry covers countries worldwide; extend with any lat/lon via API."
         />
         <Feature
           icon={Shield}
@@ -82,22 +82,19 @@ export default function HomePage() {
 
       <section className="mt-16 rounded-3xl bg-gradient-to-r from-ocean to-sky-500 p-8 text-white text-center">
         <h2 className="text-xl font-extrabold">
-          Aligned with UNICEF Venture Fund — Climate × Children&apos;s Health
+          Built for children, caregivers, and communities
         </h2>
         <p className="mt-3 max-w-2xl mx-auto text-white/90 text-sm">
-          Equity-free funding up to US$100,000 for Open Source frontier tech.
-          Applications due May 17, 2026. This prototype demonstrates early
-          warning, predictive health readiness, and trusted community data
-          interpretation.
+          This prototype demonstrates early warning, predictive health
+          readiness, and trusted community data interpretation — turning climate
+          signals into guidance families and schools can act on.
         </p>
-        <a
-          href="https://www.unicef.org/innovation/venturefund"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/pitch"
           className="mt-6 inline-block rounded-full bg-white px-6 py-3 font-bold text-ocean hover:bg-sky-50"
         >
-          Learn about the fund
-        </a>
+          Read the overview
+        </Link>
       </section>
     </div>
   );

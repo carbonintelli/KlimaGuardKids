@@ -38,7 +38,7 @@ export async function runAgentPipeline(params: {
       name: "Nutrition & Food Security Agent",
       role: "Infers hydration, food safety, and scarcity patterns",
       status: "idle",
-      source: sourceFor("unicef-climate"),
+      source: sourceFor("open-meteo"),
     },
     {
       id: "disease",
@@ -59,7 +59,7 @@ export async function runAgentPipeline(params: {
       name: "Synthesis & Guidance Agent",
       role: "Orchestrates cross-agent correlation and age-banded child guidance",
       status: "idle",
-      source: sourceFor("unicef-climate"),
+      source: sourceFor("who-guidance"),
     },
   ];
 

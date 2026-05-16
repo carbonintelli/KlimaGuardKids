@@ -44,7 +44,7 @@ export default function RootLayout({
                 href="/pitch"
                 className="rounded-full bg-ocean px-4 py-2 text-white shadow-md hover:bg-sky-600 transition-colors"
               >
-                Pitch
+                About
               </Link>
             </nav>
           </div>
@@ -52,7 +52,7 @@ export default function RootLayout({
         <main>{children}</main>
         <footer className="mt-16 border-t border-sky-100 bg-white/60 py-8 text-center text-sm text-ink/60">
           <p>
-            Open Source · UNICEF Climate & Health aligned · Data from trusted
+            Open Source · Climate & health intelligence · Data from trusted
             public APIs
           </p>
           <p className="mt-1">

@@ -73,7 +73,7 @@ export function correlateInsights(
 
   if (correlations.length === 0) {
     correlations.push(
-      "Synthesis Agent: All agents report stable cross-signals. Maintain routine preparedness drills and monitor UNICEF/WHO local advisories."
+      "Synthesis Agent: All agents report stable cross-signals. Maintain routine preparedness drills and monitor WHO local advisories."
     );
   }
 
