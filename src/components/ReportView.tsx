@@ -11,6 +11,8 @@ import {
   Apple,
   Bug,
   Link2,
+  Leaf,
+  Shield,
 } from "lucide-react";
 
 export function ReportView({ report }: { report: SynthesisReport }) {
@@ -86,7 +88,137 @@ export function ReportView({ report }: { report: SynthesisReport }) {
         </ul>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <InsightCard
+          icon={Bug}
+          title="Disease preparedness"
+          items={[
+            {
+              title: "Outlook",
+              risk: report.disease.risk,
+              body: report.disease.conditions.join(", "),
+              list: report.disease.prevention,
+            },
+          ]}
+        />
+        <div className="rounded-3xl border border-sky-100 bg-white p-5 shadow-sm">
+          <h3 className="flex items-center gap-2 font-extrabold text-ink">
+            <Shield className="h-5 w-5 text-ocean" />
+            How diseases spread
+          </h3>
+          <ul className="mt-3 list-disc pl-4 text-sm text-ink/80 space-y-2">
+            {report.disease.transmissionSummary.map((t, i) => (
+              <li key={i}>{t}</li>
+            ))}
+          </ul>
+          <h4 className="mt-4 text-xs font-bold uppercase text-ink/50">
+            Precautionary steps
+          </h4>
+          <ul className="mt-2 list-disc pl-4 text-sm text-ink/80 space-y-1">
+            {report.disease.precautionarySteps.map((p, i) => (
+              <li key={i}>{p}</li>
+            ))}
+          </ul>
+          {report.disease.symptoms.length > 0 && (
+            <>
+              <h4 className="mt-4 text-xs font-bold uppercase text-ink/50">
+                Watch for symptoms
+              </h4>
+              <p className="mt-1 text-sm text-ink/70">
+                {report.disease.symptoms.join(" · ")}
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+
+      {report.disease.profiles.length > 0 && (
+        <section className="rounded-3xl border border-rose-100 bg-rose-50/30 p-6">
+          <h3 className="text-lg font-extrabold text-ink">
+            Disease profiles — spread, signs & when to seek care
+          </h3>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {report.disease.profiles.map((profile) => (
+              <article
+                key={profile.name}
+                className="rounded-2xl border border-rose-100 bg-white p-4"
+              >
+                <h4 className="font-bold text-ink">{profile.name}</h4>
+                <p className="mt-2 text-xs font-bold uppercase text-ink/50">
+                  How it spreads
+                </p>
+                <ul className="mt-1 list-disc pl-4 text-sm text-ink/80 space-y-1">
+                  {profile.howItSpreads.map((h, i) => (
+                    <li key={i}>{h}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-xs font-bold uppercase text-ink/50">
+                  Early symptoms
+                </p>
+                <ul className="mt-1 list-disc pl-4 text-sm text-ink/80 space-y-1">
+                  {profile.earlySymptoms.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-xs font-bold uppercase text-ink/50">
+                  Precautions
+                </p>
+                <ul className="mt-1 list-disc pl-4 text-sm text-ink/80 space-y-1">
+                  {profile.precautions.map((p, i) => (
+                    <li key={i}>{p}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 rounded-xl bg-rose-50 p-2 text-xs text-ink/80">
+                  <strong>See a clinician:</strong> {profile.whenToSeeDoctor}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="rounded-3xl border border-emerald-100 bg-emerald-50/40 p-6">
+        <h3 className="flex items-center gap-2 text-lg font-extrabold text-ink">
+          <Leaf className="h-5 w-5 text-leaf" />
+          Natural medicines & home support
+          <RiskBadge level={report.naturalMedicine.risk} />
+        </h3>
+        <p className="mt-2 text-sm text-ink/70">
+          Matched by the Natural Medicine Agent from disease conditions — always
+          under adult supervision; not a substitute for vaccines or prescribed
+          treatment.
+        </p>
+        <ul className="mt-3 list-disc pl-4 text-xs text-ink/70 space-y-1">
+          {report.naturalMedicine.generalCautions.map((c, i) => (
+            <li key={i}>{c}</li>
+          ))}
+        </ul>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          {report.naturalMedicine.remedies.map((r) => (
+            <article
+              key={r.remedy}
+              className="rounded-2xl border border-emerald-100 bg-white p-4"
+            >
+              <p className="text-xs font-bold text-ocean">{r.forCondition}</p>
+              <h4 className="mt-1 font-bold text-ink">{r.remedy}</h4>
+              <p className="mt-2 text-sm text-ink/75">{r.howItHelps}</p>
+              <p className="mt-2 text-xs text-ink/70">
+                <strong>Adult supervision:</strong> {r.adultSupervision}
+              </p>
+              {r.cautions.length > 0 && (
+                <ul className="mt-2 list-disc pl-4 text-xs text-coral/90 space-y-1">
+                  {r.cautions.map((c, i) => (
+                    <li key={i}>{c}</li>
+                  ))}
+                </ul>
+              )}
+              <p className="mt-2 text-xs text-ink/50 italic">{r.evidenceNote}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <div className="grid gap-6 lg:grid-cols-2">
         <InsightCard
           icon={Heart}
           title="Health"
@@ -113,23 +245,11 @@ export function ReportView({ report }: { report: SynthesisReport }) {
             },
           ]}
         />
-        <InsightCard
-          icon={Bug}
-          title="Disease preparedness"
-          items={[
-            {
-              title: "Outlook",
-              risk: report.disease.risk,
-              body: report.disease.conditions.join(", "),
-              list: report.disease.prevention,
-            },
-          ]}
-        />
       </div>
 
       <section>
         <h3 className="mb-4 text-lg font-extrabold text-ink">
-          Guidance for children
+          Guidance for children (by age)
         </h3>
         <div className="grid gap-4 md:grid-cols-3">
           {report.childGuidance.map((g) => (
@@ -143,26 +263,32 @@ export function ReportView({ report }: { report: SynthesisReport }) {
               </p>
               <h4 className="mt-1 font-extrabold text-ink">{g.headline}</h4>
               <p className="mt-2 text-sm text-ink/75">{g.simpleExplanation}</p>
-              <div className="mt-4">
-                <p className="text-xs font-bold uppercase text-ink/50">
-                  Prepare today
+
+              <div className="mt-4 rounded-xl bg-sky-50/80 p-3">
+                <p className="text-xs font-bold uppercase text-ocean">
+                  How climate affects you
                 </p>
-                <ul className="mt-1 list-disc pl-4 text-sm text-ink/80 space-y-1">
-                  {g.prepareToday.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
+                <p className="mt-1 text-sm text-ink/80">{g.howClimateAffectsYou}</p>
               </div>
-              <div className="mt-3">
-                <p className="text-xs font-bold uppercase text-ink/50">
-                  Ask a caring adult
-                </p>
-                <ul className="mt-1 list-disc pl-4 text-sm text-ink/80 space-y-1">
-                  {g.askAdultFor.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </div>
+
+              <GuidanceList
+                title="Beating the disruption"
+                items={g.beatingTheDisruption}
+              />
+              <GuidanceList
+                title="Stay healthy from germs"
+                items={g.stayHealthyFromGerms}
+              />
+              <GuidanceList
+                title="Natural help at home (with an adult)"
+                items={g.naturalHelpFromHome}
+              />
+              <GuidanceList title="Prepare today" items={g.prepareToday} />
+              <GuidanceList
+                title="Ask a caring adult"
+                items={g.askAdultFor}
+              />
+
               {g.funFact && (
                 <p className="mt-3 rounded-xl bg-sky-50 p-3 text-xs text-ocean font-medium">
                   💡 {g.funFact}
@@ -190,6 +316,19 @@ export function ReportView({ report }: { report: SynthesisReport }) {
           ))}
         </ul>
       </section>
+    </div>
+  );
+}
+
+function GuidanceList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="mt-3">
+      <p className="text-xs font-bold uppercase text-ink/50">{title}</p>
+      <ul className="mt-1 list-disc pl-4 text-sm text-ink/80 space-y-1">
+        {items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -241,7 +380,7 @@ function InsightCard({
             </div>
             <p className="mt-1 text-sm text-ink/70">{item.body}</p>
             <ul className="mt-2 list-disc pl-4 text-xs text-ink/75 space-y-1">
-              {item.list.slice(0, 5).map((l, j) => (
+              {item.list.slice(0, 8).map((l, j) => (
                 <li key={j}>{l}</li>
               ))}
             </ul>

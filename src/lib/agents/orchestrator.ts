@@ -4,12 +4,11 @@ import { fetchClimateData } from "./climate-agent";
 import { analyzeHealthRisks } from "./health-agent";
 import { analyzeNutrition } from "./nutrition-agent";
 import { analyzeDiseaseRisks } from "./disease-agent";
+import { analyzeNaturalMedicine } from "./natural-medicine-agent";
 import { assembleReport } from "./synthesis-agent";
 
 function sourceFor(id: string) {
-  return (
-    TRUSTED_SOURCES.find((s) => s.id === id) ?? TRUSTED_SOURCES[0]
-  );
+  return TRUSTED_SOURCES.find((s) => s.id === id) ?? TRUSTED_SOURCES[0];
 }
 
 export async function runAgentPipeline(params: {
@@ -44,14 +43,21 @@ export async function runAgentPipeline(params: {
     {
       id: "disease",
       name: "Disease Outlook Agent",
-      role: "Correlates vectors, waterborne, and heat-related illness risk",
+      role: "Transmission pathways, precautions, and illness profiles",
       status: "idle",
       source: sourceFor("who-guidance"),
     },
     {
+      id: "natural-medicine",
+      name: "Natural Medicine Agent",
+      role: "Evidence-tagged supportive remedies under caregiver supervision",
+      status: "idle",
+      source: sourceFor("who-traditional-medicine"),
+    },
+    {
       id: "synthesis",
       name: "Synthesis & Guidance Agent",
-      role: "Multi-agent correlation and age-appropriate child guidance",
+      role: "Orchestrates cross-agent correlation and age-banded child guidance",
       status: "idle",
       source: sourceFor("unicef-climate"),
     },
@@ -69,21 +75,28 @@ export async function runAgentPipeline(params: {
   }
 
   agents[1].status = "analyzing";
-  const health = analyzeHealthRisks(climate);
+  agents[2].status = "analyzing";
+  agents[3].status = "analyzing";
+
+  const [health, nutrition, disease] = await Promise.all([
+    Promise.resolve(analyzeHealthRisks(climate)),
+    Promise.resolve(analyzeNutrition(climate)),
+    Promise.resolve(analyzeDiseaseRisks(climate)),
+  ]);
+
   agents[1].status = "complete";
   agents[1].summary = `${health.length} health signal(s) identified`;
-
-  agents[2].status = "analyzing";
-  const nutrition = analyzeNutrition(climate);
   agents[2].status = "complete";
   agents[2].summary = nutrition.title;
-
-  agents[3].status = "analyzing";
-  const disease = analyzeDiseaseRisks(climate);
   agents[3].status = "complete";
-  agents[3].summary = `${disease.conditions.length} condition(s) in outlook`;
+  agents[3].summary = `${disease.profiles.length} disease profile(s), ${disease.transmissionSummary.length} transmission note(s)`;
 
   agents[4].status = "analyzing";
+  const naturalMedicine = analyzeNaturalMedicine(disease);
+  agents[4].status = "complete";
+  agents[4].summary = `${naturalMedicine.remedies.length} supportive remedy(ies) matched to conditions`;
+
+  agents[5].status = "analyzing";
   const report = assembleReport(
     {
       country: params.country,
@@ -96,6 +109,7 @@ export async function runAgentPipeline(params: {
     health,
     nutrition,
     disease,
+    naturalMedicine,
     agents
   );
 
@@ -104,7 +118,7 @@ export async function runAgentPipeline(params: {
       ? {
           ...a,
           status: "complete" as const,
-          summary: `${report.correlations.length} cross-agent correlation(s)`,
+          summary: `${report.correlations.length} cross-agent correlation(s); ${report.childGuidance.length} age bands`,
         }
       : a
   );

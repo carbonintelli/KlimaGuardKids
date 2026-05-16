@@ -16,7 +16,7 @@ export default function HomePage() {
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-ink/70">
           KlimaGuard Kids connects trusted climate data with health, nutrition,
-          and disease intelligence through five cooperating AI agents — turning
+          and disease intelligence through six cooperating AI agents — turning
           raw forecasts into age-appropriate guidance children can act on with
           their families and communities.
         </p>
