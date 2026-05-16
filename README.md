@@ -2,8 +2,6 @@
 
 **Open-source, agentic AI platform for child-centric climate health preparedness — worldwide.**
 
-Inspired by the [UNICEF Venture Fund — Climate tech for children's health](https://www.startupgrantsindia.com/funding-frontier-climate-tech-for-childrens-health) (up to US$100,000 equity-free, applications due **May 17, 2026**).
-
 ## What it does
 
 Five cooperating AI agents:
@@ -36,4 +34,4 @@ Open [http://localhost:3000](http://localhost:3000) — use **Dashboard** to run
 
 ## License
 
-MIT — Open Source for UNICEF Venture Fund alignment.
+MIT — Open Source.
