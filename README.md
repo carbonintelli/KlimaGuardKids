@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" /></a>
-  <a href="https://github.com/carbonintelli/climateresiliencechildhealth/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
+  <a href="https://github.com/carbonintelli/ClimateResilienceChildHealth/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
   <img src="https://img.shields.io/badge/India-12%20regions-orange.svg" alt="12 India regions" />
   <img src="https://img.shields.io/badge/Agents-8-blue.svg" alt="8 AI agents" />
 </p>
