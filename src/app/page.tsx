@@ -1,13 +1,17 @@
 import Link from "next/link";
-import { Shield, Sparkles, Globe2, Bot } from "lucide-react";
+import { Shield, Sparkles, Globe2, Bot, MapPin } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <section className="text-center">
+        <div className="flex justify-center mb-6">
+          <Logo size={72} showText={false} />
+        </div>
         <p className="inline-flex items-center gap-2 rounded-full bg-ocean/10 px-4 py-1 text-sm font-bold text-ocean">
           <Sparkles className="h-4 w-4" />
-          Open Source · Agentic AI · Every Country
+          Open Source · Agentic AI · India Regional Intelligence
         </p>
         <h1 className="mt-6 text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
           Help every child{" "}
@@ -16,16 +20,22 @@ export default function HomePage() {
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-ink/70">
           KlimaGuard Kids connects trusted climate data with health, nutrition,
-          and disease intelligence through six cooperating AI agents — turning
-          raw forecasts into age-appropriate guidance children can act on with
-          their families and communities.
+          and disease intelligence through eight cooperating AI agents — including
+          dedicated India agents that measure child health impact across 12
+          regional climate zones.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <Link
+            href="/india"
+            className="rounded-full bg-gradient-to-r from-saffron to-ocean px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-90 transition-opacity"
+          >
+            India impact dashboard
+          </Link>
           <Link
             href="/dashboard"
             className="rounded-full bg-ocean px-8 py-4 text-lg font-bold text-white shadow-lg hover:bg-sky-600 transition-colors"
           >
-            Open global dashboard
+            Global dashboard
           </Link>
           <Link
             href="/pitch"
@@ -39,23 +49,23 @@ export default function HomePage() {
       <section className="mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Feature
           icon={Bot}
-          title="5 AI agents"
-          text="Climate, health, nutrition, disease, and synthesis agents fetch, correlate, and explain risks."
+          title="8 AI agents"
+          text="Climate, health, nutrition, disease, natural medicine, India regional, India impact, and synthesis agents."
+        />
+        <Feature
+          icon={MapPin}
+          title="12 India regions"
+          text="Delhi NCR to Kochi — CHIS scores measure heat, air, waterborne, vector, and nutrition burden for children."
         />
         <Feature
           icon={Globe2}
-          title="195+ countries ready"
-          text="Demo registry covers countries worldwide; extend with any lat/lon via API."
+          title="Global coverage"
+          text="Demo registry covers 20 countries worldwide; extend with any lat/lon via API."
         />
         <Feature
           icon={Shield}
-          title="Child safeguarding"
-          text="Privacy-first design, age-banded language, and caregiver prompts — no personal data required."
-        />
-        <Feature
-          icon={Sparkles}
-          title="Early action"
-          text="Anticipatory windows for heat, floods, air quality, vectors, and food security."
+          title="Open source"
+          text="MIT licensed with transparent measurement formulas. Contribute regions, agents, and data sources."
         />
       </section>
 
@@ -63,13 +73,12 @@ export default function HomePage() {
         <h2 className="text-2xl font-extrabold text-ink text-center">
           How agentic AI works here
         </h2>
-        <ol className="mt-8 grid gap-4 md:grid-cols-5 text-center text-sm">
+        <ol className="mt-8 grid gap-4 md:grid-cols-4 text-center text-sm">
           {[
             ["1", "Climate Agent", "Open-Meteo live feed"],
-            ["2", "Health Agent", "Heat, air, water risks"],
-            ["3", "Nutrition Agent", "Food & hydration"],
-            ["4", "Disease Agent", "Vectors & outbreaks"],
-            ["5", "Synthesis", "Child guidance"],
+            ["2", "Health + Disease", "Risk mapping & profiles"],
+            ["3", "India Agents", "Regional context + CHIS"],
+            ["4", "Synthesis", "Child guidance by age"],
           ].map(([step, name, desc]) => (
             <li key={step} className="rounded-2xl bg-sky-50 p-4">
               <span className="text-2xl font-extrabold text-ocean">{step}</span>
@@ -80,20 +89,20 @@ export default function HomePage() {
         </ol>
       </section>
 
-      <section className="mt-16 rounded-3xl bg-gradient-to-r from-ocean to-sky-500 p-8 text-white text-center">
+      <section className="mt-16 rounded-3xl bg-gradient-to-r from-saffron/90 to-ocean p-8 text-white text-center">
         <h2 className="text-xl font-extrabold">
-          Built for children, caregivers, and communities
+          Measuring child health impact from climate change in India
         </h2>
         <p className="mt-3 max-w-2xl mx-auto text-white/90 text-sm">
-          This prototype demonstrates early warning, predictive health
-          readiness, and trusted community data interpretation — turning climate
-          signals into guidance families and schools can act on.
+          The India Child Health Impact Agent computes a transparent CHIS score
+          (0–100) across five dimensions — helping communities, schools, and
+          health workers anticipate and act before hospitals fill.
         </p>
         <Link
-          href="/pitch"
+          href="/india"
           className="mt-6 inline-block rounded-full bg-white px-6 py-3 font-bold text-ocean hover:bg-sky-50"
         >
-          Read the overview
+          Explore India dashboard
         </Link>
       </section>
     </div>

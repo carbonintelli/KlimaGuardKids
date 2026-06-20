@@ -1,9 +1,21 @@
 {
   "name": "klimaguard-kids",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Open-source, agentic AI platform for child-centric climate health preparedness — global",
+  "version": "0.2.0",
+  "description": "Open-source, agentic AI platform for child-centric climate health preparedness — with India regional impact measurement",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbonintelli/climateresiliencechildhealth.git"
+  },
+  "keywords": [
+    "climate-change",
+    "child-health",
+    "india",
+    "open-source",
+    "ai-agents",
+    "health-impact",
+    "nextjs"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
