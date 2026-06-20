@@ -45,8 +45,8 @@ All formulas are **transparent and open-source** in `src/lib/agents/india-impact
 ## Quick start
 
 ```bash
-git clone https://github.com/carbonintelli/climateresiliencechildhealth.git
-cd climateresiliencechildhealth
+git clone https://github.com/carbonintelli/ClimateResilienceChildHealth.git
+cd ClimateResilienceChildHealth
 npm install
 npm run dev
 ```

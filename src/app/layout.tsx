@@ -61,7 +61,7 @@ export default function RootLayout({
           </p>
           <p className="mt-1">
             <a
-              href="https://github.com/carbonintelli/climateresiliencechildhealth"
+              href="https://github.com/carbonintelli/ClimateResilienceChildHealth"
               className="text-ocean hover:underline"
               target="_blank"
               rel="noopener noreferrer"
