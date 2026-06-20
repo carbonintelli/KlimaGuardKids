@@ -16,7 +16,9 @@ export function correlateInsights(
   health: HealthInsight[],
   nutrition: NutritionInsight,
   disease: DiseaseInsight,
-  naturalMedicine: NaturalMedicineInsight
+  naturalMedicine: NaturalMedicineInsight,
+  indiaRegional?: import("../types").IndiaRegionalInsight,
+  indiaImpact?: import("../types").IndiaImpactInsight
 ): string[] {
   const correlations: string[] = [];
   const maxTemp = Math.max(
@@ -69,6 +71,25 @@ export function correlateInsights(
     correlations.push(
       "Disease Agent + Synthesis Agent: Transmission pathways mapped to age-banded child guidance — younger children get picture-based prevention; teens get community action steps."
     );
+  }
+
+  if (indiaRegional && indiaImpact) {
+    correlations.push(
+      `India Regional Agent + Impact Agent: ${indiaRegional.regionName} (${indiaRegional.state}) — CHIS ${indiaImpact.compositeScore}/100 with ${indiaRegional.activeRegionalRisks.length} active regional drivers during ${indiaRegional.inMonsoonSeason ? "monsoon" : "non-monsoon"} season.`
+    );
+
+    const topDim = [...indiaImpact.dimensions].sort((a, b) => b.score - a.score)[0];
+    if (topDim.score >= 50) {
+      correlations.push(
+        `India Impact Agent + Health Agent: Primary burden driver "${topDim.name}" (${topDim.score}/100) — ${topDim.childSpecificNote}`
+      );
+    }
+
+    if (indiaRegional.inMonsoonSeason && disease.conditions.some((c) => c.includes("Diarrheal"))) {
+      correlations.push(
+        "India Regional Agent + Disease Agent: Monsoon season overlap with waterborne disease risk — activate ASHA/Anganwadi ORS pre-positioning per district disaster plan."
+      );
+    }
   }
 
   if (correlations.length === 0) {
@@ -342,11 +363,8 @@ function riskOrder(r: RiskLevel): number {
 }
 
 export function computeOverallRisk(
-  healthRisk: RiskLevel,
-  nutritionRisk: RiskLevel,
-  diseaseRisk: RiskLevel
+  ...risks: RiskLevel[]
 ): RiskLevel {
-  const risks = [healthRisk, nutritionRisk, diseaseRisk];
   const order: RiskLevel[] = ["low", "moderate", "high", "critical"];
   let max: RiskLevel = "low";
   for (const r of risks) {
@@ -372,21 +390,26 @@ export function assembleReport(
   nutrition: NutritionInsight,
   disease: DiseaseInsight,
   naturalMedicine: NaturalMedicineInsight,
-  agents: SynthesisReport["agents"]
+  agents: SynthesisReport["agents"],
+  india?: {
+    indiaRegional?: SynthesisReport["indiaRegional"];
+    indiaImpact?: SynthesisReport["indiaImpact"];
+  }
 ): SynthesisReport {
   const healthRisk = maxHealthRisk(health);
-  const overallRisk = computeOverallRisk(
-    healthRisk,
-    nutrition.risk,
-    disease.risk
-  );
+  const indiaImpactRisk = india?.indiaImpact?.risk;
+  const overallRisk = indiaImpactRisk
+    ? computeOverallRisk(healthRisk, nutrition.risk, disease.risk, indiaImpactRisk)
+    : computeOverallRisk(healthRisk, nutrition.risk, disease.risk);
   const disruptionWindow = inferDisruptionWindow(climate);
   const correlations = correlateInsights(
     climate,
     health,
     nutrition,
     disease,
-    naturalMedicine
+    naturalMedicine,
+    india?.indiaRegional,
+    india?.indiaImpact
   );
 
   return {
@@ -414,5 +437,7 @@ export function assembleReport(
       ...s,
       lastFetched: new Date().toISOString(),
     })),
+    indiaRegional: india?.indiaRegional,
+    indiaImpact: india?.indiaImpact,
   };
 }

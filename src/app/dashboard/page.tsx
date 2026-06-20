@@ -2,16 +2,22 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { CountryOption, SynthesisReport } from "@/lib/types";
+import { INDIA_REGIONS } from "@/lib/india-regions";
 import { CountrySelector } from "@/components/CountrySelector";
+import { IndiaRegionSelector } from "@/components/IndiaRegionSelector";
 import { ReportView } from "@/components/ReportView";
 import { Loader2, Radar } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const [countries, setCountries] = useState<CountryOption[]>([]);
   const [countryCode, setCountryCode] = useState("IN");
+  const [regionId, setRegionId] = useState("delhi-ncr");
   const [report, setReport] = useState<SynthesisReport | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isIndia = countryCode === "IN";
 
   useEffect(() => {
     fetch("/api/countries")
@@ -30,10 +36,13 @@ export default function DashboardPage() {
     setError(null);
     setReport(null);
     try {
+      const body: { countryCode: string; regionId?: string } = { countryCode };
+      if (isIndia) body.regionId = regionId;
+
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ countryCode }),
+        body: JSON.stringify(body),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message ?? data.error ?? "Analysis failed");
@@ -43,7 +52,7 @@ export default function DashboardPage() {
     } finally {
       setLoading(false);
     }
-  }, [countryCode]);
+  }, [countryCode, isIndia, regionId]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -53,10 +62,19 @@ export default function DashboardPage() {
           Global climate-health dashboard
         </h1>
         <p className="mt-2 text-ink/70 max-w-2xl">
-          Select any supported country. Five AI agents fetch live climate data,
+          Select any supported country. Eight AI agents fetch live climate data,
           correlate health and nutrition risks, and generate child-ready
-          preparedness guidance.
+          preparedness guidance. For India, choose a region for CHIS impact
+          measurement.
         </p>
+        {isIndia && (
+          <Link
+            href="/india"
+            className="mt-3 inline-block text-sm font-bold text-saffron hover:underline"
+          >
+            → Open dedicated India dashboard with full impact panel
+          </Link>
+        )}
       </div>
 
       <div className="rounded-3xl border border-sky-100 bg-white p-6 shadow-lg max-w-xl">
@@ -66,6 +84,16 @@ export default function DashboardPage() {
           onChange={setCountryCode}
           disabled={loading}
         />
+        {isIndia && (
+          <div className="mt-4">
+            <IndiaRegionSelector
+              regions={INDIA_REGIONS}
+              value={regionId}
+              onChange={setRegionId}
+              disabled={loading}
+            />
+          </div>
+        )}
         <button
           type="button"
           onClick={runAnalysis}
@@ -88,7 +116,7 @@ export default function DashboardPage() {
 
       {report && (
         <div className="mt-10">
-          <ReportView report={report} />
+          <ReportView report={report} showIndiaPanel={isIndia} />
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -12,7 +13,10 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "KlimaGuard Kids — Child-Centric Climate Health Intelligence",
   description:
-    "Open-source, agentic AI platform helping children worldwide prepare for climate disruptions affecting health, nutrition, and disease risk.",
+    "Open-source, agentic AI platform measuring child health impact from climate change — with dedicated India regional intelligence across 12 climate zones.",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({
@@ -26,12 +30,7 @@ export default function RootLayout({
         <header className="sticky top-0 z-50 border-b border-sky-200/60 bg-white/80 backdrop-blur-md">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl" aria-hidden>
-                🌍
-              </span>
-              <span className="text-lg font-extrabold text-ocean">
-                KlimaGuard Kids
-              </span>
+              <Logo size={36} />
             </Link>
             <nav className="flex items-center gap-4 text-sm font-semibold">
               <Link
@@ -39,6 +38,12 @@ export default function RootLayout({
                 className="text-ink/80 hover:text-ocean transition-colors"
               >
                 Dashboard
+              </Link>
+              <Link
+                href="/india"
+                className="text-ink/80 hover:text-saffron transition-colors"
+              >
+                India
               </Link>
               <Link
                 href="/pitch"
@@ -52,11 +57,19 @@ export default function RootLayout({
         <main>{children}</main>
         <footer className="mt-16 border-t border-sky-100 bg-white/60 py-8 text-center text-sm text-ink/60">
           <p>
-            Open Source · Climate & health intelligence · Data from trusted
-            public APIs
+            Open Source · MIT License · Climate & child health intelligence
           </p>
           <p className="mt-1">
-            Built for children and communities in every country
+            <a
+              href="https://github.com/carbonintelli/ClimateResilienceChildHealth"
+              className="text-ocean hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contribute on GitHub
+            </a>
+            {" · "}
+            Built for children and communities worldwide — India-first regional depth
           </p>
         </footer>
       </body>

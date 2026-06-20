@@ -6,6 +6,7 @@
   --leaf: #4ade80;
   --sun: #fbbf24;
   --coral: #fb7185;
+  --saffron: #f97316;
   --ink: #0f172a;
   --paper: #f8fafc;
   --card: #ffffff;
@@ -17,6 +18,7 @@
   --color-leaf: var(--leaf);
   --color-sun: var(--sun);
   --color-coral: var(--coral);
+  --color-saffron: var(--saffron);
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-card: var(--card);

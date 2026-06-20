@@ -8,6 +8,7 @@ const bodySchema = z.object({
   lat: z.number().optional(),
   lon: z.number().optional(),
   city: z.string().optional(),
+  regionId: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { countryCode, lat, lon, city: cityOverride } = parsed.data;
+    const { countryCode, lat, lon, city: cityOverride, regionId } = parsed.data;
     const code = countryCode.toUpperCase();
     const country = COUNTRIES.find((c) => c.code === code);
     const preset = CITY_BY_COUNTRY[code];
@@ -39,6 +40,7 @@ export async function POST(req: NextRequest) {
       city: cityOverride ?? preset.city,
       lat: lat ?? preset.lat,
       lon: lon ?? preset.lon,
+      regionId,
     });
 
     return NextResponse.json(report);
@@ -57,15 +59,18 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   return NextResponse.json({
     service: "KlimaGuard Kids Agent API",
-    version: "0.1.0",
+    version: "0.2.0",
     agents: [
       "climate",
       "health",
       "nutrition",
       "disease",
       "natural-medicine",
+      "india-regional",
+      "india-impact",
       "synthesis",
     ],
+    indiaRegions: 12,
     countries: COUNTRIES.length,
   });
 }

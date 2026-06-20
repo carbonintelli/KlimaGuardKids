@@ -3,6 +3,7 @@
 import type { SynthesisReport } from "@/lib/types";
 import { RiskBadge } from "./RiskBadge";
 import { AgentPanel } from "./AgentPanel";
+import { IndiaImpactPanel } from "./IndiaImpactPanel";
 import {
   Droplets,
   Thermometer,
@@ -15,7 +16,13 @@ import {
   Shield,
 } from "lucide-react";
 
-export function ReportView({ report }: { report: SynthesisReport }) {
+export function ReportView({
+  report,
+  showIndiaPanel = false,
+}: {
+  report: SynthesisReport;
+  showIndiaPanel?: boolean;
+}) {
   return (
     <div className="space-y-8">
       <section className="rounded-3xl border border-sky-100 bg-white p-6 shadow-lg">
@@ -63,6 +70,15 @@ export function ReportView({ report }: { report: SynthesisReport }) {
           </p>
         )}
       </section>
+
+      {(showIndiaPanel || report.indiaImpact) &&
+        report.indiaRegional &&
+        report.indiaImpact && (
+          <IndiaImpactPanel
+            regional={report.indiaRegional}
+            impact={report.indiaImpact}
+          />
+        )}
 
       <section>
         <h3 className="mb-4 text-lg font-extrabold text-ink">
