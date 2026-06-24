@@ -69,6 +69,7 @@ export async function GET() {
       "india-regional",
       "india-impact",
       "synthesis",
+      "chat",
     ],
     indiaRegions: 12,
     countries: COUNTRIES.length,
