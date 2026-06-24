@@ -46,6 +46,12 @@ export default function RootLayout({
                 India
               </Link>
               <Link
+                href="/chat"
+                className="text-ink/80 hover:text-leaf transition-colors"
+              >
+                Health chat
+              </Link>
+              <Link
                 href="/pitch"
                 className="rounded-full bg-ocean px-4 py-2 text-white shadow-md hover:bg-sky-600 transition-colors"
               >

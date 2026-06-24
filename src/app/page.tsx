@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Shield, Sparkles, Globe2, Bot, MapPin } from "lucide-react";
+import { Shield, Sparkles, Globe2, Bot, MapPin, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
 export default function HomePage() {
@@ -32,6 +32,12 @@ export default function HomePage() {
             India impact dashboard
           </Link>
           <Link
+            href="/chat"
+            className="rounded-full bg-leaf px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-90 transition-opacity"
+          >
+            Kids health chat
+          </Link>
+          <Link
             href="/dashboard"
             className="rounded-full bg-ocean px-8 py-4 text-lg font-bold text-white shadow-lg hover:bg-sky-600 transition-colors"
           >
@@ -46,11 +52,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <Feature
           icon={Bot}
-          title="8 AI agents"
-          text="Climate, health, nutrition, disease, natural medicine, India regional, India impact, and synthesis agents."
+          title="9 AI agents"
+          text="Climate, health, nutrition, disease, natural medicine, India regional, India impact, synthesis, and kids health chat."
         />
         <Feature
           icon={MapPin}
@@ -61,6 +67,11 @@ export default function HomePage() {
           icon={Globe2}
           title="Global coverage"
           text="Demo registry covers 20 countries worldwide; extend with any lat/lon via API."
+        />
+        <Feature
+          icon={MessageCircle}
+          title="Kids health chat"
+          text="Age-banded Q&A on health and climate impact — private browser sessions with optional consultant scheduling."
         />
         <Feature
           icon={Shield}
