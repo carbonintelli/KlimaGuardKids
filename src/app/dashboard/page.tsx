@@ -62,10 +62,9 @@ export default function DashboardPage() {
           Global climate-health dashboard
         </h1>
         <p className="mt-2 text-ink/70 max-w-2xl">
-          Select any supported country. Eight AI agents fetch live climate data,
-          correlate health and nutrition risks, and generate child-ready
-          preparedness guidance. For India, choose a region for CHIS impact
-          measurement.
+          Select any supported country. Six pipeline agents fetch live climate
+          data and generate child-ready guidance; for India, two additional
+          regional agents measure CHIS impact across 12 zones.
         </p>
         {isIndia && (
           <Link

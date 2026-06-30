@@ -12,12 +12,12 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" /></a>
   <a href="https://github.com/carbonintelli/ClimateResilienceChildHealth/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
   <img src="https://img.shields.io/badge/India-12%20regions-orange.svg" alt="12 India regions" />
-  <img src="https://img.shields.io/badge/Agents-8-blue.svg" alt="8 AI agents" />
+  <img src="https://img.shields.io/badge/Agents-9-blue.svg" alt="9 AI agents" />
 </p>
 
 ---
 
-KlimaGuard Kids connects live climate data with health, nutrition, and disease intelligence through **eight cooperating AI agents** — turning raw forecasts into age-appropriate guidance and **quantified child health impact scores** for Indian regions.
+KlimaGuard Kids connects live climate data with health, nutrition, and disease intelligence through **nine cooperating AI agents** — turning raw forecasts into age-appropriate guidance and **quantified child health impact scores** for Indian regions.
 
 ## What it does
 

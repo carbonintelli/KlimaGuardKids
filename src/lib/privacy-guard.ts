@@ -9,8 +9,8 @@ const NAME_INTRO_PATTERN =
   /\b(?:my name is|i am|i'm|call me)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3}/gi;
 
 const DIAGNOSIS_REQUESTS = [
-  /\b(?:diagnos|what (?:disease|illness) do i have)\b/i,
-  /\b(?:prescribe|give me (?:medicine|medication|antibiotic))\b/i,
+  /\b(?:diagnos\w*|what (?:disease|illness) do i have)\b/i,
+  /\b(?:prescribe|give me (?:medicine|medication|antibiotic\w*))\b/i,
   /\b(?:should i take|can i take)\s+\w+\s+(?:mg|pill|tablet)\b/i,
 ];
 
