@@ -131,7 +131,7 @@ function computeWaterborneImpact(
     unit: "WDPI points",
     trend: rain > 80 ? "rising" : regional.inMonsoonSeason ? "stable" : "easing",
     methodology:
-      "Combines 7-day precipitation, monsoon seasonality, and flood risk flags. Benchmarked against WHO/UNICEF India WASH child diarrheal mortality estimates.",
+      "Combines 7-day precipitation, monsoon seasonality, and flood risk flags. Benchmarked against WHO India WASH child diarrheal mortality estimates.",
     childSpecificNote:
       "Under-5 children face 3× higher severe dehydration risk from climate-linked water contamination.",
   };

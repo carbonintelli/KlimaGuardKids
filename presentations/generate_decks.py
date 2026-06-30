@@ -209,7 +209,7 @@ def build_pitch_deck() -> Presentation:
         "Our solution",
         [
             "Open-source agentic AI platform connecting climate data with health intelligence.",
-            "Six cooperating agents ingest trusted feeds and output unified preparedness briefings.",
+            "Nine cooperating agents ingest trusted feeds and output unified preparedness briefings.",
             "Age-banded guidance for children 5–17, plus caregiver and teacher action steps.",
             "Privacy-first: country/city location only; no child accounts required for demo.",
         ],
@@ -219,7 +219,7 @@ def build_pitch_deck() -> Presentation:
 
     add_bullet_slide(
         prs,
-        "Six AI agents — one pipeline",
+        "Nine AI agents — one pipeline",
         [
             "Climate Data Agent — live 7-day forecast, heat index, AQI (Open-Meteo)",
             "Health Risk Agent — heat, respiratory, flood, vector stressors (WHO-aligned)",
@@ -227,6 +227,8 @@ def build_pitch_deck() -> Presentation:
             "Disease Agent — transmission pathways, precautions, illness profiles",
             "Natural Medicine Agent — evidence-tagged remedies under caregiver supervision",
             "Synthesis Agent — cross-correlation + age-banded child guidance",
+            "India Regional + Impact Agents — CHIS scores across 12 Indian regions",
+            "Kids Health Chat Agent — age-banded Q&A with privacy safeguards",
         ],
     )
 
@@ -242,9 +244,9 @@ def build_pitch_deck() -> Presentation:
         ],
         "Delivery",
         [
-            "Web dashboard + global country selector",
+            "Web dashboard + India impact dashboard + kids health chat",
             "POST /api/analyze — full agent pipeline",
-            "Extensible to any lat/lon via API",
+            "POST /api/chat — age-banded health Q&A",
             "Roadmap: PWA, SMS/USSD, 12+ languages",
         ],
     )
@@ -254,8 +256,8 @@ def build_pitch_deck() -> Presentation:
         "Prototype traction",
         [
             ("20", "Countries in demo registry"),
-            ("6", "Cooperating AI agents"),
-            ("3", "Age bands (5–8, 9–12, 13–17)"),
+            ("9", "Cooperating AI agents"),
+            ("12", "India regions with CHIS"),
             ("<5s", "End-to-end analysis per location"),
         ],
     )
@@ -344,7 +346,7 @@ def build_checkin_deck() -> Presentation:
         [
             ("Live", "Deployed prototype"),
             ("20", "Countries supported"),
-            ("6", "Agents operational"),
+            ("9", "Agents operational"),
             ("100%", "Build passing"),
         ],
     )
@@ -354,15 +356,15 @@ def build_checkin_deck() -> Presentation:
         "Completed this period",
         "Product",
         [
-            "Home, dashboard, and about pages",
+            "Home, dashboard, India, chat, and about pages",
             "Global country selector (20 countries)",
             "Live Open-Meteo integration",
             "Age-banded child guidance output",
         ],
         "Engineering",
         [
-            "Six-agent orchestration pipeline",
-            "REST API (/api/analyze, /api/countries)",
+            "Nine-agent orchestration pipeline",
+            "REST API (/api/analyze, /api/chat, /api/countries)",
             "Agent provenance & status UI",
             "Production build verified",
         ],

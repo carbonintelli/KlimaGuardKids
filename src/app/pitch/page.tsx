@@ -42,7 +42,7 @@ export default function PitchPage() {
 
       <Section icon={Cpu} title="Solution — Agentic AI platform">
         <p>
-          KlimaGuard Kids deploys six cooperating AI agents that ingest
+          KlimaGuard Kids deploys nine cooperating AI agents that ingest
           authenticated public feeds (Open-Meteo weather & air quality, aligned
           with WHO safeguarding principles), correlate signals across health,
           nutrition, and disease domains, and output inference-ready briefings
@@ -73,6 +73,18 @@ export default function PitchPage() {
             <strong>Synthesis Agent</strong> — orchestrated cross-correlation +
             age-banded climate & health guidance
           </li>
+          <li>
+            <strong>India Regional Context Agent</strong> — monsoon cycles and
+            zone-specific child vulnerability across 12 regions
+          </li>
+          <li>
+            <strong>India Child Health Impact Agent</strong> — CHIS score (0–100)
+            across five transparent dimensions
+          </li>
+          <li>
+            <strong>Kids Health Chat Agent</strong> — age-banded Q&A with
+            privacy safeguards and consultant scheduling
+          </li>
         </ul>
       </Section>
 
@@ -96,10 +108,10 @@ export default function PitchPage() {
 
       <Section icon={TrendingUp} title="Traction & prototype">
         <p>
-          Functional web prototype with live Open-Meteo integration, multi-agent
-          orchestration API, global country selector, and product overview.
-          Ready for field pilots with ministries of health and education
-          partners.
+          Functional web prototype with live Open-Meteo integration, nine-agent
+          orchestration API, India CHIS dashboard, kids health chat, global
+          country selector, and product overview. Ready for field pilots with
+          ministries of health and education partners.
         </p>
       </Section>
 

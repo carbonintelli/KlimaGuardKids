@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
+import { SiteNav } from "@/components/SiteNav";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -28,36 +29,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunito.variable} font-sans antialiased`}>
         <header className="sticky top-0 z-50 border-b border-sky-200/60 bg-white/80 backdrop-blur-md">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-            <Link href="/" className="flex items-center gap-2">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:gap-4">
+            <Link href="/" className="flex shrink-0 items-center gap-2">
               <Logo size={36} />
             </Link>
-            <nav className="flex items-center gap-4 text-sm font-semibold">
-              <Link
-                href="/dashboard"
-                className="text-ink/80 hover:text-ocean transition-colors"
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/india"
-                className="text-ink/80 hover:text-saffron transition-colors"
-              >
-                India
-              </Link>
-              <Link
-                href="/chat"
-                className="text-ink/80 hover:text-leaf transition-colors"
-              >
-                Health chat
-              </Link>
-              <Link
-                href="/pitch"
-                className="rounded-full bg-ocean px-4 py-2 text-white shadow-md hover:bg-sky-600 transition-colors"
-              >
-                About
-              </Link>
-            </nav>
+            <SiteNav />
           </div>
         </header>
         <main>{children}</main>

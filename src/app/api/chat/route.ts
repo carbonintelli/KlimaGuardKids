@@ -4,6 +4,7 @@ import { generateChatResponse } from "@/lib/agents/chat-agent";
 import { runAgentPipeline } from "@/lib/agents/orchestrator";
 import { COUNTRIES, CITY_BY_COUNTRY } from "@/lib/countries";
 import { checkMessagePrivacy } from "@/lib/privacy-guard";
+import { caregiverConsentDeniedResponse } from "@/lib/consent-response";
 import type { SynthesisReport } from "@/lib/types";
 
 const bodySchema = z.object({
@@ -43,14 +44,7 @@ export async function POST(req: NextRequest) {
     } = parsed.data;
 
     if (!caregiverConsent) {
-      return NextResponse.json(
-        {
-          error: "Caregiver consent required",
-          message:
-            "A parent or guardian must agree to supervise this chat before continuing.",
-        },
-        { status: 403 }
-      );
+      return caregiverConsentDeniedResponse("chat");
     }
 
     const privacy = checkMessagePrivacy(message);
