@@ -5,6 +5,7 @@ import {
   getConsultantSlots,
 } from "@/lib/consultant-scheduler";
 import { checkMessagePrivacy } from "@/lib/privacy-guard";
+import { caregiverConsentDeniedResponse } from "@/lib/consent-response";
 
 const bodySchema = z.object({
   sessionId: z.string().min(8).max(64),
@@ -38,13 +39,7 @@ export async function POST(req: NextRequest) {
     } = parsed.data;
 
     if (!caregiverConsent) {
-      return NextResponse.json(
-        {
-          error: "Caregiver consent required",
-          message: "A parent or guardian must confirm before booking a consultant call.",
-        },
-        { status: 403 }
-      );
+      return caregiverConsentDeniedResponse("booking");
     }
 
     const privacy = checkMessagePrivacy(reason);

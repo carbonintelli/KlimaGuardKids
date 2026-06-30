@@ -200,7 +200,16 @@ export function ChatPanel() {
 
   const bookSlot = useCallback(
     async (slot: ConsultantSlot) => {
-      if (!consented || !sessionId) return;
+      if (!consented) {
+        setError(
+          "Please confirm caregiver consent before booking a consultant call."
+        );
+        return;
+      }
+      if (!sessionId) {
+        setError("Send a chat message first so we can start your session.");
+        return;
+      }
       setBookingSlotId(slot.id);
       setError(null);
 
@@ -219,7 +228,16 @@ export function ChatPanel() {
           }),
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.message ?? data.error ?? "Booking failed");
+        if (!res.ok) {
+          if (res.status === 403 && data.caregiverConsent === false) {
+            setError(
+              data.message ??
+                "A parent or guardian must confirm before booking a consultant call."
+            );
+            return;
+          }
+          throw new Error(data.message ?? data.error ?? "Booking failed");
+        }
         setBooking(data.booking as ConsultantBooking);
         setConsultantSlots([]);
       } catch (e) {
