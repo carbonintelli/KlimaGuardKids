@@ -176,6 +176,8 @@ export interface IndiaRegion {
   city: string;
   lat: number;
   lon: number;
+  /** Urban tier: 1 = metro, 2 = emerging hub, 3 = district/regional centre */
+  tier: 1 | 2 | 3;
   climateZone:
     | "semi-arid"
     | "coastal-tropical"

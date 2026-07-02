@@ -11,6 +11,7 @@ export async function GET() {
       lat: r.lat,
       lon: r.lon,
       climateZone: r.climateZone,
+      tier: r.tier,
       primaryRisks: r.primaryRisks,
     }))
   );
