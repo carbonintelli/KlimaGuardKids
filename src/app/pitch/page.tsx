@@ -7,6 +7,8 @@ import {
   TrendingUp,
   Lock,
 } from "lucide-react";
+import { COUNTRIES } from "@/lib/countries";
+import { INDIA_REGIONS } from "@/lib/india-regions";
 
 export default function PitchPage() {
   return (
@@ -75,7 +77,7 @@ export default function PitchPage() {
           </li>
           <li>
             <strong>India Regional Context Agent</strong> — monsoon cycles and
-            zone-specific child vulnerability across 12 regions
+            zone-specific child vulnerability across {INDIA_REGIONS.length} regions
           </li>
           <li>
             <strong>India Child Health Impact Agent</strong> — CHIS score (0–100)
@@ -91,7 +93,7 @@ export default function PitchPage() {
       <Section icon={Users} title="Who we serve">
         <p>
           Children, caregivers, teachers, community health workers, and local
-          authorities worldwide — starting with 20 demo cities and extensible to
+          authorities worldwide — starting with {COUNTRIES.length} climate-vulnerable demo cities and extensible to
           any coordinates via API. Languages and offline modes are on the
           roadmap; architecture is Open Source (MIT) for local adaptation.
         </p>

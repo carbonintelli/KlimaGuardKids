@@ -11,7 +11,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" /></a>
   <a href="https://github.com/carbonintelli/ClimateResilienceChildHealth/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
-  <img src="https://img.shields.io/badge/India-12%20regions-orange.svg" alt="12 India regions" />
+  <img src="https://img.shields.io/badge/India-20%20regions-orange.svg" alt="20 India regions" />
   <img src="https://img.shields.io/badge/Agents-9-blue.svg" alt="9 AI agents" />
 </p>
 
@@ -33,7 +33,7 @@ KlimaGuard Kids connects live climate data with health, nutrition, and disease i
 
 ### India-specific agents
 
-8. **India Regional Context Agent** — interprets monsoon cycles, climate zones, and state-level child vulnerability across **12 Indian regions**
+8. **India Regional Context Agent** — interprets monsoon cycles, climate zones, and state-level child vulnerability across **20 Indian regions**
 9. **India Child Health Impact Agent** — measures the **Child Health Impact Score (CHIS)** (0–100) across five dimensions:
    - Child Heat Vulnerability Index (CHVI)
    - Child Respiratory Burden Score (CRBS)
@@ -55,15 +55,15 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000):
 
 - **Health chat** — age-banded Q&A on health and climate impact with privacy safeguards
-- **Dashboard** — global analysis for 20 countries
-- **India** — regional child health impact analysis across 12 climate zones
+- **Dashboard** — global analysis for 40 climate-vulnerable countries
+- **India** — regional child health impact analysis across 20 climate zones
 
 ## API
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/api/countries` | GET | List supported countries |
-| `/api/india/regions` | GET | List 12 Indian regions with climate metadata |
+| `/api/india/regions` | GET | List 20 Indian regions with climate metadata |
 | `/api/analyze` | POST | Run full agent pipeline |
 | `/api/chat` | POST | Kids health chat (age-banded, privacy-safe) |
 | `/api/chat` | GET | Chat service metadata |
@@ -80,7 +80,7 @@ curl -X POST http://localhost:3000/api/analyze \
 
 ### Supported India regions
 
-Delhi NCR, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad, Ahmedabad, Lucknow, Patna, Guwahati, Jaipur, Kochi
+Delhi NCR, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad, Ahmedabad, Lucknow, Patna, Guwahati, Jaipur, Kochi, Bhubaneswar, Surat, Varanasi, Srinagar, Visakhapatnam, Indore, Ranchi, Dehradun
 
 ## Tech stack
 

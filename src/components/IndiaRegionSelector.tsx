@@ -40,7 +40,7 @@ export function IndiaRegionSelector({
         ))}
       </select>
       <p className="mt-2 text-xs text-ink/60">
-        12 climate zones across India · child health impact measured per region
+        {regions.length} climate zones across India · child health impact measured per region
       </p>
       {disabled && (
         <p id={hintId} className="mt-1 text-xs text-ink/60">
