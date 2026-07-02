@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Shield, Sparkles, Globe2, Bot, MapPin, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { COUNTRIES } from "@/lib/countries";
+import { INDIA_REGIONS } from "@/lib/india-regions";
 
 export default function HomePage() {
   return (
@@ -21,7 +23,7 @@ export default function HomePage() {
         <p className="mx-auto mt-6 max-w-2xl text-lg text-ink/70">
           KlimaGuard Kids connects trusted climate data with health, nutrition,
           and disease intelligence through eight cooperating AI agents — including
-          dedicated India agents that measure child health impact across 12
+          dedicated India agents that measure child health impact across {INDIA_REGIONS.length}
           regional climate zones.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -60,13 +62,13 @@ export default function HomePage() {
         />
         <Feature
           icon={MapPin}
-          title="12 India regions"
-          text="Delhi NCR to Kochi — CHIS scores measure heat, air, waterborne, vector, and nutrition burden for children."
+          title={`${INDIA_REGIONS.length} India regions`}
+          text="Delhi NCR to Dehradun — CHIS scores measure heat, air, waterborne, vector, and nutrition burden for children."
         />
         <Feature
           icon={Globe2}
           title="Global coverage"
-          text="Demo registry covers 20 countries worldwide; extend with any lat/lon via API."
+          text={`Demo registry covers ${COUNTRIES.length} climate-vulnerable countries worldwide; extend with any lat/lon via API.`}
         />
         <Feature
           icon={MessageCircle}

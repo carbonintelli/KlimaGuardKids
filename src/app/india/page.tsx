@@ -45,7 +45,7 @@ export default function IndiaDashboardPage() {
           Child health impact across Indian regions
         </h1>
         <p className="mt-2 text-ink/70 max-w-3xl">
-          Eight specialized AI agents analyze live climate data for 12 Indian
+          Eight specialized AI agents analyze live climate data for {INDIA_REGIONS.length} Indian
           regions — measuring the Child Health Impact Score (CHIS) across heat,
           air quality, waterborne disease, vectors, and nutrition dimensions.
           Built on open-source, transparent heuristics aligned with IMD, CPCB,
@@ -94,7 +94,7 @@ export default function IndiaDashboardPage() {
           {[
             {
               name: "India Regional Context Agent",
-              desc: "Interprets monsoon cycles, climate zones, and state-level child vulnerability profiles across 12 regions.",
+              desc: `Interprets monsoon cycles, climate zones, and state-level child vulnerability profiles across ${INDIA_REGIONS.length} regions.`,
             },
             {
               name: "India Child Health Impact Agent",

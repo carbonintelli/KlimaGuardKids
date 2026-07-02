@@ -64,7 +64,7 @@ export default function DashboardPage() {
         <p className="mt-2 text-ink/70 max-w-2xl">
           Select any supported country. Six pipeline agents fetch live climate
           data and generate child-ready guidance; for India, two additional
-          regional agents measure CHIS impact across 12 zones.
+          regional agents measure CHIS impact across {INDIA_REGIONS.length} zones.
         </p>
         {isIndia && (
           <Link

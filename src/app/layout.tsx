@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { SiteNav } from "@/components/SiteNav";
+import { INDIA_REGIONS } from "@/lib/india-regions";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -14,7 +15,7 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "KlimaGuard Kids — Child-Centric Climate Health Intelligence",
   description:
-    "Open-source, agentic AI platform measuring child health impact from climate change — with dedicated India regional intelligence across 12 climate zones.",
+    `Open-source, agentic AI platform measuring child health impact from climate change — with dedicated India regional intelligence across ${INDIA_REGIONS.length} climate zones.`,
   icons: {
     icon: "/logo.svg",
   },

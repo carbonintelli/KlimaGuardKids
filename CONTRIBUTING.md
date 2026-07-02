@@ -33,9 +33,14 @@ src/
 
 ## Adding a new Indian region
 
-1. Add an entry to `src/lib/india-regions.ts` with lat/lon, climate zone, and primary risks
+1. Add an entry to `src/lib/india-regions.ts` with lat/lon, climate zone, urban tier (`1` = metro, `2` = emerging hub, `3` = regional centre), and primary risks
 2. The India Regional Context Agent and Impact Agent will automatically include it
 3. Test via `/india` dashboard or `POST /api/analyze` with `regionId`
+
+## Adding a new country
+
+1. Add entries to `COUNTRIES` and `CITY_BY_COUNTRY` in `src/lib/countries.ts` with ISO code, flag, and representative vulnerable city coordinates
+2. Test via `/dashboard` or `POST /api/analyze` with `countryCode`
 
 ## Adding or modifying agents
 

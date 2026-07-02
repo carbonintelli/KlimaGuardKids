@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { runAgentPipeline } from "@/lib/agents/orchestrator";
 import { COUNTRIES, CITY_BY_COUNTRY } from "@/lib/countries";
+import { INDIA_REGIONS } from "@/lib/india-regions";
 
 const bodySchema = z.object({
   countryCode: z.string().length(2),
@@ -71,7 +72,7 @@ export async function GET() {
       "synthesis",
       "chat",
     ],
-    indiaRegions: 12,
+    indiaRegions: INDIA_REGIONS.length,
     countries: COUNTRIES.length,
   });
 }
