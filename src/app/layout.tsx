@@ -17,7 +17,8 @@ export const metadata: Metadata = {
   description:
     `Open-source, agentic AI platform measuring child health impact from climate change — with dedicated India regional intelligence across ${INDIA_REGIONS.length} climate zones.`,
   icons: {
-    icon: "/logo.svg",
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/logo.png", sizes: "1024x1024", type: "image/png" }],
   },
 };
 
