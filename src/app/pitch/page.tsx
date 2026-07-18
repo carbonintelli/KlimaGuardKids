@@ -107,8 +107,9 @@ export default function PitchPage() {
       <Section icon={TrendingUp} title="Traction & prototype">
         <p>
           Functional web prototype with live Open-Meteo integration, eight-agent
-          orchestration API, India CHIS dashboard, global country selector, and
-          product overview. Ready for field pilots with ministries of health and
+          orchestration API, India CHIS dashboard, age-based kids play missions
+          (stars / points / Impact XP), global country selector, and product
+          overview. Ready for field pilots with ministries of health and
           education partners.
         </p>
       </Section>

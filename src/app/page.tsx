@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Shield, Sparkles, Globe2, Bot, MapPin } from "lucide-react";
+import { Shield, Sparkles, Globe2, Bot, MapPin, Gamepad2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { COUNTRIES } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
@@ -27,6 +27,12 @@ export default function HomePage() {
           regional climate zones.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <Link
+            href="/play"
+            className="rounded-full bg-leaf px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-90 transition-opacity"
+          >
+            Kids play missions
+          </Link>
           <Link
             href="/india"
             className="rounded-full bg-gradient-to-r from-saffron to-ocean px-8 py-4 text-lg font-bold text-white shadow-lg hover:opacity-90 transition-opacity"
@@ -63,6 +69,11 @@ export default function HomePage() {
           icon={Globe2}
           title="Global coverage"
           text={`Demo registry covers ${COUNTRIES.length} climate-vulnerable countries worldwide; extend with any lat/lon via API.`}
+        />
+        <Feature
+          icon={Gamepad2}
+          title="Age-based play"
+          text="Ages 5–8 earn stars, 9–12 earn points, and teens earn Impact XP — with badges and climate-powered missions."
         />
         <Feature
           icon={Shield}
