@@ -70,7 +70,6 @@ export async function GET() {
       "india-regional",
       "india-impact",
       "synthesis",
-      "chat",
     ],
     indiaRegions: INDIA_REGIONS.length,
     countries: COUNTRIES.length,

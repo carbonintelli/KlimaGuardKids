@@ -12,12 +12,12 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" /></a>
   <a href="https://github.com/carbonintelli/ClimateResilienceChildHealth/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
   <img src="https://img.shields.io/badge/India-37%20regions-orange.svg" alt="37 India regions" />
-  <img src="https://img.shields.io/badge/Agents-9-blue.svg" alt="9 AI agents" />
+  <img src="https://img.shields.io/badge/Agents-8-blue.svg" alt="8 AI agents" />
 </p>
 
 ---
 
-KlimaGuard Kids connects live climate data with health, nutrition, and disease intelligence through **nine cooperating AI agents** — turning raw forecasts into age-appropriate guidance and **quantified child health impact scores** for Indian regions.
+KlimaGuard Kids connects live climate data with health, nutrition, and disease intelligence through **eight cooperating AI agents** — turning raw forecasts into age-appropriate guidance and **quantified child health impact scores** for Indian regions.
 
 ## What it does
 
@@ -29,12 +29,11 @@ KlimaGuard Kids connects live climate data with health, nutrition, and disease i
 4. **Disease Outlook Agent** — waterborne, vector-borne, and heat illness preparedness
 5. **Natural Medicine Agent** — evidence-tagged supportive remedies under caregiver supervision
 6. **Synthesis Agent** — cross-agent correlation and age-banded guidance (ages 5–8, 9–12, 13–17)
-7. **Kids Health Chat Agent** — conversational Q&A on health and climate impact, age-appropriate tone, privacy filtering, and consultant scheduling
 
 ### India-specific agents
 
-8. **India Regional Context Agent** — interprets monsoon cycles, climate zones, and state-level child vulnerability across **37 Indian regions** (Tier 1–3 metros and hubs)
-9. **India Child Health Impact Agent** — measures the **Child Health Impact Score (CHIS)** (0–100) across five dimensions:
+7. **India Regional Context Agent** — interprets monsoon cycles, climate zones, and state-level child vulnerability across **37 Indian regions** (Tier 1–3 metros and hubs)
+8. **India Child Health Impact Agent** — measures the **Child Health Impact Score (CHIS)** (0–100) across five dimensions:
    - Child Heat Vulnerability Index (CHVI)
    - Child Respiratory Burden Score (CRBS)
    - Waterborne Disease Pressure Index (WDPI)
@@ -54,7 +53,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000):
 
-- **Health chat** — age-banded Q&A on health and climate impact with privacy safeguards
 - **Dashboard** — global analysis for 65 climate-vulnerable countries
 - **India** — regional child health impact analysis across 37 Tier 1–3 cities
 
@@ -65,10 +63,6 @@ Open [http://localhost:3000](http://localhost:3000):
 | `/api/countries` | GET | List supported countries |
 | `/api/india/regions` | GET | List 37 Indian regions with tier and climate metadata |
 | `/api/analyze` | POST | Run full agent pipeline |
-| `/api/chat` | POST | Kids health chat (age-banded, privacy-safe) |
-| `/api/chat` | GET | Chat service metadata |
-| `/api/consultant/schedule` | POST | Book a health consultant call (demo) |
-| `/api/consultant/schedule` | GET | List available consultant slots |
 
 ### Analyze India region
 
