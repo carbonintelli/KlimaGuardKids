@@ -7,7 +7,6 @@ import { Menu, X } from "lucide-react";
 const NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard", className: "text-ink/80 hover:text-ocean" },
   { href: "/india", label: "India", className: "text-ink/80 hover:text-saffron" },
-  { href: "/chat", label: "Health chat", className: "text-ink/80 hover:text-leaf" },
   {
     href: "/pitch",
     label: "About",

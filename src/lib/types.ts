@@ -8,66 +8,9 @@ export type AgentId =
   | "natural-medicine"
   | "india-regional"
   | "india-impact"
-  | "synthesis"
-  | "chat";
+  | "synthesis";
 
 export type AgeBand = "5-8" | "9-12" | "13-17";
-
-export type ChatRole = "user" | "assistant" | "system";
-
-export type ChatAction =
-  | "none"
-  | "consult-caregiver"
-  | "schedule-consultant";
-
-export interface ChatMessage {
-  id: string;
-  role: ChatRole;
-  content: string;
-  timestamp: string;
-  citations?: string[];
-  actionSuggested?: ChatAction;
-}
-
-export interface ConsultantSlot {
-  id: string;
-  consultantName: string;
-  specialty: string;
-  datetime: string;
-  durationMinutes: number;
-  timezone: string;
-  available: boolean;
-}
-
-export interface ConsultantBooking {
-  bookingId: string;
-  slotId: string;
-  consultantName: string;
-  specialty: string;
-  datetime: string;
-  durationMinutes: number;
-  timezone: string;
-  sessionId: string;
-  ageBand: AgeBand;
-  reasonSummary: string;
-  confirmationNote: string;
-}
-
-export interface PrivacyCheckResult {
-  safe: boolean;
-  sanitizedMessage: string;
-  warnings: string[];
-  blockedReason?: string;
-}
-
-export interface ChatResponse {
-  message: ChatMessage;
-  privacyNotice: string;
-  consultantAvailable: boolean;
-  consultantSlots?: ConsultantSlot[];
-  sessionId: string;
-  reportContextUsed: boolean;
-}
 
 export interface DataSource {
   id: string;
