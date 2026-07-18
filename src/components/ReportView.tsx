@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import type { SynthesisReport } from "@/lib/types";
+import { AGE_PROFILES } from "@/lib/gamification";
 import { RiskBadge } from "./RiskBadge";
 import { AgentPanel } from "./AgentPanel";
 import { IndiaImpactPanel } from "./IndiaImpactPanel";
@@ -14,6 +16,7 @@ import {
   Link2,
   Leaf,
   Shield,
+  Gamepad2,
 } from "lucide-react";
 
 export function ReportView({
@@ -264,54 +267,74 @@ export function ReportView({
       </div>
 
       <section>
-        <h3 className="mb-4 text-lg font-extrabold text-ink">
-          Guidance for children (by age)
-        </h3>
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h3 className="text-lg font-extrabold text-ink">
+              Guidance for children (by age)
+            </h3>
+            <p className="mt-1 text-sm text-ink/60">
+              Turn these tips into age-matched quests, badges, and streaks.
+            </p>
+          </div>
+          <Link
+            href="/play"
+            className="inline-flex items-center gap-2 rounded-full bg-leaf px-4 py-2 text-sm font-bold text-white hover:opacity-90"
+          >
+            <Gamepad2 className="h-4 w-4" />
+            Open kids play
+          </Link>
+        </div>
         <div className="grid gap-4 md:grid-cols-3">
-          {report.childGuidance.map((g) => (
-            <article
-              key={g.ageBand}
-              className="rounded-3xl border-2 border-sky-100 bg-white p-5 shadow-md"
-            >
-              <span className="text-3xl">{g.emoji}</span>
-              <p className="mt-2 text-xs font-bold text-ocean">
-                Ages {g.ageBand}
-              </p>
-              <h4 className="mt-1 font-extrabold text-ink">{g.headline}</h4>
-              <p className="mt-2 text-sm text-ink/75">{g.simpleExplanation}</p>
-
-              <div className="mt-4 rounded-xl bg-sky-50/80 p-3">
-                <p className="text-xs font-bold uppercase text-ocean">
-                  How climate affects you
+          {report.childGuidance.map((g) => {
+            const profile = AGE_PROFILES[g.ageBand];
+            return (
+              <article
+                key={g.ageBand}
+                className="rounded-3xl border-2 border-sky-100 bg-white p-5 shadow-md"
+              >
+                <span className="text-3xl">{g.emoji}</span>
+                <p className="mt-2 text-xs font-bold text-ocean">
+                  Ages {g.ageBand} · {profile.label}
                 </p>
-                <p className="mt-1 text-sm text-ink/80">{g.howClimateAffectsYou}</p>
-              </div>
-
-              <GuidanceList
-                title="Beating the disruption"
-                items={g.beatingTheDisruption}
-              />
-              <GuidanceList
-                title="Stay healthy from germs"
-                items={g.stayHealthyFromGerms}
-              />
-              <GuidanceList
-                title="Natural help at home (with an adult)"
-                items={g.naturalHelpFromHome}
-              />
-              <GuidanceList title="Prepare today" items={g.prepareToday} />
-              <GuidanceList
-                title="Ask a caring adult"
-                items={g.askAdultFor}
-              />
-
-              {g.funFact && (
-                <p className="mt-3 rounded-xl bg-sky-50 p-3 text-xs text-ocean font-medium">
-                  💡 {g.funFact}
+                <h4 className="mt-1 font-extrabold text-ink">{g.headline}</h4>
+                <p className="mt-2 text-sm text-ink/75">{g.simpleExplanation}</p>
+                <p className="mt-2 text-xs font-semibold text-ink/50">
+                  Earn {profile.currencyEmoji} {profile.currencyName} in play mode
                 </p>
-              )}
-            </article>
-          ))}
+
+                <div className="mt-4 rounded-xl bg-sky-50/80 p-3">
+                  <p className="text-xs font-bold uppercase text-ocean">
+                    How climate affects you
+                  </p>
+                  <p className="mt-1 text-sm text-ink/80">{g.howClimateAffectsYou}</p>
+                </div>
+
+                <GuidanceList
+                  title="Beating the disruption"
+                  items={g.beatingTheDisruption}
+                />
+                <GuidanceList
+                  title="Stay healthy from germs"
+                  items={g.stayHealthyFromGerms}
+                />
+                <GuidanceList
+                  title="Natural help at home (with an adult)"
+                  items={g.naturalHelpFromHome}
+                />
+                <GuidanceList title="Prepare today" items={g.prepareToday} />
+                <GuidanceList
+                  title="Ask a caring adult"
+                  items={g.askAdultFor}
+                />
+
+                {g.funFact && (
+                  <p className="mt-3 rounded-xl bg-sky-50 p-3 text-xs text-ocean font-medium">
+                    💡 {g.funFact}
+                  </p>
+                )}
+              </article>
+            );
+          })}
         </div>
       </section>
 

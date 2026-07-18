@@ -12,6 +12,48 @@ export type AgentId =
 
 export type AgeBand = "5-8" | "9-12" | "13-17";
 
+export type MissionCategory =
+  | "heat"
+  | "water"
+  | "air"
+  | "germs"
+  | "nutrition"
+  | "community"
+  | "prep";
+
+export interface GameMission {
+  id: string;
+  ageBand: AgeBand;
+  title: string;
+  description: string;
+  category: MissionCategory;
+  xp: number;
+  difficulty: "easy" | "medium" | "challenge";
+  source: "baseline" | "climate";
+}
+
+export interface GameBadge {
+  id: string;
+  ageBand: AgeBand;
+  name: string;
+  description: string;
+  emoji: string;
+  requirement: {
+    type: "missions" | "xp" | "category";
+    value: number;
+    category?: MissionCategory;
+  };
+}
+
+export interface PlayerProgress {
+  ageBand: AgeBand;
+  xp: number;
+  completedMissionIds: string[];
+  unlockedBadgeIds: string[];
+  lastPlayedDate: string | null;
+  streakDays: number;
+}
+
 export interface DataSource {
   id: string;
   name: string;

@@ -42,6 +42,18 @@ KlimaGuard Kids connects live climate data with health, nutrition, and disease i
 
 All formulas are **transparent and open-source** in `src/lib/agents/india-impact-agent.ts`.
 
+### Age-based kids play
+
+`/play` turns preparedness tips into checkable missions matched to age:
+
+| Ages | Mode | Currency | Feel |
+|------|------|----------|------|
+| 5–8 | Little Climate Heroes | Stars | Short, playful quests + sticker-style badges |
+| 9–12 | Climate Cadets | Points | Practical missions + level titles |
+| 13–17 | Impact Leaders | Impact XP | Peer/community actions + leadership badges |
+
+Progress (XP, badges, streaks) is stored in the browser only — no child accounts. Optional climate unlocks pull live guidance from the agent pipeline for the selected place.
+
 ## Quick start
 
 ```bash
@@ -53,6 +65,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000):
 
+- **Kids play** — age-based missions, badges, and streaks (5–8 / 9–12 / 13–17)
 - **Dashboard** — global analysis for 65 climate-vulnerable countries
 - **India** — regional child health impact analysis across 37 Tier 1–3 cities
 
