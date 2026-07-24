@@ -68,7 +68,7 @@ export default function HomePage() {
         <Feature
           icon={Globe2}
           title="Global coverage"
-          text={`Demo registry covers ${COUNTRIES.length} climate-vulnerable countries worldwide; extend with any lat/lon via API.`}
+          text={`Demo registry covers ${COUNTRIES.length} climate-vulnerable countries and multiple high-risk cities worldwide; extend with any lat/lon via API.`}
         />
         <Feature
           icon={Gamepad2}

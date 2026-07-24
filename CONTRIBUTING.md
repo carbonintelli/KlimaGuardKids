@@ -37,10 +37,11 @@ src/
 2. The India Regional Context Agent and Impact Agent will automatically include it
 3. Test via `/india` dashboard or `POST /api/analyze` with `regionId`
 
-## Adding a new country
+## Adding a new country or city
 
-1. Add entries to `COUNTRIES` and `CITY_BY_COUNTRY` in `src/lib/countries.ts` with ISO code, flag, and representative vulnerable city coordinates
-2. Test via `/dashboard` or `POST /api/analyze` with `countryCode`
+1. Add the country to `COUNTRIES` in `src/lib/countries.ts` (ISO code, name, flag)
+2. Add one or more city presets under `CITIES_BY_COUNTRY` with `id`, coordinates, and `primaryRisks`
+3. Test via `/dashboard` (country + city selectors) or `POST /api/analyze` with `countryCode` and optional `cityId`
 
 ## Adding or modifying agents
 
