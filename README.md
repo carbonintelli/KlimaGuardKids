@@ -111,7 +111,13 @@ curl -X POST http://localhost:3000/api/analyze \
 
 ## Design & architecture
 
-For a short technical overview of product design, agent pipeline, registries, and client/server boundaries, see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
+For a short technical overview of product design, agent pipeline, registries, and client/server boundaries — with explanatory diagrams — see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
+
+<p align="center">
+  <img src="docs/images/system-layers.png" alt="System layers diagram" width="640" />
+</p>
+
+Diagrams can be regenerated with `python3 docs/generate_architecture_diagrams.py`.
 
 ## Contributing
 
