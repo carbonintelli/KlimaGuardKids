@@ -109,6 +109,10 @@ curl -X POST http://localhost:3000/api/analyze \
 - Live data: Open-Meteo Forecast + Air Quality APIs (no API key required)
 - References: IMD, CPCB, NFHS-5, NVBDCP, WHO climate-health guidance
 
+## Design & architecture
+
+For a short technical overview of product design, agent pipeline, registries, and client/server boundaries, see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
+
 ## Contributing
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, coding standards, and how to add new regions or agents.
