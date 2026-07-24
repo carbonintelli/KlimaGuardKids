@@ -17,8 +17,17 @@ export const metadata: Metadata = {
   description:
     `Open-source, agentic AI platform measuring child health impact from climate change — with dedicated India regional intelligence across ${INDIA_REGIONS.length} climate zones.`,
   icons: {
-    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/logo.png", sizes: "1024x1024", type: "image/png" }],
+    icon: [
+      { url: "/logo/logo_klimaguardkids.jpeg", type: "image/jpeg" },
+    ],
+    shortcut: "/logo/logo_klimaguardkids.jpeg",
+    apple: [
+      {
+        url: "/logo/logo_klimaguardkids.jpeg",
+        sizes: "1254x1254",
+        type: "image/jpeg",
+      },
+    ],
   },
 };
 
@@ -32,8 +41,8 @@ export default function RootLayout({
       <body className={`${nunito.variable} font-sans antialiased`}>
         <header className="sticky top-0 z-50 border-b border-sky-200/60 bg-white/80 backdrop-blur-md">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:gap-4">
-            <Link href="/" className="flex shrink-0 items-center gap-2">
-              <Logo size={36} />
+            <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="KlimaGuard Kids home">
+              <Logo size={48} />
             </Link>
             <SiteNav />
           </div>

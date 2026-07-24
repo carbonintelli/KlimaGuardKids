@@ -9,7 +9,7 @@ export default function HomePage() {
     <div className="mx-auto max-w-6xl px-4 py-12">
       <section className="text-center">
         <div className="flex justify-center mb-6">
-          <Logo size={72} showText={false} />
+          <Logo size={140} />
         </div>
         <p className="inline-flex items-center gap-2 rounded-full bg-ocean/10 px-4 py-1 text-sm font-bold text-ocean">
           <Sparkles className="h-4 w-4" />

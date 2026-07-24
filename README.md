@@ -1,7 +1,7 @@
 # KlimaGuard Kids
 
 <p align="center">
-  <img src="public/logo.svg" alt="KlimaGuard Kids logo" width="96" />
+  <img src="logo/logo_klimaguardkids.jpeg" alt="KlimaGuard Kids logo" width="160" />
 </p>
 
 <p align="center">

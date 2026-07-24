@@ -4,8 +4,9 @@ import { useCallback, useState } from "react";
 import type { SynthesisReport } from "@/lib/types";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 import { IndiaRegionSelector } from "@/components/IndiaRegionSelector";
+import { Logo } from "@/components/Logo";
 import { ReportView } from "@/components/ReportView";
-import { Loader2, MapPin, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 
 export default function IndiaDashboardPage() {
   const [regionId, setRegionId] = useState("delhi-ncr");
@@ -41,7 +42,7 @@ export default function IndiaDashboardPage() {
           India Climate-Health Intelligence
         </p>
         <h1 className="mt-4 text-3xl font-extrabold text-ink flex items-center gap-3">
-          <MapPin className="h-8 w-8 text-saffron" />
+          <Logo size={56} />
           Child health impact across Indian regions
         </h1>
         <p className="mt-2 text-ink/70 max-w-3xl">

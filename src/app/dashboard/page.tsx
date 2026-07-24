@@ -5,8 +5,9 @@ import type { CountryOption, SynthesisReport } from "@/lib/types";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 import { CountrySelector } from "@/components/CountrySelector";
 import { IndiaRegionSelector } from "@/components/IndiaRegionSelector";
+import { Logo } from "@/components/Logo";
 import { ReportView } from "@/components/ReportView";
-import { Loader2, Radar } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardPage() {
@@ -58,7 +59,7 @@ export default function DashboardPage() {
     <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="mb-8">
         <h1 className="text-3xl font-extrabold text-ink flex items-center gap-3">
-          <Radar className="h-8 w-8 text-ocean" />
+          <Logo size={56} />
           Global climate-health dashboard
         </h1>
         <p className="mt-2 text-ink/70 max-w-2xl">
