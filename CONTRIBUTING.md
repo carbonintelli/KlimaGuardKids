@@ -28,8 +28,13 @@ src/
     ├── agents/       # AI agent modules (add new agents here)
     ├── india-regions.ts
     ├── countries.ts
+    ├── gamification.ts
     └── types.ts
+docs/
+└── ARCHITECTURE.md   # Design goals, pipeline, registries
 ```
+
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, and client/server boundaries before larger changes.
 
 ## Adding a new Indian region
 
