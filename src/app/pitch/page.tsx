@@ -89,9 +89,10 @@ export default function PitchPage() {
       <Section icon={Users} title="Who we serve">
         <p>
           Children, caregivers, teachers, community health workers, and local
-          authorities worldwide — starting with {COUNTRIES.length} climate-vulnerable demo cities and extensible to
-          any coordinates via API. Languages and offline modes are on the
-          roadmap; architecture is Open Source (MIT) for local adaptation.
+          authorities worldwide — starting with {COUNTRIES.length} climate-vulnerable
+          countries and city-level presets, extensible to any coordinates via API.
+          Languages and offline modes are on the roadmap; architecture is Open
+          Source (MIT) for local adaptation.
         </p>
       </Section>
 

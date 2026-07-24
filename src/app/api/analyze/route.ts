@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { runAgentPipeline } from "@/lib/agents/orchestrator";
-import { COUNTRIES, CITY_BY_COUNTRY } from "@/lib/countries";
+import {
+  CITY_COUNT,
+  COUNTRIES,
+  getCityPreset,
+} from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 
 const bodySchema = z.object({
   countryCode: z.string().length(2),
+  cityId: z.string().optional(),
   lat: z.number().optional(),
   lon: z.number().optional(),
   city: z.string().optional(),
@@ -23,10 +28,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { countryCode, lat, lon, city: cityOverride, regionId } = parsed.data;
+    const {
+      countryCode,
+      cityId,
+      lat,
+      lon,
+      city: cityOverride,
+      regionId,
+    } = parsed.data;
     const code = countryCode.toUpperCase();
     const country = COUNTRIES.find((c) => c.code === code);
-    const preset = CITY_BY_COUNTRY[code];
+    const preset = getCityPreset(code, cityId);
 
     if (!country || !preset) {
       return NextResponse.json(
@@ -60,7 +72,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   return NextResponse.json({
     service: "KlimaGuard Kids Agent API",
-    version: "0.2.0",
+    version: "0.3.0",
     agents: [
       "climate",
       "health",
@@ -73,5 +85,6 @@ export async function GET() {
     ],
     indiaRegions: INDIA_REGIONS.length,
     countries: COUNTRIES.length,
+    cities: CITY_COUNT,
   });
 }

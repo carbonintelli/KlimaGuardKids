@@ -1,7 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { AgeBand, ChildGuidance, CountryOption, SynthesisReport } from "@/lib/types";
+import type {
+  AgeBand,
+  ChildGuidance,
+  CityPreset,
+  CountryOption,
+  SynthesisReport,
+} from "@/lib/types";
 import {
   AGE_PROFILES,
   categoryLabel,
@@ -15,6 +21,7 @@ import {
 } from "@/lib/gamification";
 import { AgeBandPicker } from "@/components/AgeBandPicker";
 import { CountrySelector } from "@/components/CountrySelector";
+import { CitySelector } from "@/components/CitySelector";
 import { IndiaRegionSelector } from "@/components/IndiaRegionSelector";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 import {
@@ -34,7 +41,8 @@ export function KidsPlayHub() {
     ageBand ? loadProgress(ageBand) : null
   );
   const [countries, setCountries] = useState<CountryOption[]>([]);
-  const [countryCode, setCountryCode] = useState("IN");
+  const [countryCode, setCountryCode] = useState("BD");
+  const [cityId, setCityId] = useState("dhaka");
   const [regionId, setRegionId] = useState("delhi-ncr");
   const [report, setReport] = useState<SynthesisReport | null>(null);
   const [loadingClimate, setLoadingClimate] = useState(false);
@@ -43,13 +51,26 @@ export function KidsPlayHub() {
   const [celebrating, setCelebrating] = useState(false);
 
   const isIndia = countryCode === "IN";
+  const citiesForCountry: CityPreset[] = useMemo(() => {
+    return countries.find((c) => c.code === countryCode)?.cities ?? [];
+  }, [countries, countryCode]);
 
   useEffect(() => {
     fetch("/api/countries")
       .then((r) => r.json())
-      .then((data: CountryOption[]) => setCountries(data))
+      .then((data: { countries?: CountryOption[] } | CountryOption[]) => {
+        const list = Array.isArray(data) ? data : data.countries ?? [];
+        setCountries(list);
+      })
       .catch(() => setCountries([]));
   }, []);
+
+  useEffect(() => {
+    if (isIndia || !citiesForCountry.length) return;
+    if (!citiesForCountry.find((c) => c.id === cityId)) {
+      setCityId(citiesForCountry[0].id);
+    }
+  }, [citiesForCountry, cityId, isIndia]);
 
   useEffect(() => {
     if (!ageBand) {
@@ -83,8 +104,13 @@ export function KidsPlayHub() {
     setLoadingClimate(true);
     setClimateError(null);
     try {
-      const body: { countryCode: string; regionId?: string } = { countryCode };
+      const body: {
+        countryCode: string;
+        regionId?: string;
+        cityId?: string;
+      } = { countryCode };
       if (isIndia) body.regionId = regionId;
+      else body.cityId = cityId;
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -99,7 +125,16 @@ export function KidsPlayHub() {
     } finally {
       setLoadingClimate(false);
     }
-  }, [countryCode, isIndia, regionId]);
+  }, [countryCode, isIndia, regionId, cityId]);
+
+  const onCountryChange = (code: string) => {
+    setCountryCode(code);
+    setReport(null);
+    const next = countries.find((c) => c.code === code);
+    if (code !== "IN" && next?.cities?.length) {
+      setCityId(next.cities[0].id);
+    }
+  };
 
   const onComplete = (missionId: string) => {
     if (!ageBand || !progress || !profile) return;
@@ -217,13 +252,19 @@ export function KidsPlayHub() {
               <CountrySelector
                 countries={countries}
                 value={countryCode}
-                onChange={setCountryCode}
+                onChange={onCountryChange}
               />
-              {isIndia && (
+              {isIndia ? (
                 <IndiaRegionSelector
                   regions={INDIA_REGIONS}
                   value={regionId}
                   onChange={setRegionId}
+                />
+              ) : (
+                <CitySelector
+                  cities={citiesForCountry}
+                  value={cityId}
+                  onChange={setCityId}
                 />
               )}
             </div>

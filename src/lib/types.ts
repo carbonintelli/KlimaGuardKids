@@ -229,8 +229,21 @@ export interface SynthesisReport {
   indiaImpact?: IndiaImpactInsight;
 }
 
+export interface CityPreset {
+  id: string;
+  city: string;
+  lat: number;
+  lon: number;
+  /** Short climate-health risk tags for UI context */
+  primaryRisks?: string[];
+}
+
 export interface CountryOption {
   code: string;
   name: string;
   flag: string;
+  cities?: CityPreset[];
+  defaultCity?: string;
+  lat?: number;
+  lon?: number;
 }

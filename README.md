@@ -66,16 +66,24 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000):
 
 - **Kids play** — age-based missions, badges, and streaks (5–8 / 9–12 / 13–17)
-- **Dashboard** — global analysis for 65 climate-vulnerable countries
+- **Dashboard** — global analysis across climate-vulnerable countries and cities
 - **India** — regional child health impact analysis across 37 Tier 1–3 cities
 
 ## API
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/countries` | GET | List supported countries |
+| `/api/countries` | GET | List supported countries with city presets |
 | `/api/india/regions` | GET | List 37 Indian regions with tier and climate metadata |
-| `/api/analyze` | POST | Run full agent pipeline |
+| `/api/analyze` | POST | Run full agent pipeline (`countryCode`, optional `cityId` or India `regionId`) |
+
+### Analyze a vulnerable city
+
+```bash
+curl -X POST http://localhost:3000/api/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"countryCode": "BD", "cityId": "chattogram"}'
+```
 
 ### Analyze India region
 
