@@ -1,6 +1,10 @@
 # KlimaGuard Kids — Design & Architecture
 
-Brief technical overview of how the product is designed and how the system fits together.
+Brief technical overview of how the product is designed and how the system fits together. Diagrams below live in [`docs/images/`](images/) and can be regenerated with:
+
+```bash
+python3 docs/generate_architecture_diagrams.py
+```
 
 ## Design goals
 
@@ -12,29 +16,12 @@ Brief technical overview of how the product is designed and how the system fits 
 
 ## High-level architecture
 
+<p align="center">
+  <img src="images/system-layers.png" alt="System layers from UI through API, orchestrator, agents, and report" width="820" />
+</p>
+
 ```text
-┌─────────────────────────────────────────────────────────────┐
-│  Next.js App Router (React UI)                              │
-│  /dashboard  /india  /play  /pitch                          │
-└───────────────────────────┬─────────────────────────────────┘
-                            │ fetch JSON
-┌───────────────────────────▼─────────────────────────────────┐
-│  Route Handlers                                             │
-│  POST /api/analyze   GET /api/countries   GET /api/india/…  │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-┌───────────────────────────▼─────────────────────────────────┐
-│  Orchestrator  (src/lib/agents/orchestrator.ts)             │
-│                                                             │
-│  Climate ──► Health / Nutrition / Disease (parallel)        │
-│         ──► Natural Medicine                                │
-│         ──► [IN] Regional + CHIS Impact                     │
-│         ──► Synthesis (correlations + child guidance)       │
-└───────────────────────────┬─────────────────────────────────┘
-                            │ SynthesisReport
-┌───────────────────────────▼─────────────────────────────────┐
-│  ReportView / IndiaImpactPanel / KidsPlayHub                │
-└─────────────────────────────────────────────────────────────┘
+UI pages  →  Route handlers  →  Orchestrator  →  Agents  →  SynthesisReport  →  UI
 ```
 
 ## Stack
@@ -49,6 +36,10 @@ Brief technical overview of how the product is designed and how the system fits 
 | Play progress | Browser `localStorage` only |
 
 ## Repository layout
+
+<p align="center">
+  <img src="images/repo-map.png" alt="Code map of app, components, agents, and registries" width="780" />
+</p>
 
 ```text
 src/
@@ -69,6 +60,10 @@ src/
 
 ## Analyze request flow
 
+<p align="center">
+  <img src="images/analyze-sequence.png" alt="Analyze sequence from place selection to rendered guidance" width="820" />
+</p>
+
 1. UI posts `{ countryCode, cityId? }` or `{ countryCode: "IN", regionId }`.
 2. `/api/analyze` validates with Zod, resolves lat/lon from the city or India region registry.
 3. `runAgentPipeline()`:
@@ -80,6 +75,10 @@ src/
 4. UI renders `SynthesisReport` (and play mode can turn guidance into missions).
 
 ## Agent model
+
+<p align="center">
+  <img src="images/agent-pipeline.png" alt="Eight-agent pipeline with India-only branch" width="820" />
+</p>
 
 | Agent | Scope | Role |
 |--------|--------|------|
@@ -94,13 +93,27 @@ src/
 
 India agents activate only when `countryCode === "IN"`. Formulas for CHIS live in `src/lib/agents/india-impact-agent.ts`.
 
+### India CHIS dimensions
+
+<p align="center">
+  <img src="images/chis-dimensions.png" alt="Five CHIS dimensions composing the India impact score" width="780" />
+</p>
+
 ## Data & registries
+
+<p align="center">
+  <img src="images/data-registries.png" alt="How countries, cities, and India regions resolve to coordinates" width="820" />
+</p>
 
 - **Countries / cities** — `CITIES_BY_COUNTRY` holds multi-city presets with `primaryRisks` tags; `getCityPreset(code, cityId)` resolves coordinates for analyze.
 - **India regions** — separate from the global city list; dashboard shows `IndiaRegionSelector` for India.
 - **Trusted sources** — `sources.ts` attaches provenance to agent status (Open-Meteo, WHO, IMD, NFHS, etc.).
 
 ## Client vs server
+
+<p align="center">
+  <img src="images/client-server.png" alt="Browser client responsibilities versus server route handlers and agents" width="820" />
+</p>
 
 | Runs on server | Runs in the browser |
 |----------------|---------------------|
@@ -110,7 +123,7 @@ India agents activate only when `countryCode === "IN"`. Formulas for CHIS live i
 
 Outbound network from the demo pipeline is Open-Meteo (climate agent). Analysis is always requested via `fetch("/api/analyze")` so agent logic stays server-side.
 
-## UI surfaces
+## UI surfaces & kids play
 
 | Route | Purpose |
 |--------|---------|
@@ -120,15 +133,20 @@ Outbound network from the demo pipeline is Open-Meteo (climate agent). Analysis 
 | `/play` | Age-tiered missions powered by guidance (optional climate unlock) |
 | `/pitch` | Narrative / stakeholder overview |
 
+<p align="center">
+  <img src="images/play-gamification.png" alt="Age-tiered play missions and browser-local progress" width="820" />
+</p>
+
 ## Design notes for contributors
 
 - Prefer **deterministic, documented heuristics** over hidden model calls for core health scoring.
 - Keep child copy **age-appropriate**; synthesis already splits tone by band.
 - When adding geography, update registries only — orchestrator and selectors pick them up automatically (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
 - Play mode must remain **privacy-light** (device-local progress, no required child accounts).
+- Regenerate diagrams after major pipeline changes: `python3 docs/generate_architecture_diagrams.py`.
 
 ## Related docs
 
 - [README.md](../README.md) — product overview, quick start, API table  
 - [CONTRIBUTING.md](../CONTRIBUTING.md) — how to add countries, cities, regions, agents  
-- `Training/` — longer narrative and diagram assets for presentations  
+- `Training/` — longer narrative and additional presentation diagram assets  

@@ -31,10 +31,12 @@ src/
     ├── gamification.ts
     └── types.ts
 docs/
-└── ARCHITECTURE.md   # Design goals, pipeline, registries
+├── ARCHITECTURE.md                 # Design goals, pipeline, registries
+├── generate_architecture_diagrams.py
+└── images/                         # Technical diagrams for ARCHITECTURE.md
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, and client/server boundaries before larger changes.
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, diagrams, and client/server boundaries before larger changes.
 
 ## Adding a new Indian region
 
