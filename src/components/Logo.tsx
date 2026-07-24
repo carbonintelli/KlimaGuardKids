@@ -6,18 +6,19 @@ interface LogoProps {
   className?: string;
 }
 
-/** KlimaGuard Kids mark: Climate (sun + leaves) + Protection (shield) + Kids (child). */
-export function Logo({ size = 40, showText = true, className = "" }: LogoProps) {
+const LOGO_SRC = "/logo/logo_klimaguardkids.jpeg";
+
+/** KlimaGuard Kids brand mark from logo/logo_klimaguardkids.jpeg */
+export function Logo({ size = 40, showText = false, className = "" }: LogoProps) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <Image
-        src="/logo.svg"
+        src={LOGO_SRC}
         alt={showText ? "" : "KlimaGuard Kids"}
         width={size}
         height={size}
-        className="shrink-0"
+        className="shrink-0 rounded-full object-cover"
         priority
-        unoptimized
       />
       {showText && (
         <span className="text-lg font-extrabold tracking-tight">
