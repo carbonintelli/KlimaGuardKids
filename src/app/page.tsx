@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Shield, Sparkles, Globe2, Bot, MapPin, Gamepad2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
-import { COUNTRIES } from "@/lib/countries";
+import { CITY_COUNT, COUNTRIES } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 
 export default function HomePage() {
@@ -68,7 +68,7 @@ export default function HomePage() {
         <Feature
           icon={Globe2}
           title="Global coverage"
-          text={`Demo registry covers ${COUNTRIES.length} climate-vulnerable countries and multiple high-risk cities worldwide; extend with any lat/lon via API.`}
+          text={`Demo registry covers ${COUNTRIES.length} climate-vulnerable countries and ${CITY_COUNT} high-risk cities worldwide; extend with any lat/lon via API.`}
         />
         <Feature
           icon={Gamepad2}
