@@ -34,12 +34,14 @@ src/
 docs/
 ├── ARCHITECTURE.md                   # Design goals, pipeline, registries
 ├── DATA_SOURCES_AND_GEOGRAPHY.md     # Tiers, coverage counts, trusted sources
-├── UNGM_TECHNICAL_DOCUMENTATION.md   # Elaborated tech doc for UNGM submission
+├── KGK_Technical_Commendation.pdf    # Rich-text technical commendation (published)
+├── KGK_Technical_Commendation.source.md  # Editable source for the PDF
+├── generate_kgk_technical_commendation.py
 ├── generate_architecture_diagrams.py
 └── images/                           # Technical diagrams
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, diagrams, and client/server boundaries before larger changes. For registry counts, tiers, and provenance, see [docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md). For UNGM-oriented capability language, see [docs/UNGM_TECHNICAL_DOCUMENTATION.md](docs/UNGM_TECHNICAL_DOCUMENTATION.md).
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, diagrams, and client/server boundaries before larger changes. For registry counts, tiers, and provenance, see [docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md). For the full capability statement, see [docs/KGK_Technical_Commendation.pdf](docs/KGK_Technical_Commendation.pdf) (regenerate after source edits with `python3 docs/generate_kgk_technical_commendation.py`).
 
 ## Adding a new Indian region
 
@@ -53,7 +55,7 @@ Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze 
 2. Add one or more city presets under `CITIES_BY_COUNTRY` with `id`, coordinates, `tier` (`1` metro / `2` emerging / `3` regional), and `primaryRisks`
 3. If you add a validated reference feed, register it in `src/lib/sources.ts` and wire the agent in `orchestrator.ts`
 4. Test via `/dashboard` (country + city selectors) or `POST /api/analyze` with `countryCode` and optional `cityId`
-5. If coverage counts change materially, update `README.md`, `docs/DATA_SOURCES_AND_GEOGRAPHY.md`, and the coverage table in `docs/UNGM_TECHNICAL_DOCUMENTATION.md`
+5. If coverage counts change materially, update `README.md`, `docs/DATA_SOURCES_AND_GEOGRAPHY.md`, and `docs/KGK_Technical_Commendation.source.md`, then regenerate the PDF with `python3 docs/generate_kgk_technical_commendation.py`
 
 ## Adding a validated data source
 
