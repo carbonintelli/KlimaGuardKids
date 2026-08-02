@@ -89,7 +89,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md):
 1. Add countries/cities with a `tier` in `countries.ts`.
 2. Add India regions with tier + climate metadata in `india-regions.ts`.
 3. Register new validated feeds in `sources.ts` and wire agents in `orchestrator.ts`.
-4. Refresh counts in README / this file / UNGM doc when registry size changes materially.
+4. Refresh counts in README / this file / `KGK_Technical_Commendation.source.md` (and UNGM bid templates if needed) when registry size changes materially.
 5. Optionally regenerate architecture diagrams: `python3 docs/generate_architecture_diagrams.py`.
 
 ## Related documentation
