@@ -27,17 +27,19 @@ src/
 └── lib/
     ├── agents/       # AI agent modules (add new agents here)
     ├── india-regions.ts
-    ├── countries.ts
+    ├── countries.ts  # Global countries + Tier 1–3 city presets
+    ├── sources.ts    # Validated / trusted data provenance catalogue
     ├── gamification.ts
     └── types.ts
 docs/
 ├── ARCHITECTURE.md                   # Design goals, pipeline, registries
+├── DATA_SOURCES_AND_GEOGRAPHY.md     # Tiers, coverage counts, trusted sources
 ├── UNGM_TECHNICAL_DOCUMENTATION.md   # Elaborated tech doc for UNGM submission
 ├── generate_architecture_diagrams.py
 └── images/                           # Technical diagrams
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, diagrams, and client/server boundaries before larger changes. For UNGM-oriented capability language, see [docs/UNGM_TECHNICAL_DOCUMENTATION.md](docs/UNGM_TECHNICAL_DOCUMENTATION.md).
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, diagrams, and client/server boundaries before larger changes. For registry counts, tiers, and provenance, see [docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md). For UNGM-oriented capability language, see [docs/UNGM_TECHNICAL_DOCUMENTATION.md](docs/UNGM_TECHNICAL_DOCUMENTATION.md).
 
 ## Adding a new Indian region
 
@@ -51,6 +53,14 @@ Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze 
 2. Add one or more city presets under `CITIES_BY_COUNTRY` with `id`, coordinates, `tier` (`1` metro / `2` emerging / `3` regional), and `primaryRisks`
 3. If you add a validated reference feed, register it in `src/lib/sources.ts` and wire the agent in `orchestrator.ts`
 4. Test via `/dashboard` (country + city selectors) or `POST /api/analyze` with `countryCode` and optional `cityId`
+5. If coverage counts change materially, update `README.md`, `docs/DATA_SOURCES_AND_GEOGRAPHY.md`, and the coverage table in `docs/UNGM_TECHNICAL_DOCUMENTATION.md`
+
+## Adding a validated data source
+
+1. Add a `DataSource` entry to `TRUSTED_SOURCES` in `src/lib/sources.ts` (`id`, `name`, `url`, `authenticated`)
+2. Prefer citing it from the matching agent in `src/lib/agents/orchestrator.ts` via `getTrustedSource(id)`
+3. Keep the distinction clear: **live fetch** (Open-Meteo today) vs **reference/provenance** (WHO, FAO, IMD, etc.)
+4. Document the family in `docs/DATA_SOURCES_AND_GEOGRAPHY.md` when adding a new source category
 
 ## Adding or modifying agents
 

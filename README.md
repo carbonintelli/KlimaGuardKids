@@ -107,15 +107,30 @@ curl -X POST http://localhost:3000/api/analyze \
 
 Full list: `GET /api/india/regions` or `src/lib/india-regions.ts`.
 
+### Global city tiers
+
+| Tier | Role | Approx. count |
+|------|------|--------------:|
+| 1 — Metro hubs | Capitals and primary metros | 168 |
+| 2 — Emerging cities | Secondary / provincial hubs | 163 |
+| 3 — Regional centres | District, coastal, frontier centres | 151 |
+
+## Data sources & geography
+
+Live weather/AQ comes from Open-Meteo. Reports cite a broader catalogue of **~50 validated sources** (WHO/UNICEF/UNDRR, FAO/WFP/IPC/FEWS NET, Copernicus/NASA POWER/CHIRPS, WRI Aqueduct, regional CDC/PAHO/CIMH/SPREP, India IMD/CPCB/NFHS-5/NVBDCP/IDSP/NCDC, and more).
+
+**[docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md)** — full tier model, registry counts, source families, and agent provenance wiring.
+
 ## Tech stack
 
 - Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
 - Live data: Open-Meteo Forecast + Air Quality APIs (no API key required)
-- Validated references: WHO, UNICEF CCRI, UNDRR, FAO/WFP/IPC, FEWS NET, Copernicus, NASA POWER, CHIRPS, WRI Aqueduct, regional CDC/PAHO/CIMH/SPREP, plus India IMD/CPCB/NFHS-5/NVBDCP/IDSP/NCDC
+- Validated references: see `src/lib/sources.ts` and the geography/sources doc above
 
 ## Design & architecture
 
 - **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — concise design/architecture with diagrams  
+- **[docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md)** — countries, cities, tiers, and trusted sources  
 - **[docs/UNGM_TECHNICAL_DOCUMENTATION.md](docs/UNGM_TECHNICAL_DOCUMENTATION.md)** — elaborated technical documentation prepared for **UNGM portal** submission (capabilities, APIs, safeguarding, deployment, licensing)
 
 <p align="center">

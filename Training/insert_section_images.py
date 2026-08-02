@@ -92,8 +92,9 @@ def main() -> None:
         doc,
         "2. Product Overview",
         "Platform context: KlimaGuard Kids is an open-source (MIT) Next.js web application with live "
-        "Open-Meteo integration, nine cooperating AI agents, 65 global countries, and 37 India regions. "
-        "The live prototype includes home, global dashboard, India CHIS dashboard, kids health chat, "
+        "Open-Meteo integration, eight cooperating AI agents, 159 global countries, 482 Tier 1–3 cities, "
+        "77 India regions, and ~50 validated data sources. "
+        "The live prototype includes home, global dashboard, India CHIS dashboard, kids play, "
         "and stakeholder pitch pages — all accessible without API keys for demonstration purposes.",
     )
 

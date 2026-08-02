@@ -105,9 +105,18 @@ India agents activate only when `countryCode === "IN"`. Formulas for CHIS live i
   <img src="images/data-registries.png" alt="How countries, cities, and India regions resolve to coordinates" width="820" />
 </p>
 
-- **Countries / cities** — `CITIES_BY_COUNTRY` holds multi-city presets with urban `tier` (1–3) and `primaryRisks` tags; `getCityPreset(code, cityId)` resolves coordinates for analyze.
-- **India regions** — separate from the global city list; dashboard shows `IndiaRegionSelector` for India.
-- **Trusted sources** — `sources.ts` attaches provenance to agent status (Open-Meteo, WHO/UNICEF/UNDRR, FAO/IPC, Copernicus, regional services, India IMD/NFHS/etc.).
+Full catalogue and tier definitions: **[DATA_SOURCES_AND_GEOGRAPHY.md](DATA_SOURCES_AND_GEOGRAPHY.md)**.
+
+| Registry | Count (demo) | Notes |
+|----------|-------------:|-------|
+| Countries | 159 | ISO code, name, flag |
+| Global cities | 482 | Tier 1–3 + `primaryRisks`; ≈168 / 163 / 151 |
+| India regions | 77 | Tier 1–3 + climate zone / monsoon / CHIS inputs (8 / 33 / 36) |
+| Trusted sources | 50 | Live Open-Meteo + validated reference frameworks |
+
+- **Countries / cities** — `CITIES_BY_COUNTRY` holds multi-city presets with urban `tier` (1–3) and `primaryRisks` tags; `getCityPreset(code, cityId)` resolves coordinates for analyze. UI groups cities by tier.
+- **India regions** — separate from the global city list; dashboard shows `IndiaRegionSelector` for India deep CHIS coverage.
+- **Trusted sources** — `sources.ts` attaches provenance to agent status. Live fetch is Open-Meteo; WHO/UNICEF/UNDRR, FAO/IPC/FEWS, Copernicus/NASA/CHIRPS, regional CDC/PAHO/CIMH/SPREP, and India IMD/NFHS/etc. frame heuristics and report citations.
 
 ## Client vs server
 
@@ -147,6 +156,7 @@ Outbound network from the demo pipeline is Open-Meteo (climate agent). Analysis 
 
 ## Related docs
 
+- [DATA_SOURCES_AND_GEOGRAPHY.md](DATA_SOURCES_AND_GEOGRAPHY.md) — tiers, registry counts, validated sources, agent provenance  
 - [UNGM_TECHNICAL_DOCUMENTATION.md](UNGM_TECHNICAL_DOCUMENTATION.md) — elaborated technical documentation for UNGM portal submission  
 - [README.md](../README.md) — product overview, quick start, API table  
 - [CONTRIBUTING.md](../CONTRIBUTING.md) — how to add countries, cities, regions, agents  

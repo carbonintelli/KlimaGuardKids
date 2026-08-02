@@ -244,6 +244,8 @@ Live operational fetch today uses Open-Meteo. Remaining entries are authoritativ
 
 City presets emphasise climate-vulnerable locations (heat, flood, cyclone/typhoon, drought, air pollution, sea-level, vector pressure) across metro (Tier 1), emerging (Tier 2), and district/frontier (Tier 3) centres. India retains a dedicated regional model for deeper CHIS analysis.
 
+For the maintained catalogue (tier definitions, helper functions, source families, and orchestrator provenance mapping), see [`DATA_SOURCES_AND_GEOGRAPHY.md`](DATA_SOURCES_AND_GEOGRAPHY.md).
+
 ### 6.3 India Child Health Impact Score (CHIS)
 
 <p align="center">
@@ -411,9 +413,10 @@ Training assets are also available under `Training/` (marketing/training manual 
 |----------|----------|
 | **This file** (`docs/UNGM_TECHNICAL_DOCUMENTATION.md`) | UNGM-oriented technical capability statement |
 | [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) | Concise design/architecture with diagrams |
+| [`docs/DATA_SOURCES_AND_GEOGRAPHY.md`](DATA_SOURCES_AND_GEOGRAPHY.md) | Tiers, registry counts, validated sources, agent provenance |
 | [`docs/images/`](images/) | Technical diagrams (system layers, pipeline, CHIS, etc.) |
 | [`README.md`](../README.md) | Product overview and quick start |
-| [`CONTRIBUTING.md`](../CONTRIBUTING.md) | How to extend geography and agents |
+| [`CONTRIBUTING.md`](../CONTRIBUTING.md) | How to extend geography, sources, and agents |
 | [`LICENSE`](../LICENSE) | MIT licence text |
 | `Training/` | Longer narrative and presentation assets |
 

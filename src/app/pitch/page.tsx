@@ -7,8 +7,9 @@ import {
   TrendingUp,
   Lock,
 } from "lucide-react";
-import { COUNTRIES } from "@/lib/countries";
+import { CITY_COUNT, COUNTRIES } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
+import { TRUSTED_SOURCES } from "@/lib/sources";
 
 export default function PitchPage() {
   return (
@@ -90,9 +91,11 @@ export default function PitchPage() {
         <p>
           Children, caregivers, teachers, community health workers, and local
           authorities worldwide — starting with {COUNTRIES.length} climate-vulnerable
-          countries and city-level presets, extensible to any coordinates via API.
-          Languages and offline modes are on the roadmap; architecture is Open
-          Source (MIT) for local adaptation.
+          countries, {CITY_COUNT} Tier 1–3 city presets, and{" "}
+          {INDIA_REGIONS.length} India CHIS regions, grounded by{" "}
+          {TRUSTED_SOURCES.length} validated data sources. Extensible to any
+          coordinates via API. Languages and offline modes are on the roadmap;
+          architecture is Open Source (MIT) for local adaptation.
         </p>
       </Section>
 
