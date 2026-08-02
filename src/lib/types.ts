@@ -229,11 +229,20 @@ export interface SynthesisReport {
   indiaImpact?: IndiaImpactInsight;
 }
 
+export type UrbanTier = 1 | 2 | 3;
+
 export interface CityPreset {
   id: string;
   city: string;
   lat: number;
   lon: number;
+  /**
+   * Urban vulnerability tier for global city presets:
+   * 1 = primary metro / national hub,
+   * 2 = emerging secondary city,
+   * 3 = district / coastal / frontier centre.
+   */
+  tier: UrbanTier;
   /** Short climate-health risk tags for UI context */
   primaryRisks?: string[];
 }

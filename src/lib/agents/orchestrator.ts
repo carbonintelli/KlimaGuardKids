@@ -1,5 +1,5 @@
 import type { AgentStatus, IndiaImpactInsight, IndiaRegionalInsight, SynthesisReport } from "../types";
-import { TRUSTED_SOURCES } from "../sources";
+import { getTrustedSource, TRUSTED_SOURCES } from "../sources";
 import { getIndiaRegion } from "../india-regions";
 import { fetchClimateData } from "./climate-agent";
 import { analyzeHealthRisks } from "./health-agent";
@@ -11,7 +11,7 @@ import { measureIndiaChildHealthImpact } from "./india-impact-agent";
 import { assembleReport } from "./synthesis-agent";
 
 function sourceFor(id: string) {
-  return TRUSTED_SOURCES.find((s) => s.id === id) ?? TRUSTED_SOURCES[0];
+  return getTrustedSource(id) ?? TRUSTED_SOURCES[0];
 }
 
 export async function runAgentPipeline(params: {
@@ -31,30 +31,30 @@ export async function runAgentPipeline(params: {
     {
       id: "climate",
       name: "Climate Data Agent",
-      role: "Fetches authenticated Open-Meteo weather & air quality feeds",
+      role: "Fetches Open-Meteo weather & air quality; framed by Copernicus / WMO climate services",
       status: "fetching",
       source: sourceFor("open-meteo"),
     },
     {
       id: "health",
       name: "Health Risk Agent",
-      role: "Maps climate signals to child health stressors (WHO-aligned)",
+      role: "Maps climate signals to child health stressors (WHO heat–health aligned)",
       status: "idle",
-      source: sourceFor("who-guidance"),
+      source: sourceFor("who-heat-health"),
     },
     {
       id: "nutrition",
       name: "Nutrition & Food Security Agent",
-      role: "Infers hydration, food safety, and scarcity patterns",
+      role: "Infers hydration, food safety, and scarcity patterns (FAO / IPC framed)",
       status: "idle",
-      source: sourceFor("open-meteo"),
+      source: sourceFor("fao-food-security"),
     },
     {
       id: "disease",
       name: "Disease Outlook Agent",
-      role: "Transmission pathways, precautions, and illness profiles",
+      role: "Transmission pathways via WASH and climate-sensitive disease guidance",
       status: "idle",
-      source: sourceFor("who-guidance"),
+      source: sourceFor("who-wash"),
     },
     {
       id: "natural-medicine",
@@ -68,14 +68,14 @@ export async function runAgentPipeline(params: {
           {
             id: "india-regional" as const,
             name: "India Regional Context Agent",
-            role: "Interprets monsoon, heatwave, and zone-specific child vulnerability across Indian regions",
+            role: "Interprets monsoon, heatwave, and zone-specific child vulnerability (IMD / CPCB framed)",
             status: "idle" as const,
             source: sourceFor("imd-india"),
           },
           {
             id: "india-impact" as const,
             name: "India Child Health Impact Agent",
-            role: "Measures CHIS composite score across heat, air, waterborne, vector, and nutrition dimensions",
+            role: "Measures CHIS using NFHS baseline plus NVBDCP / IDSP / NCDC disease framing",
             status: "idle" as const,
             source: sourceFor("nfhs-india"),
           },
@@ -84,9 +84,9 @@ export async function runAgentPipeline(params: {
     {
       id: "synthesis",
       name: "Synthesis & Guidance Agent",
-      role: "Orchestrates cross-agent correlation and age-banded child guidance",
+      role: "Cross-agent correlation and age-banded guidance (UNICEF CCRI / UNDRR framed)",
       status: "idle",
-      source: sourceFor("who-guidance"),
+      source: sourceFor("unicef-climate-child"),
     },
   ];
 

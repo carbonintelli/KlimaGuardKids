@@ -33,9 +33,10 @@ The platform is designed for **anticipatory action**, not clinical diagnosis. Al
 
 | Scope | Count |
 |--------|------:|
-| Climate-vulnerable countries | 143 |
-| High-risk city presets | 323 |
-| India regional zones (deep coverage) | 37 |
+| Climate-vulnerable countries | 159 |
+| High-risk city presets (Tier 1–3) | 482 |
+| India regional zones (deep coverage) | 77 |
+| Validated / trusted data sources | 50 |
 
 ---
 
@@ -69,7 +70,7 @@ KlimaGuard Kids addresses this gap by:
 | Capability | Description |
 |------------|-------------|
 | Global dashboard | Select a vulnerable country and city; run the full agent pipeline; view risks, correlations, and child guidance |
-| India dashboard | Select one of 37 regions; view regional monsoon/zone context and CHIS composite + dimension scores |
+| India dashboard | Select one of 77 regions; view regional monsoon/zone context and CHIS composite + dimension scores |
 | Kids play mode | Age-tiered missions, badges, levels, and streaks derived from preparedness tips (browser-local progress) |
 | Machine-readable API | REST endpoints for countries, India regions, and full analysis reports (JSON) |
 | Provenance | Each agent run cites trusted data/reference sources |
@@ -180,7 +181,7 @@ Browser UI  →  HTTPS JSON APIs  →  Orchestrator  →  Agents  →  Synthesis
 |--------|--------|-------------|
 | `/` | Landing | Product introduction and entry points |
 | `/dashboard` | Global analysis | Country + vulnerable-city selection; full report |
-| `/india` | India CHIS | 37-region selector; impact panel and guidance |
+| `/india` | India CHIS | 77-region selector; impact panel and guidance |
 | `/play` | Kids play | Age bands 5–8 / 9–12 / 13–17; missions and badges |
 | `/pitch` | Stakeholder brief | Narrative overview for partners |
 
@@ -214,16 +215,19 @@ Missions can use a starter pack or unlock from live `ChildGuidance` after climat
 
 ### 6.1 Trusted sources
 
-| Source | Use in platform |
-|--------|-----------------|
-| Open-Meteo Forecast API | Live weather / precipitation / heat inputs |
-| Open-Meteo Air Quality API | AQI inputs |
-| WHO climate & health guidance | Reference framing for health heuristics |
-| WHO traditional / complementary medicine | Reference framing for supportive remedies |
-| IMD (India) | Heatwave threshold references for India scoring |
-| CPCB (India) | Air-quality reference framing |
-| NFHS-5 (India) | Child-health baseline context for CHIS notes |
-| NVBDCP (India) | Vector-borne disease control reference |
+Live operational fetch today uses Open-Meteo. Remaining entries are authoritative reference frameworks that ground agent heuristics, India CHIS notes, and UN-aligned provenance (see `src/lib/sources.ts` for the full catalogue of ~50 sources).
+
+| Source family | Examples | Use in platform |
+|---------------|----------|-----------------|
+| Live weather / AQ | Open-Meteo Forecast & Air Quality | Near-real-time temperature, precip, humidity, AQI |
+| Climate EO / forecast | Copernicus CDS, NASA POWER, CHIRPS, ECMWF, NOAA CPC, ClimateSERV | Climate context and early-warning framing |
+| UN health & child rights | WHO heat–health / WASH / GHO, UNICEF CCRI / WASH / MICS | Child-health and WASH heuristics |
+| Disaster & adaptation | UNDRR Sendai, INFORM, ND-GAIN, EM-DAT, ReliefWeb | Risk and vulnerability framing |
+| Food security | FAO / GIEWS, WFP, IPC, FEWS NET | Nutrition and scarcity stress framing |
+| Water / development | WRI Aqueduct, World Bank Climate Portal | Water-stress context |
+| Regional health / met | PAHO, Africa CDC, ECDC, CIMH, SPREP, Met Office, BoM, JMA, US CDC | Region-specific disease and climate services |
+| Humanitarian context | ACAPS, UNHCR climate, IOM DTM | Displacement and crisis vulnerability |
+| India national | IMD, CPCB, NFHS-5, NVBDCP, IDSP, NCDC | India regional and CHIS scoring context |
 
 ### 6.2 Geographic registries
 
@@ -233,11 +237,14 @@ Missions can use a starter pack or unlock from live `ChildGuidance` after climat
 
 | Registry | Location in code | Contents |
 |----------|------------------|----------|
-| Countries | `src/lib/countries.ts` | 143 ISO countries with flags |
-| Cities | `CITIES_BY_COUNTRY` in same file | 323 city presets with lat/lon and primary risk tags |
-| India regions | `src/lib/india-regions.ts` | 37 zones with tier, climate zone, monsoon months, primary risks |
+| Countries | `src/lib/countries.ts` | 159 ISO countries with flags |
+| Cities | `CITIES_BY_COUNTRY` in same file | 482 city presets with lat/lon, urban tier (1–3), and primary risk tags |
+| India regions | `src/lib/india-regions.ts` | 77 zones with tier, climate zone, monsoon months, primary risks |
+| Trusted sources | `src/lib/sources.ts` | ~50 validated feeds and reference frameworks |
 
-City presets emphasise climate-vulnerable locations (heat, flood, cyclone/typhoon, drought, air pollution, sea-level, vector pressure). India retains a dedicated regional model for deeper CHIS analysis.
+City presets emphasise climate-vulnerable locations (heat, flood, cyclone/typhoon, drought, air pollution, sea-level, vector pressure) across metro (Tier 1), emerging (Tier 2), and district/frontier (Tier 3) centres. India retains a dedicated regional model for deeper CHIS analysis.
+
+For the maintained catalogue (tier definitions, helper functions, source families, and orchestrator provenance mapping), see [`DATA_SOURCES_AND_GEOGRAPHY.md`](DATA_SOURCES_AND_GEOGRAPHY.md).
 
 ### 6.3 India Child Health Impact Score (CHIS)
 
@@ -266,7 +273,7 @@ Base URL (local demo): `http://localhost:3000`
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/api/countries` | GET | Countries with nested city presets and registry counts |
-| `/api/india/regions` | GET | 37 Indian regions with metadata |
+| `/api/india/regions` | GET | 77 Indian regions with metadata |
 | `/api/analyze` | POST | Runs full agent pipeline; returns `SynthesisReport` |
 | `/api/analyze` | GET | Service metadata (agents, country/city/region counts) |
 
@@ -385,7 +392,7 @@ Training assets are also available under `Training/` (marketing/training manual 
 ### 12.1 Current limitations
 
 - Heuristic health models are **decision-support**, not epidemiological forecasting validated for clinical use  
-- Global city registry is a curated demo set (323 cities), not exhaustive  
+- Global city registry is a curated demo set (482 cities across Tier 1–3), not exhaustive  
 - India has deeper quantitative scoring than other countries today  
 - Multilingual UI and offline-first modes are roadmap items  
 - Production authentication, RBAC, and enterprise SSO are not in the public demo  
@@ -406,9 +413,10 @@ Training assets are also available under `Training/` (marketing/training manual 
 |----------|----------|
 | **This file** (`docs/UNGM_TECHNICAL_DOCUMENTATION.md`) | UNGM-oriented technical capability statement |
 | [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) | Concise design/architecture with diagrams |
+| [`docs/DATA_SOURCES_AND_GEOGRAPHY.md`](DATA_SOURCES_AND_GEOGRAPHY.md) | Tiers, registry counts, validated sources, agent provenance |
 | [`docs/images/`](images/) | Technical diagrams (system layers, pipeline, CHIS, etc.) |
 | [`README.md`](../README.md) | Product overview and quick start |
-| [`CONTRIBUTING.md`](../CONTRIBUTING.md) | How to extend geography and agents |
+| [`CONTRIBUTING.md`](../CONTRIBUTING.md) | How to extend geography, sources, and agents |
 | [`LICENSE`](../LICENSE) | MIT licence text |
 | `Training/` | Longer narrative and presentation assets |
 

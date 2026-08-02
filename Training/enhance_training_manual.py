@@ -53,7 +53,7 @@ def capture_screenshots() -> dict[str, Path]:
         ("home", "/"),
         ("dashboard", "/dashboard"),
         ("india", "/india"),
-        ("chat", "/chat"),
+        ("play", "/play"),
         ("pitch", "/pitch"),
     ]
     with sync_playwright() as p:
@@ -113,7 +113,7 @@ def draw_agent_architecture() -> Path:
     box(3.5, 1.5, 2.2, 0.8, "India Child Health\nImpact Agent (CHIS)", SAFFRON, 9)
     box(6.3, 1.5, 2.2, 0.8, "Synthesis Agent\n(Age-banded guidance)", LEAF, 9)
 
-    box(3.8, 0.2, 4.4, 0.8, "Kids Health Chat Agent + Dashboard Outputs", "#fef3c7", 10)
+    box(3.8, 0.2, 4.4, 0.8, "Dashboards · Kids Play · Age-banded Guidance", "#fef3c7", 10)
 
     for x in [1.2, 3.4, 5.6, 7.8, 10.0]:
         ax.annotate("", xy=(x, 3.0), xytext=(6.0, 4.5), arrowprops=dict(arrowstyle="->", color=MUTED, lw=1.2))
@@ -130,11 +130,11 @@ def draw_agent_architecture() -> Path:
 def draw_product_flow() -> Path:
     out = ASSETS / "diagram_product_flow.png"
     steps = [
-        "1. Data Sources\n(Open-Meteo, IMD,\nCPCB, NFHS-5)",
-        "2. Agent Pipeline\n(9 cooperating\nAI agents)",
-        "3. Regional Mapping\n(65 countries /\n37 India regions)",
+        "1. Data Sources\n(Open-Meteo +\n~50 validated refs)",
+        "2. Agent Pipeline\n(8 cooperating\nAI agents)",
+        "3. Regional Mapping\n(159 countries /\n482 Tier 1–3 cities)",
         "4. Impact Scoring\n(CHIS 0–100\nacross 5 dimensions)",
-        "5. Dashboards\n& Chat",
+        "5. Dashboards\n& Kids Play",
         "6. Stakeholder\nAction",
     ]
     fig, ax = plt.subplots(figsize=(12, 3.2))
@@ -249,13 +249,13 @@ def draw_india_coverage() -> Path:
     out = ASSETS / "diagram_india_coverage.png"
     tiers = {
         "Tier 1 Metros (8)": "Delhi NCR · Mumbai · Bengaluru · Hyderabad · Chennai · Kolkata · Ahmedabad · Pune",
-        "Tier 2 Hubs (19)": "Lucknow · Jaipur · Kochi · Surat · Bhubaneswar · Visakhapatnam · Indore · Guwahati · Dehradun · Varanasi · Chandigarh · Nagpur · Coimbatore · Vadodara · Thiruvananthapuram · Bhopal · Amritsar · Raipur",
-        "Tier 3 Centres (10)": "Patna · Ranchi · Srinagar · Kanpur · Agra · Jodhpur · Gorakhpur · Madurai · Tiruchirappalli · Jammu · Siliguri",
+        "Tier 2 Hubs (33)": "Lucknow · Jaipur · Kochi · Surat · Bhubaneswar · Visakhapatnam · Indore · Guwahati · Mysuru · Nashik · Prayagraj · Vijayawada · Mangaluru · Imphal · Agartala · Shillong · Shimla · Hubballi · + more",
+        "Tier 3 Centres (36)": "Patna · Ranchi · Srinagar · Kanpur · Agra · Jodhpur · Muzaffarpur · Gaya · Udaipur · Kota · Bikaner · Warangal · Kozhikode · Solapur · Aizawl · Kohima · Itanagar · + more",
     }
     fig, ax = plt.subplots(figsize=(11, 5))
     fig.patch.set_facecolor("white")
     ax.axis("off")
-    ax.set_title("India Regional Coverage — 37 Climate-Health Zones", fontsize=14, fontweight="bold", color=INK, pad=12)
+    ax.set_title("India Regional Coverage — 77 Climate-Health Zones", fontsize=14, fontweight="bold", color=INK, pad=12)
 
     y = 0.85
     colors = [SAFFRON, OCEAN, LEAF]
@@ -334,10 +334,10 @@ def enhance_document(
     )
 
     add_heading(doc, "26.1 Home Page — Product Entry Point", 2)
-    add_image(doc, screenshots["home"], "Figure 26.1: Home page with navigation to India dashboard, kids chat, global dashboard, and pitch.")
+    add_image(doc, screenshots["home"], "Figure 26.1: Home page with navigation to India dashboard, kids play, global dashboard, and pitch.")
     add_bullets(doc, [
-        "Marketing angle: One platform, multiple entry points for schools (chat), CSR (India impact), researchers (global dashboard).",
-        "Key message: Open source, agentic AI, 37 India regions, 65 global countries.",
+        "Marketing angle: One platform, multiple entry points for schools (play), CSR (India impact), researchers (global dashboard).",
+        "Key message: Open source, agentic AI, 77 India regions, 159 countries / 482 Tier 1–3 cities, ~50 validated sources.",
         "Call-to-action: Direct stakeholders to the surface most relevant to their use case.",
     ])
 
@@ -345,54 +345,54 @@ def enhance_document(
     add_image(doc, screenshots["dashboard"], "Figure 26.2: Global dashboard with country selector and six-agent pipeline analysis.")
     add_bullets(doc, [
         "Demonstrates live Open-Meteo integration — no API key required for demo.",
-        "Six global agents produce child-ready guidance for 65 climate-vulnerable countries.",
+        "Six global agents produce child-ready guidance across 159 climate-vulnerable countries and 482 Tier 1–3 cities.",
         "For India, links to dedicated CHIS dashboard with two additional regional agents.",
     ])
 
     add_heading(doc, "26.3 India Child Health Impact Dashboard", 2)
-    add_image(doc, screenshots["india"], "Figure 26.3: India dashboard measuring CHIS across 37 Tier 1–3 regions.")
+    add_image(doc, screenshots["india"], "Figure 26.3: India dashboard measuring CHIS across 77 Tier 1–3 regions.")
     add_bullets(doc, [
         "Primary demo surface for Indian school groups, NGOs, CSR, and government stakeholders.",
         "Shows composite CHIS score plus five dimension breakdowns with methodology notes.",
         "References IMD, CPCB, NFHS-5, and NVBDCP — cite these for credibility with researchers.",
     ])
 
-    add_heading(doc, "26.4 Kids Health Chat", 2)
-    add_image(doc, screenshots["chat"], "Figure 26.4: Age-banded kids health chat with privacy safeguards.")
+    add_heading(doc, "26.4 Kids Play", 2)
+    play_shot = screenshots.get("play") or screenshots.get("chat") or screenshots.get("home")
+    add_image(doc, play_shot, "Figure 26.4: Age-banded kids play missions, badges, and streaks.")
     add_bullets(doc, [
-        "Age bands: 5–8, 9–12, 13–17 — answers adapt to reading level and complexity.",
-        "Privacy-first: browser session only, no child accounts required for demo.",
-        "Consultant scheduling available — position as escalation path, not replacement for clinical care.",
+        "Age bands: 5–8 (stars), 9–12 (points), 13–17 (Impact XP) — missions adapt to reading level.",
+        "Privacy-first: browser localStorage only, no child accounts required for demo.",
+        "Optional climate unlocks pull live guidance from the agent pipeline for the selected place.",
     ])
 
     add_heading(doc, "26.5 Product Pitch Page", 2)
     add_image(doc, screenshots["pitch"], "Figure 26.5: Stakeholder-facing product overview with SDG alignment.")
     add_bullets(doc, [
         "Use for pre-demo email attachments and association webinar follow-ups.",
-        "Covers problem, nine agents, safeguarding, and open-source positioning.",
+        "Covers problem, eight agents, 159/482/77 coverage, safeguarding, and open-source positioning.",
     ])
 
     doc.add_page_break()
-    add_heading(doc, "27. Nine AI Agents — Marketing Reference Guide", 1)
-    add_image(doc, diagrams["architecture"], "Figure 27.1: Nine-agent architecture showing data flow from Open-Meteo to dashboards and chat.", 6.5)
+    add_heading(doc, "27. Eight AI Agents — Marketing Reference Guide", 1)
+    add_image(doc, diagrams["architecture"], "Figure 27.1: Eight-agent architecture showing data flow from Open-Meteo to dashboards and play.", 6.5)
     doc.add_paragraph(
-        "Marketing professionals should be able to name all nine agents and explain each in one sentence. "
+        "Marketing professionals should be able to name all eight agents and explain each in one sentence. "
         "Do not overstate AI capabilities — agents organize, correlate, and explain; they do not diagnose."
     )
 
-    agents_table = doc.add_table(rows=10, cols=3)
+    agents_table = doc.add_table(rows=9, cols=3)
     agents_table.style = "Table Grid"
     headers = ["Agent", "One-Line Marketing Explanation", "Primary Stakeholder"]
     data = [
         ["Climate Data Agent", "Fetches live 7-day weather, heat index, and air quality from Open-Meteo.", "All stakeholders"],
-        ["Health Risk Agent", "Maps heat stress, respiratory, flood, and vector alerts using WHO-aligned heuristics.", "Schools, public health"],
-        ["Nutrition Agent", "Assesses hydration needs, food safety, and climate-linked nutrition stress.", "NGOs, CSR (nutrition programs)"],
-        ["Disease Outlook Agent", "Surfaces waterborne, vector-borne, and heat illness preparedness context.", "Public health, researchers"],
+        ["Health Risk Agent", "Maps heat stress, respiratory, flood, and vector alerts using WHO heat–health heuristics.", "Schools, public health"],
+        ["Nutrition Agent", "Assesses hydration needs, food safety, and climate-linked nutrition stress (FAO/IPC framed).", "NGOs, CSR (nutrition programs)"],
+        ["Disease Outlook Agent", "Surfaces waterborne, vector-borne, and heat illness preparedness (WHO WASH framed).", "Public health, researchers"],
         ["Natural Medicine Agent", "Evidence-tagged supportive remedies under caregiver supervision only.", "Community health, NGOs"],
-        ["Synthesis Agent", "Correlates all agent outputs into age-banded guidance (ages 5–17).", "Teachers, parents, schools"],
-        ["India Regional Context Agent", "Interprets monsoon cycles and zone-specific vulnerability across 37 regions.", "Government, India CSR"],
+        ["Synthesis Agent", "Correlates all agent outputs into age-banded guidance (ages 5–17; UNICEF CCRI framed).", "Teachers, parents, schools"],
+        ["India Regional Context Agent", "Interprets monsoon cycles and zone-specific vulnerability across 77 regions.", "Government, India CSR"],
         ["India Child Health Impact Agent", "Computes transparent CHIS score (0–100) across five dimensions.", "Researchers, CSR, policy"],
-        ["Kids Health Chat Agent", "Conversational Q&A with privacy filtering and consultant scheduling.", "Schools, parents"],
     ]
     for j, h in enumerate(headers):
         agents_table.rows[0].cells[j].text = h
@@ -421,7 +421,7 @@ def enhance_document(
     )
 
     add_heading(doc, "29. India Regional Coverage Map", 1)
-    add_image(doc, diagrams["india"], "Figure 29.1: 37 Indian regions organized by tier for targeted outreach.", 6.5)
+    add_image(doc, diagrams["india"], "Figure 29.1: 77 Indian regions organized by tier for targeted outreach.", 6.5)
     doc.add_paragraph(
         "When prospecting, match tier to stakeholder size: Tier 1 for large school networks and metro CSR; "
         "Tier 2 for state-level NGOs and regional government; Tier 3 for community programs and district pilots."
@@ -448,9 +448,9 @@ def enhance_document(
         ["Capability", "Weather App", "KlimaGuard Kids"],
         ["Child-centric framing", "No", "Yes — ages 5–17 guidance"],
         ["Multi-domain correlation", "No", "Yes — health, nutrition, disease, climate"],
-        ["Regional impact scoring", "No", "Yes — CHIS across 37 India regions"],
+        ["Regional impact scoring", "No", "Yes — CHIS across 77 India regions"],
         ["Transparent methodology", "N/A", "Yes — open-source MIT, formulas published"],
-        ["Age-banded chat", "No", "Yes — privacy-safe kids health Q&A"],
+        ["Age-banded play", "No", "Yes — missions/badges for ages 5–17"],
     ]
     for i, row in enumerate(diff_data):
         for j, val in enumerate(row):
@@ -469,8 +469,8 @@ def enhance_document(
     add_bullets(doc, [
         "MIT License — free to use, modify, and distribute; lowers adoption friction for NGOs and researchers.",
         "Transparent formulas in open codebase — invite technical review rather than asking stakeholders to trust black boxes.",
-        "Extensible via API: /api/analyze, /api/chat, /api/india/regions — supports integration with existing school or health systems.",
-        "Community contributions welcome: new regions, agents, language packs, offline modes.",
+        "Extensible via API: /api/analyze, /api/countries, /api/india/regions — supports integration with existing school or health systems.",
+        "Community contributions welcome: new regions, tiered cities, validated sources, agents, language packs, offline modes.",
         "Positioning: 'Intelligence layer you can inspect, adapt, and co-develop' — not a locked proprietary SaaS.",
     ])
 
@@ -482,15 +482,16 @@ def enhance_document(
     )
 
     add_heading(doc, "35. Quick Reference Card — Trainer Handout", 1)
-    ref_table = doc.add_table(rows=8, cols=2)
+    ref_table = doc.add_table(rows=9, cols=2)
     ref_table.style = "Table Grid"
     ref_items = [
         ["Product type", "Child-centric climate-health intelligence & decision support"],
         ["Not a", "Medical diagnostic, treatment system, or individual disease predictor"],
-        ["Live demo URL paths", "/ · /india · /dashboard · /chat · /pitch"],
-        ["India coverage", "37 regions (8 Tier 1 · 19 Tier 2 · 10 Tier 3)"],
-        ["Global coverage", "65 climate-vulnerable countries"],
-        ["AI agents", "9 cooperating agents with transparent orchestration"],
+        ["Live demo URL paths", "/ · /india · /dashboard · /play · /pitch"],
+        ["India coverage", "77 regions (8 Tier 1 · 33 Tier 2 · 36 Tier 3)"],
+        ["Global coverage", "159 countries · 482 Tier 1–3 cities"],
+        ["Validated sources", "~50 trusted feeds/references (Open-Meteo live + UN/national refs)"],
+        ["AI agents", "8 cooperating agents with transparent orchestration"],
         ["Key score", "CHIS 0–100 (higher = greater regional burden)"],
         ["License", "MIT Open Source"],
     ]

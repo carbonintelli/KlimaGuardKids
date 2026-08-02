@@ -12,13 +12,23 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 type CountriesResponse = {
-  count?: { countries: number; cities: number };
+  count?: {
+    countries: number;
+    cities: number;
+    byTier?: { 1: number; 2: number; 3: number };
+    trustedSources?: number;
+  };
   countries: CountryOption[];
 };
 
 export default function DashboardPage() {
   const [countries, setCountries] = useState<CountryOption[]>([]);
-  const [registryCounts, setRegistryCounts] = useState({
+  const [registryCounts, setRegistryCounts] = useState<{
+    countries: number;
+    cities: number;
+    byTier?: { 1: number; 2: number; 3: number };
+    trustedSources?: number;
+  }>({
     countries: 0,
     cities: 0,
   });
@@ -106,9 +116,12 @@ export default function DashboardPage() {
           Global climate-health dashboard
         </h1>
         <p className="mt-2 text-ink/70 max-w-2xl">
-          Choose a climate-vulnerable country and city
+          Choose a climate-vulnerable country and Tier 1–3 city
           {registryCounts.countries
             ? ` from ${registryCounts.countries} countries and ${registryCounts.cities} cities`
+            : ""}
+          {registryCounts.trustedSources
+            ? ` · ${registryCounts.trustedSources} validated data sources`
             : ""}
           . Six pipeline agents fetch live climate data and generate child-ready
           guidance; for India, two additional regional agents measure CHIS impact
