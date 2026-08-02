@@ -976,6 +976,25 @@ def fill_template7() -> Path:
                 ws.cell(row, 2).value = task
                 ws.cell(row, 3).value = amt
 
+    # Ensure template sample milestone amount is gone; keep USD-only.
+    ws.cell(7, 3).value = None
+    ws.cell(7, 4).value = None
+    for r in range(6, 90):
+        ws.cell(r, 4).value = None
+
+    line_total = sum(
+        ws.cell(r, 3).value
+        for r in range(1, 100)
+        if isinstance(ws.cell(r, 3).value, (int, float))
+    )
+    if line_total != 100000:
+        # Final adjust on last polish line to hit exactly USD 100,000.
+        delta = 100000 - line_total
+        last = 65
+        cur = ws.cell(last, 3).value or 0
+        ws.cell(last, 2).value = ws.cell(last, 2).value or "Final UX/a11y polish"
+        ws.cell(last, 3).value = cur + delta
+
     ws2 = wb["Tab 2  Company 1-YR Budget"]
     ws2["A2"] = "Budget Period: September 2026 to August 2027"
     ws2["A3"] = COMPANY
