@@ -929,7 +929,7 @@ def fill_template7() -> Path:
         13: ("Accessibility pass", 2000),
         14: ("KPI/data feed", 3000),
         15: ("Analytics pipeline", 2000),
-        16: ("Registry expansion", 1000),
+        16: ("Registry expansion", 0),
         25: ("PWA offline shell", 6000),
         26: ("SW + cache", 3000),
         28: ("National feed adapters", 5000),
@@ -982,18 +982,17 @@ def fill_template7() -> Path:
     for r in range(6, 90):
         ws.cell(r, 4).value = None
 
+    # Drop zero-amount placeholder rows from the funding request total.
+    for r in range(6, 90):
+        if ws.cell(r, 3).value == 0:
+            ws.cell(r, 3).value = None
+
     line_total = sum(
         ws.cell(r, 3).value
         for r in range(1, 100)
         if isinstance(ws.cell(r, 3).value, (int, float))
     )
-    if line_total != 100000:
-        # Final adjust on last polish line to hit exactly USD 100,000.
-        delta = 100000 - line_total
-        last = 65
-        cur = ws.cell(last, 3).value or 0
-        ws.cell(last, 2).value = ws.cell(last, 2).value or "Final UX/a11y polish"
-        ws.cell(last, 3).value = cur + delta
+    print(f"Project design budget line total: USD {line_total}")
 
     ws2 = wb["Tab 2  Company 1-YR Budget"]
     ws2["A2"] = "Budget Period: September 2026 to August 2027"
