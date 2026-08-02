@@ -98,7 +98,9 @@ export async function runAgentPipeline(params: {
   try {
     climate = await fetchClimateData(lat, lon);
     agents[0].status = "complete";
-    agents[0].summary = `Live feed: ${climate.temperatureC}°C, ${climate.forecastDays.length}-day forecast`;
+    const quality =
+      climate.dataQuality === "cached" ? "Cached feed" : "Live feed";
+    agents[0].summary = `${quality}: ${climate.temperatureC}°C, ${climate.forecastDays.length}-day forecast`;
   } catch (e) {
     agents[0].status = "error";
     agents[0].summary = e instanceof Error ? e.message : "Climate fetch failed";

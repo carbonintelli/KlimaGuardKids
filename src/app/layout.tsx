@@ -52,7 +52,13 @@ export default function RootLayout({
           <p>
             Open Source · MIT License · Climate & child health intelligence
           </p>
-          <p className="mt-1">
+          <p className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <Link href="/impact" className="text-ocean hover:underline">
+              Impact
+            </Link>
+            <Link href="/privacy" className="text-ocean hover:underline">
+              Privacy
+            </Link>
             <a
               href="https://github.com/carbonintelli/ClimateResilienceChildHealth"
               className="text-ocean hover:underline"
@@ -61,7 +67,8 @@ export default function RootLayout({
             >
               Contribute on GitHub
             </a>
-            {" · "}
+          </p>
+          <p className="mt-1">
             Built for children and communities worldwide — India-first regional depth
           </p>
         </footer>
