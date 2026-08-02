@@ -64,12 +64,12 @@ export default function HomePage() {
         <Feature
           icon={MapPin}
           title={`${INDIA_REGIONS.length} India regions`}
-          text="Delhi NCR to Dehradun — CHIS scores measure heat, air, waterborne, vector, and nutrition burden for children."
+          text="Tier 1–3 metros to district centres — CHIS scores measure heat, air, waterborne, vector, and nutrition burden for children."
         />
         <Feature
           icon={Globe2}
           title="Global coverage"
-          text={`Demo registry covers ${COUNTRIES.length} climate-vulnerable countries and ${CITY_COUNT} high-risk cities worldwide; extend with any lat/lon via API.`}
+          text={`Demo registry covers ${COUNTRIES.length} countries and ${CITY_COUNT} Tier 1–3 cities (${CITY_TIER_COUNTS[1]} / ${CITY_TIER_COUNTS[2]} / ${CITY_TIER_COUNTS[3]}), grounded by ${TRUSTED_SOURCES.length} validated sources.`}
         />
         <Feature
           icon={Gamepad2}
