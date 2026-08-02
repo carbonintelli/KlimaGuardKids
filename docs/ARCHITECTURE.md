@@ -147,6 +147,7 @@ Outbound network from the demo pipeline is Open-Meteo (climate agent). Analysis 
 
 ## Related docs
 
+- [UNGM_TECHNICAL_DOCUMENTATION.md](UNGM_TECHNICAL_DOCUMENTATION.md) — elaborated technical documentation for UNGM portal submission  
 - [README.md](../README.md) — product overview, quick start, API table  
 - [CONTRIBUTING.md](../CONTRIBUTING.md) — how to add countries, cities, regions, agents  
 - `Training/` — longer narrative and additional presentation diagram assets  

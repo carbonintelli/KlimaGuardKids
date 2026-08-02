@@ -111,7 +111,8 @@ curl -X POST http://localhost:3000/api/analyze \
 
 ## Design & architecture
 
-For a short technical overview of product design, agent pipeline, registries, and client/server boundaries — with explanatory diagrams — see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
+- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — concise design/architecture with diagrams  
+- **[docs/UNGM_TECHNICAL_DOCUMENTATION.md](docs/UNGM_TECHNICAL_DOCUMENTATION.md)** — elaborated technical documentation prepared for **UNGM portal** submission (capabilities, APIs, safeguarding, deployment, licensing)
 
 <p align="center">
   <img src="docs/images/system-layers.png" alt="System layers diagram" width="640" />
