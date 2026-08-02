@@ -8,6 +8,8 @@ const NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard", className: "text-ink/80 hover:text-ocean" },
   { href: "/india", label: "India", className: "text-ink/80 hover:text-saffron" },
   { href: "/play", label: "Kids play", className: "text-ink/80 hover:text-leaf" },
+  { href: "/impact", label: "Impact", className: "text-ink/80 hover:text-ocean" },
+  { href: "/privacy", label: "Privacy", className: "text-ink/80 hover:text-ocean" },
   {
     href: "/pitch",
     label: "About",

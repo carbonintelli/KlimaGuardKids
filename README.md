@@ -75,11 +75,14 @@ Open [http://localhost:3000](http://localhost:3000):
 
 ## API
 
+Full contracts: **[docs/API.md](docs/API.md)**.
+
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/api/countries` | GET | List supported countries with tiered city presets and source counts |
 | `/api/india/regions` | GET | List 77 Indian regions with tier and climate metadata |
 | `/api/analyze` | POST | Run full agent pipeline (`countryCode`, optional `cityId` or India `regionId`) |
+| `/api/kpi` | GET | Public coverage + investment KPI stub |
 
 ### Analyze a vulnerable city
 
@@ -130,9 +133,12 @@ Live weather/AQ comes from Open-Meteo. Reports cite a broader catalogue of **~50
 ## Design & architecture
 
 - **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — concise design/architecture with diagrams  
+- **[docs/API.md](docs/API.md)** — analyze, KPI, and registry API contracts  
+- **[docs/ADDING_GEOGRAPHY.md](docs/ADDING_GEOGRAPHY.md)** — contributor checklist for cities and India regions  
 - **[docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md)** — countries, cities, tiers, and trusted sources  
 - **[docs/KGK_Technical_Commendation.pdf](docs/KGK_Technical_Commendation.pdf)** — rich-text technical commendation (capabilities, APIs, safeguarding, deployment, licensing); regenerate with `python3 docs/generate_kgk_technical_commendation.py`
 - **[UNGM/submission/](UNGM/submission/)** — Sustainow Technologies bid pack for UNICEF Venture Fund `RFPS-NYH-2026-503931` (KlimaGuard Kids); regenerate with `python3 UNGM/fill_sustainow_bid.py`
+- **[/privacy](/privacy)** · **[/impact](/impact)** · **[SECURITY.md](SECURITY.md)** — safeguarding, public KPIs, vulnerability reporting
 
 <p align="center">
   <img src="docs/images/system-layers.png" alt="System layers diagram" width="640" />
