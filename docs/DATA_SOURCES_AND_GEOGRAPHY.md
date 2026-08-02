@@ -95,5 +95,5 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md):
 ## Related documentation
 
 - [ARCHITECTURE.md](ARCHITECTURE.md) — system design and pipeline  
-- [UNGM_TECHNICAL_DOCUMENTATION.md](UNGM_TECHNICAL_DOCUMENTATION.md) — UNGM capability statement (§6 sources & geography)  
+- [KGK_Technical_Commendation.pdf](KGK_Technical_Commendation.pdf) — technical commendation (§6 sources & geography)  
 - [README.md](../README.md) — product overview and badges  

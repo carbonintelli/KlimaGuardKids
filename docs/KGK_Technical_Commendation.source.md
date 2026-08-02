@@ -1,9 +1,9 @@
-# KlimaGuard Kids  
-## Technical Documentation for UNGM Submission
+# KlimaGuard Kids
+## KGK Technical Commendation
 
 | Field | Detail |
 |--------|--------|
-| **Document title** | KlimaGuard Kids — Technical Documentation (UNGM) |
+| **Document title** | KlimaGuard Kids — KGK Technical Commendation |
 | **Product name** | KlimaGuard Kids |
 | **Supplier / developer** | Sustainow Technologies |
 | **Document version** | 1.0 |
@@ -14,7 +14,7 @@
 | **Classification (indicative UNSPSC)** | 43230000 Software; 81112200 Software maintenance and support; 77101500 Environmental management; 85101705 Public health administration |
 
 > **Purpose of this document**  
-> This document provides a clear technical description of KlimaGuard Kids for United Nations Global Marketplace (UNGM) vendor registration, capability statements, and related solicitation responses. It is intended for procurement, ICT, programme, and evaluation reviewers.
+> This document provides a clear technical description of KlimaGuard Kids (KGK) for procurement, ICT, programme, partner, and evaluation reviewers. It serves as the product technical commendation and capability statement.
 
 ---
 
@@ -411,7 +411,7 @@ Training assets are also available under `Training/` (marketing/training manual 
 
 | Document | Contents |
 |----------|----------|
-| **This file** (`docs/UNGM_TECHNICAL_DOCUMENTATION.md`) | UNGM-oriented technical capability statement |
+| **This file** (`docs/KGK_Technical_Commendation.pdf`) | KGK technical commendation / capability statement |
 | [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) | Concise design/architecture with diagrams |
 | [`docs/DATA_SOURCES_AND_GEOGRAPHY.md`](DATA_SOURCES_AND_GEOGRAPHY.md) | Tiers, registry counts, validated sources, agent provenance |
 | [`docs/images/`](images/) | Technical diagrams (system layers, pipeline, CHIS, etc.) |
@@ -450,10 +450,8 @@ python3 docs/generate_architecture_diagrams.py
 | Repository | https://github.com/carbonintelli/KlimaGuardKids |
 | Licence | MIT |
 
-**UNGM upload guidance:** Convert this Markdown file (and selected diagrams from `docs/images/`) to a single PDF labelled clearly, for example:  
-`Sustainow_Technologies_KlimaGuard_Kids_Technical_Documentation.pdf`  
-Attach under the supplier’s UNGM **My Documents** area and link it to the relevant registration or solicitation response as required.
+**Distribution guidance:** Use this PDF (`docs/KGK_Technical_Commendation.pdf`) as the official KlimaGuard Kids technical commendation for partner, procurement, and programme submissions. Diagrams in `docs/images/` are embedded below where relevant.
 
 ---
 
-*End of technical documentation.*
+*End of KGK Technical Commendation.*

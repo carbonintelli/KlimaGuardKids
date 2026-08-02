@@ -131,7 +131,7 @@ Live weather/AQ comes from Open-Meteo. Reports cite a broader catalogue of **~50
 
 - **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — concise design/architecture with diagrams  
 - **[docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md)** — countries, cities, tiers, and trusted sources  
-- **[docs/UNGM_TECHNICAL_DOCUMENTATION.md](docs/UNGM_TECHNICAL_DOCUMENTATION.md)** — elaborated technical documentation prepared for **UNGM portal** submission (capabilities, APIs, safeguarding, deployment, licensing)
+- **[docs/KGK_Technical_Commendation.pdf](docs/KGK_Technical_Commendation.pdf)** — rich-text technical commendation (capabilities, APIs, safeguarding, deployment, licensing); regenerate with `python3 docs/generate_kgk_technical_commendation.py`
 
 <p align="center">
   <img src="docs/images/system-layers.png" alt="System layers diagram" width="640" />
