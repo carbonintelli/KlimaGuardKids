@@ -31,12 +31,13 @@ src/
     ├── gamification.ts
     └── types.ts
 docs/
-├── ARCHITECTURE.md                 # Design goals, pipeline, registries
+├── ARCHITECTURE.md                   # Design goals, pipeline, registries
+├── UNGM_TECHNICAL_DOCUMENTATION.md   # Elaborated tech doc for UNGM submission
 ├── generate_architecture_diagrams.py
-└── images/                         # Technical diagrams for ARCHITECTURE.md
+└── images/                           # Technical diagrams
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, diagrams, and client/server boundaries before larger changes.
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze pipeline, diagrams, and client/server boundaries before larger changes. For UNGM-oriented capability language, see [docs/UNGM_TECHNICAL_DOCUMENTATION.md](docs/UNGM_TECHNICAL_DOCUMENTATION.md).
 
 ## Adding a new Indian region
 
