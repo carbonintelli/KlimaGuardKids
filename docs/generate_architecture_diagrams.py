@@ -279,9 +279,9 @@ def draw_data_registries() -> Path:
         pad=12,
     )
 
-    box(ax, 0.4, 4.6, 3.4, 1.5, "COUNTRIES\nISO code · name · flag\n~143 entries", SKY, 10)
-    box(ax, 4.05, 4.6, 3.4, 1.5, "CITIES_BY_COUNTRY\ncity id · lat/lon · risks\n~323 presets", OCEAN, 10)
-    box(ax, 7.7, 4.6, 3.4, 1.5, "INDIA_REGIONS\n37 zones · tier · climate\nmonsoon months", SAFFRON, 10)
+    box(ax, 0.4, 4.6, 3.4, 1.5, "COUNTRIES\nISO code · name · flag\n~159 entries", SKY, 10)
+    box(ax, 4.05, 4.6, 3.4, 1.5, "CITIES_BY_COUNTRY\ncity · lat/lon · tier 1–3\n~482 presets", OCEAN, 10)
+    box(ax, 7.7, 4.6, 3.4, 1.5, "INDIA_REGIONS\n77 zones · tier · climate\nmonsoon months", SAFFRON, 10)
 
     box(ax, 2.2, 2.6, 7.0, 1.3, "getCityPreset(code, cityId)  or  getIndiaRegion(regionId)\n→ { city, lat, lon }", LEAF_SOFT, 11)
     arrow(ax, 2.1, 4.6, 4.5, 3.9)
@@ -383,8 +383,8 @@ def draw_repo_map() -> Path:
     box(ax, 0.4, 5.2, 10.2, 1.1, "src/app — pages (/dashboard, /india, /play) + API route handlers", SKY, 11)
     box(ax, 0.4, 3.7, 4.9, 1.2, "src/components\nSelectors · ReportView\nKidsPlayHub · Logo", OCEAN, 10)
     box(ax, 5.7, 3.7, 4.9, 1.2, "src/lib/agents\nOrchestrator + 8 agents\nCHIS formulas", LEAF, 10)
-    box(ax, 0.4, 2.1, 3.3, 1.2, "countries.ts\nCities registry", "#bae6fd", 10)
-    box(ax, 3.9, 2.1, 3.3, 1.2, "india-regions.ts\n37 zones", SAFFRON, 10)
+    box(ax, 0.4, 2.1, 3.3, 1.2, "countries.ts\n482 tiered cities", "#bae6fd", 10)
+    box(ax, 3.9, 2.1, 3.3, 1.2, "india-regions.ts\n77 zones", SAFFRON, 10)
     box(ax, 7.4, 2.1, 3.2, 1.2, "gamification.ts\nPlay rules", "#fef3c7", 10)
     box(ax, 0.4, 0.5, 10.2, 1.2, "docs/ARCHITECTURE.md + docs/images/ — technical design explained here", PAPER, 10)
     return save(fig, "repo-map.png")

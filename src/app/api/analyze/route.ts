@@ -3,10 +3,12 @@ import { z } from "zod";
 import { runAgentPipeline } from "@/lib/agents/orchestrator";
 import {
   CITY_COUNT,
+  CITY_TIER_COUNTS,
   COUNTRIES,
   getCityPreset,
 } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
+import { TRUSTED_SOURCES } from "@/lib/sources";
 
 const bodySchema = z.object({
   countryCode: z.string().length(2),
@@ -86,5 +88,7 @@ export async function GET() {
     indiaRegions: INDIA_REGIONS.length,
     countries: COUNTRIES.length,
     cities: CITY_COUNT,
+    cityTiers: CITY_TIER_COUNTS,
+    trustedSources: TRUSTED_SOURCES.length,
   });
 }

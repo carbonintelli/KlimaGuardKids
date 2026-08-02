@@ -11,9 +11,11 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" /></a>
   <a href="https://github.com/carbonintelli/ClimateResilienceChildHealth/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
-  <img src="https://img.shields.io/badge/Countries-143-blue.svg" alt="143 countries" />
-  <img src="https://img.shields.io/badge/Cities-323-blue.svg" alt="323 cities" />
-  <img src="https://img.shields.io/badge/India-37%20regions-orange.svg" alt="37 India regions" />
+  <img src="https://img.shields.io/badge/Countries-159-blue.svg" alt="159 countries" />
+  <img src="https://img.shields.io/badge/Cities-482-blue.svg" alt="482 cities" />
+  <img src="https://img.shields.io/badge/Tiers-1%E2%80%933-blue.svg" alt="Urban tiers 1-3" />
+  <img src="https://img.shields.io/badge/India-77%20regions-orange.svg" alt="77 India regions" />
+  <img src="https://img.shields.io/badge/Sources-50-blue.svg" alt="50 validated sources" />
   <img src="https://img.shields.io/badge/Agents-8-blue.svg" alt="8 AI agents" />
 </p>
 
@@ -34,7 +36,7 @@ KlimaGuard Kids connects live climate data with health, nutrition, and disease i
 
 ### India-specific agents
 
-7. **India Regional Context Agent** — interprets monsoon cycles, climate zones, and state-level child vulnerability across **37 Indian regions** (Tier 1–3 metros and hubs)
+7. **India Regional Context Agent** — interprets monsoon cycles, climate zones, and state-level child vulnerability across **77 Indian regions** (Tier 1–3 metros, hubs, and district centres)
 8. **India Child Health Impact Agent** — measures the **Child Health Impact Score (CHIS)** (0–100) across five dimensions:
    - Child Heat Vulnerability Index (CHVI)
    - Child Respiratory Burden Score (CRBS)
@@ -69,14 +71,14 @@ Open [http://localhost:3000](http://localhost:3000):
 
 - **Kids play** — age-based missions, badges, and streaks (5–8 / 9–12 / 13–17)
 - **Dashboard** — global analysis across climate-vulnerable countries and cities
-- **India** — regional child health impact analysis across 37 Tier 1–3 cities
+- **India** — regional child health impact analysis across 77 Tier 1–3 cities
 
 ## API
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/countries` | GET | List supported countries with city presets |
-| `/api/india/regions` | GET | List 37 Indian regions with tier and climate metadata |
+| `/api/countries` | GET | List supported countries with tiered city presets and source counts |
+| `/api/india/regions` | GET | List 77 Indian regions with tier and climate metadata |
 | `/api/analyze` | POST | Run full agent pipeline (`countryCode`, optional `cityId` or India `regionId`) |
 
 ### Analyze a vulnerable city
@@ -99,15 +101,17 @@ curl -X POST http://localhost:3000/api/analyze \
 
 **Tier 1 metros:** Delhi NCR, Mumbai, Bengaluru, Hyderabad, Chennai, Kolkata, Ahmedabad, Pune
 
-**Tier 2 hubs:** Lucknow, Jaipur, Kochi, Surat, Bhubaneswar, Visakhapatnam, Indore, Guwahati, Dehradun, Varanasi, Chandigarh, Nagpur, Coimbatore, Vadodara, Thiruvananthapuram, Bhopal, Amritsar, Raipur
+**Tier 2 hubs (selected):** Lucknow, Jaipur, Kochi, Surat, Bhubaneswar, Visakhapatnam, Indore, Guwahati, Mysuru, Nashik, Prayagraj, Vijayawada, Imphal, Agartala, Shillong, Shimla, and more
 
-**Tier 3 centres:** Patna, Ranchi, Srinagar, Kanpur, Agra, Jodhpur, Gorakhpur, Madurai, Tiruchirappalli, Jammu, Siliguri
+**Tier 3 centres (selected):** Patna, Ranchi, Srinagar, Kanpur, Agra, Jodhpur, Muzaffarpur, Gaya, Udaipur, Kota, Bikaner, Warangal, Kozhikode, Solapur, Aizawl, Kohima, Itanagar, and more
+
+Full list: `GET /api/india/regions` or `src/lib/india-regions.ts`.
 
 ## Tech stack
 
 - Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
 - Live data: Open-Meteo Forecast + Air Quality APIs (no API key required)
-- References: IMD, CPCB, NFHS-5, NVBDCP, WHO climate-health guidance
+- Validated references: WHO, UNICEF CCRI, UNDRR, FAO/WFP/IPC, FEWS NET, Copernicus, NASA POWER, CHIRPS, WRI Aqueduct, regional CDC/PAHO/CIMH/SPREP, plus India IMD/CPCB/NFHS-5/NVBDCP/IDSP/NCDC
 
 ## Design & architecture
 

@@ -350,7 +350,7 @@ def enhance_document(
     ])
 
     add_heading(doc, "26.3 India Child Health Impact Dashboard", 2)
-    add_image(doc, screenshots["india"], "Figure 26.3: India dashboard measuring CHIS across 37 Tier 1–3 regions.")
+    add_image(doc, screenshots["india"], "Figure 26.3: India dashboard measuring CHIS across 77 Tier 1–3 regions.")
     add_bullets(doc, [
         "Primary demo surface for Indian school groups, NGOs, CSR, and government stakeholders.",
         "Shows composite CHIS score plus five dimension breakdowns with methodology notes.",
@@ -390,7 +390,7 @@ def enhance_document(
         ["Disease Outlook Agent", "Surfaces waterborne, vector-borne, and heat illness preparedness context.", "Public health, researchers"],
         ["Natural Medicine Agent", "Evidence-tagged supportive remedies under caregiver supervision only.", "Community health, NGOs"],
         ["Synthesis Agent", "Correlates all agent outputs into age-banded guidance (ages 5–17).", "Teachers, parents, schools"],
-        ["India Regional Context Agent", "Interprets monsoon cycles and zone-specific vulnerability across 37 regions.", "Government, India CSR"],
+        ["India Regional Context Agent", "Interprets monsoon cycles and zone-specific vulnerability across 77 regions.", "Government, India CSR"],
         ["India Child Health Impact Agent", "Computes transparent CHIS score (0–100) across five dimensions.", "Researchers, CSR, policy"],
         ["Kids Health Chat Agent", "Conversational Q&A with privacy filtering and consultant scheduling.", "Schools, parents"],
     ]
@@ -421,7 +421,7 @@ def enhance_document(
     )
 
     add_heading(doc, "29. India Regional Coverage Map", 1)
-    add_image(doc, diagrams["india"], "Figure 29.1: 37 Indian regions organized by tier for targeted outreach.", 6.5)
+    add_image(doc, diagrams["india"], "Figure 29.1: 77 Indian regions organized by tier for targeted outreach.", 6.5)
     doc.add_paragraph(
         "When prospecting, match tier to stakeholder size: Tier 1 for large school networks and metro CSR; "
         "Tier 2 for state-level NGOs and regional government; Tier 3 for community programs and district pilots."
@@ -488,7 +488,7 @@ def enhance_document(
         ["Product type", "Child-centric climate-health intelligence & decision support"],
         ["Not a", "Medical diagnostic, treatment system, or individual disease predictor"],
         ["Live demo URL paths", "/ · /india · /dashboard · /chat · /pitch"],
-        ["India coverage", "37 regions (8 Tier 1 · 19 Tier 2 · 10 Tier 3)"],
+        ["India coverage", "77 regions (8 Tier 1 · 33 Tier 2 · 36 Tier 3)"],
         ["Global coverage", "65 climate-vulnerable countries"],
         ["AI agents", "9 cooperating agents with transparent orchestration"],
         ["Key score", "CHIS 0–100 (higher = greater regional burden)"],

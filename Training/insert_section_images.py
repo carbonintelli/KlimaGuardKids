@@ -80,7 +80,7 @@ def main() -> None:
         (
             "25. Final Message for the Marketing Team",
             ASSETS / "diagram_india_coverage.png",
-            "Figure 25.1: India regional coverage — 37 Tier 1–3 cities for localized pitches.",
+            "Figure 25.1: India regional coverage — 77 Tier 1–3 cities for localized pitches.",
         ),
     ]
 

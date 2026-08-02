@@ -32,7 +32,7 @@ UI pages  →  Route handlers  →  Orchestrator  →  Agents  →  SynthesisRep
 | API validation | Zod |
 | Live climate | Open-Meteo Forecast + Air Quality (no API key) |
 | Agents | Pure TS functions under `src/lib/agents/` |
-| Registries | `countries.ts` (global cities), `india-regions.ts` (37 zones) |
+| Registries | `countries.ts` (~159 countries / ~482 tiered cities), `india-regions.ts` (77 zones), `sources.ts` (~50 validated feeds) |
 | Play progress | Browser `localStorage` only |
 
 ## Repository layout
@@ -105,9 +105,9 @@ India agents activate only when `countryCode === "IN"`. Formulas for CHIS live i
   <img src="images/data-registries.png" alt="How countries, cities, and India regions resolve to coordinates" width="820" />
 </p>
 
-- **Countries / cities** — `CITIES_BY_COUNTRY` holds multi-city presets with `primaryRisks` tags; `getCityPreset(code, cityId)` resolves coordinates for analyze.
+- **Countries / cities** — `CITIES_BY_COUNTRY` holds multi-city presets with urban `tier` (1–3) and `primaryRisks` tags; `getCityPreset(code, cityId)` resolves coordinates for analyze.
 - **India regions** — separate from the global city list; dashboard shows `IndiaRegionSelector` for India.
-- **Trusted sources** — `sources.ts` attaches provenance to agent status (Open-Meteo, WHO, IMD, NFHS, etc.).
+- **Trusted sources** — `sources.ts` attaches provenance to agent status (Open-Meteo, WHO/UNICEF/UNDRR, FAO/IPC, Copernicus, regional services, India IMD/NFHS/etc.).
 
 ## Client vs server
 

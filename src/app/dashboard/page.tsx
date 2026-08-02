@@ -12,7 +12,12 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 type CountriesResponse = {
-  count?: { countries: number; cities: number };
+  count?: {
+    countries: number;
+    cities: number;
+    byTier?: { 1: number; 2: number; 3: number };
+    trustedSources?: number;
+  };
   countries: CountryOption[];
 };
 

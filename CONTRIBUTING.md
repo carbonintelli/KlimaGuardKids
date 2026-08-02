@@ -48,8 +48,9 @@ Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze 
 ## Adding a new country or city
 
 1. Add the country to `COUNTRIES` in `src/lib/countries.ts` (ISO code, name, flag)
-2. Add one or more city presets under `CITIES_BY_COUNTRY` with `id`, coordinates, and `primaryRisks`
-3. Test via `/dashboard` (country + city selectors) or `POST /api/analyze` with `countryCode` and optional `cityId`
+2. Add one or more city presets under `CITIES_BY_COUNTRY` with `id`, coordinates, `tier` (`1` metro / `2` emerging / `3` regional), and `primaryRisks`
+3. If you add a validated reference feed, register it in `src/lib/sources.ts` and wire the agent in `orchestrator.ts`
+4. Test via `/dashboard` (country + city selectors) or `POST /api/analyze` with `countryCode` and optional `cityId`
 
 ## Adding or modifying agents
 

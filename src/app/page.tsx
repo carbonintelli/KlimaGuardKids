@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Shield, Sparkles, Globe2, Bot, MapPin, Gamepad2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
-import { CITY_COUNT, COUNTRIES } from "@/lib/countries";
+import { CITY_COUNT, CITY_TIER_COUNTS, COUNTRIES } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
+import { TRUSTED_SOURCES } from "@/lib/sources";
 
 export default function HomePage() {
   return (
