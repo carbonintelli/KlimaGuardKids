@@ -1,0 +1,16 @@
+ANNEX 4 — CONTENT SAMPLE (one piece)
+
+Piece: Little Climate Heroes mission pack (Ages 5–8) — one set of exercises
+Product: KlimaGuard Kids | Sustainow Technologies
+Medium: HTML mission cards in web app /play (English)
+License: MIT (in-repo); learning objects intended CC-BY
+URL: https://klimaguardkids.sustainow.in/play
+Source: https://github.com/carbonintelli/KlimaGuardKids
+
+MISSIONS
+1) Sip like a little fish (nutrition) — Drink water 3 times today — morning, lunch, and playtime. (+4 Stars)
+2) Find shady play spots (heat) — Play under a tree, porch, or indoors when it feels too hot. (+4 Stars)
+3) Superhero elbow sneeze (germs) — Practice coughing or sneezing into your elbow cape. (+3 Stars)
+4) Soap bubble wash (germs) — Wash hands with soap before eating — sing while you scrub! (+3 Stars)
+
+Use: Supervised child selects Ages 5–8 in /play and completes checkable missions. Optional climate-unlocked missions from live local guidance. Progress in browser localStorage only (no child accounts).
