@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { runAgentPipeline } from "@/lib/agents/orchestrator";
+import { analyzeBodySchema } from "@/lib/analyze-schema";
 import {
   CITY_COUNT,
   CITY_TIER_COUNTS,
@@ -8,22 +8,20 @@ import {
   getCityPreset,
 } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
+import {
+  recordAnalyzeError,
+  recordAnalyzeStart,
+  recordAnalyzeSuccess,
+} from "@/lib/kpi";
 import { TRUSTED_SOURCES } from "@/lib/sources";
 
-const bodySchema = z.object({
-  countryCode: z.string().length(2),
-  cityId: z.string().optional(),
-  lat: z.number().optional(),
-  lon: z.number().optional(),
-  city: z.string().optional(),
-  regionId: z.string().optional(),
-});
-
 export async function POST(req: NextRequest) {
+  recordAnalyzeStart();
   try {
     const json = await req.json();
-    const parsed = bodySchema.safeParse(json);
+    const parsed = analyzeBodySchema.safeParse(json);
     if (!parsed.success) {
+      recordAnalyzeError();
       return NextResponse.json(
         { error: "Invalid request", details: parsed.error.flatten() },
         { status: 400 }
@@ -43,6 +41,7 @@ export async function POST(req: NextRequest) {
     const preset = getCityPreset(code, cityId);
 
     if (!country || !preset) {
+      recordAnalyzeError();
       return NextResponse.json(
         { error: "Country not supported in demo registry" },
         { status: 404 }
@@ -58,8 +57,13 @@ export async function POST(req: NextRequest) {
       regionId,
     });
 
+    recordAnalyzeSuccess({
+      usedCachedClimate: report.climate.dataQuality === "cached",
+    });
+
     return NextResponse.json(report);
   } catch (e) {
+    recordAnalyzeError();
     console.error("Analyze error:", e);
     return NextResponse.json(
       {
@@ -90,5 +94,6 @@ export async function GET() {
     cities: CITY_COUNT,
     cityTiers: CITY_TIER_COUNTS,
     trustedSources: TRUSTED_SOURCES.length,
+    kpi: "/api/kpi",
   });
 }
