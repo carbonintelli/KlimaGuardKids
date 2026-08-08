@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #0f172a; }
+      .sub { font: 400 12px Arial, sans-serif; fill: #64748b; }
+      .h { font: 700 13px Arial, sans-serif; fill: #0f172a; }
+      .t { font: 400 12px Arial, sans-serif; fill: #0f172a; }
+      .small { font: 400 11px Arial, sans-serif; fill: #334155; }
+      .label { font: 600 11px Arial, sans-serif; fill: #0369a1; }
+    </style>
+  </defs>
+  <rect width="1200" height="900" fill="#ffffff"/>
+  <text x="600" y="36" text-anchor="middle" class="title">Annex 1 — KlimaGuard Kids Tech Stack</text>
+  <text x="600" y="58" text-anchor="middle" class="sub">Sustainow Technologies · MIT Open Source · Next.js full-stack (no traditional database)</text>
+
+  <!-- Client -->
+  <rect x="40" y="90" width="360" height="320" rx="12" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="220" y="118" text-anchor="middle" class="h">CLIENT-SIDE (Browser)</text>
+  <text x="55" y="145" class="t">Languages / frameworks</text>
+  <text x="55" y="165" class="small">• TypeScript · React 19 · Next.js 15 App Router</text>
+  <text x="55" y="183" class="small">• Tailwind CSS 4 · lucide-react icons</text>
+  <text x="55" y="210" class="t">UI pages / subsystems</text>
+  <text x="55" y="228" class="small">• /dashboard · /india · /play · /pitch</text>
+  <text x="55" y="246" class="small">• Country/City/India selectors</text>
+  <text x="55" y="264" class="small">• ReportView · IndiaImpactPanel · KidsPlayHub</text>
+  <text x="55" y="291" class="t">Client storage (meta)</text>
+  <text x="55" y="309" class="small">• localStorage play progress only</text>
+  <text x="55" y="327" class="small">• No child accounts / no client DB</text>
+  <text x="55" y="354" class="t">Build tooling</text>
+  <text x="55" y="372" class="small">• ESLint · PostCSS · next build</text>
+  <text x="55" y="390" class="small">• GitHub Actions CI</text>
+
+  <!-- Server -->
+  <rect x="420" y="90" width="360" height="320" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="600" y="118" text-anchor="middle" class="h">SERVER-SIDE (Node.js)</text>
+  <text x="435" y="145" class="t">Runtime / language</text>
+  <text x="435" y="165" class="small">• Node.js · TypeScript · Next.js Route Handlers</text>
+  <text x="435" y="191" class="t">API boundary</text>
+  <text x="435" y="209" class="small">• POST /api/analyze</text>
+  <text x="435" y="227" class="small">• GET /api/countries · GET /api/india/regions</text>
+  <text x="435" y="245" class="small">• Zod request validation</text>
+  <text x="435" y="271" class="t">Orchestration meta-layer</text>
+  <text x="435" y="289" class="small">• orchestrator.ts (sequence, India gate)</text>
+  <text x="435" y="307" class="small">• SynthesisReport JSON contract</text>
+  <text x="435" y="333" class="t">Data / persistence</text>
+  <text x="435" y="351" class="small">• No SQL/NoSQL database in demo</text>
+  <text x="435" y="369" class="small">• Static TS registries in-repo</text>
+  <text x="435" y="387" class="small">• On-demand climate fetch (stateless)</text>
+
+  <!-- External -->
+  <rect x="800" y="90" width="360" height="320" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text x="980" y="118" text-anchor="middle" class="h">EXTERNAL / SERVICES</text>
+  <text x="815" y="145" class="t">Live climate &amp; AQ</text>
+  <text x="815" y="165" class="small">• Open-Meteo Forecast API</text>
+  <text x="815" y="183" class="small">• Open-Meteo Air Quality API</text>
+  <text x="815" y="210" class="t">Hosting / delivery</text>
+  <text x="815" y="228" class="small">• HTTPS web deploy (Node/container)</text>
+  <text x="815" y="246" class="small">• Demo: klimaguardkids.sustainow.in</text>
+  <text x="815" y="273" class="t">Source control / CI</text>
+  <text x="815" y="291" class="small">• GitHub · GitHub Actions</text>
+  <text x="815" y="309" class="small">• Repo: carbonintelli/KlimaGuardKids</text>
+  <text x="815" y="336" class="t">Reference provenance (not runtime DB)</text>
+  <text x="815" y="354" class="small">• ~50 trusted sources catalogue</text>
+  <text x="815" y="372" class="small">• WHO/UNICEF/IMD/etc. citations</text>
+  <text x="815" y="390" class="small">• No blockchain · No LLM runtime</text>
+
+  <!-- arrows client-server -->
+  <line x1="400" y1="220" x2="420" y2="220" stroke="#0284c7" stroke-width="2" marker-end="url(#m)"/>
+  <text x="410" y="210" text-anchor="middle" class="label">HTTPS JSON</text>
+
+  <!-- Agents band -->
+  <rect x="40" y="440" width="1120" height="200" rx="12" fill="#faf5ff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="600" y="468" text-anchor="middle" class="h">DOMAIN AGENTS + REGISTRIES (TypeScript modules — server-side)</text>
+  <text x="55" y="495" class="t">Global agents:</text>
+  <text x="55" y="515" class="small">Climate Data · Health Risk · Nutrition &amp; Food Security · Disease Outlook · Natural Medicine · Synthesis (age bands 5–8 / 9–12 / 13–17)</text>
+  <text x="55" y="542" class="t">India agents (when countryCode=IN):</text>
+  <text x="55" y="560" class="small">India Regional Context · India Child Health Impact (CHIS: CHVI, CRBS, WDPI, VBDP, CNSI)</text>
+  <text x="55" y="587" class="t">Registries (in-repo, not a DB):</text>
+  <text x="55" y="605" class="small">countries.ts (159 countries / 482 Tier 1–3 cities) · india-regions.ts (77 regions) · sources.ts (~50) · gamification.ts (missions/badges)</text>
+  <text x="55" y="625" class="small">Linkages: UI → API → Orchestrator → parallel/sequential agents → SynthesisReport → UI (ReportView / Play missions)</text>
+
+  <!-- Meta -->
+  <rect x="40" y="670" width="1120" height="190" rx="12" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+  <text x="600" y="698" text-anchor="middle" class="h">META-LAYERS / CROSS-CUTTING</text>
+  <text x="55" y="725" class="small">• Validation: Zod schemas on API inputs</text>
+  <text x="55" y="743" class="small">• Types: shared TypeScript contracts (SynthesisReport, RiskLevel, AgeBand)</text>
+  <text x="55" y="761" class="small">• Quality: TypeScript strict · ESLint · production next build on PR (GitHub Actions)</text>
+  <text x="55" y="779" class="small">• Security/privacy: city/region-level location only · no child PII DB · non-diagnostic disclaimers</text>
+  <text x="55" y="797" class="small">• License: MIT · Docs: README, ARCHITECTURE.md, DATA_SOURCES_AND_GEOGRAPHY.md</text>
+  <text x="55" y="825" class="t">Databases: NONE in current architecture (stateless analyze + static registries + browser localStorage for play).</text>
+  <text x="55" y="843" class="small">Planned (investment): optional privacy-preserving pilot analytics log; PWA offline cache; national met/AQ adapters — still no child-identity store.</text>
+</svg>
