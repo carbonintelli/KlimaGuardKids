@@ -832,32 +832,32 @@ def fill_template6() -> Path:
         rev = doc.tables[0]
         rows = [
             (
-                "Implementation / pilot support",
+                "Implementation / pilot support (schools, NGOs, CSR-funded pilots)",
                 "0 (pre-revenue prototype year)",
-                "25000",
-                "40%",
-                "MoUs before build; fixed-scope SOWs; open demo reduces sales friction",
+                "8000",
+                "50%",
+                "MoUs before delivery; fixed-scope SOWs; facilitator kits; open live demo",
             ),
             (
-                "CSR / ESG community programmes",
+                "CSR / ESG community climate-health programmes",
                 "0",
-                "20000",
-                "30%",
-                "Outcome dashboards (CHIS); school packs; brand-safe OSS story",
+                "6000",
+                "38%",
+                "CHIS/outcome dashboards; school packs; brand-safe MIT OSS story; multi-sponsor pipeline",
             ),
             (
-                "Government / UN adaptation contracts",
+                "Government / UN adaptation & programme contracts (early pipeline)",
                 "0",
-                "15000",
-                "20%",
-                "In-country deploy playbooks; MIT auditability; VF reference",
+                "2000",
+                "12%",
+                "In-country deploy playbook; MIT auditability; VF reference; start with small paid pilots",
             ),
             (
-                "Potential: API/hosting SLA & training",
+                "Potential: API/hosting SLA, training & integration support",
                 "0",
-                "10000",
-                "10%",
-                "Tiered support menu; start with self-serve OSS",
+                "4000 (upside)",
+                "n/a (potential)",
+                "Tiered support menu; self-serve OSS first; paid SLA only after pilot proof",
             ),
         ]
         for i, row in enumerate(rows, start=1):
@@ -891,8 +891,8 @@ def fill_template6() -> Path:
         fdata = [
             ("Founder capital / sweat equity", "Current", "In-kind R&D", "N/A", "Ongoing"),
             ("UNICEF Venture Fund seed", "Anticipated", "60000", "This RFPS submission", "Aug–Sep 2026 award window"),
-            ("CSR pilot contracts", "Anticipated", "30000", "Pilot proposals to corporates/NGOs", "Q2–Q4 investment year"),
-            ("India climate-health grants", "Anticipated", "25000", "Applications to aligned funds", "Q2–Q4"),
+            ("CSR / programme pilot contracts", "Anticipated", "6000–10000", "Pilot proposals to corporates/NGOs; school packs", "Q2–Q4 investment year"),
+            ("India climate-health grants", "Anticipated", "10000–15000", "Applications to aligned funds", "Q2–Q4"),
             ("VF Growth Funding (later)", "Anticipated", "200000–400000", "Post-seed evidence pack", "After month 12"),
         ]
         for i, row in enumerate(fdata, start=1):
