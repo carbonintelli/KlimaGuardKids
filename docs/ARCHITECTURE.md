@@ -26,14 +26,21 @@ UI pages  →  Route handlers  →  Orchestrator  →  Agents  →  SynthesisRep
 
 ## Stack
 
+<p align="center">
+  <img src="images/tech-stack-annex1.png" alt="Full tech stack: client, server, external services, agents, meta-layers" width="820" />
+</p>
+
 | Layer | Choice |
 |--------|--------|
 | App | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4 |
 | API validation | Zod |
 | Live climate | Open-Meteo Forecast + Air Quality (no API key) |
-| Agents | Pure TS functions under `src/lib/agents/` |
+| Agents | Pure TS functions under `src/lib/agents/` (deterministic heuristics — **not** LLM calls in the core pipeline) |
 | Registries | `countries.ts` (~159 countries / ~482 tiered cities), `india-regions.ts` (77 zones), `sources.ts` (~50 validated feeds) |
-| Play progress | Browser `localStorage` only |
+| Persistence | **No traditional SQL/NoSQL database** in the demo architecture (stateless analyze + in-repo registries) |
+| Play progress | Browser `localStorage` only (no child accounts / no child PII store) |
+| Quality | TypeScript strict, ESLint, `next build` on GitHub Actions |
+| License | MIT |
 
 ## Repository layout
 
@@ -47,10 +54,11 @@ src/
 │   ├── dashboard/       # Global country/city analysis UI
 │   ├── india/           # India CHIS dashboard
 │   ├── play/            # Age-based missions / badges
+│   ├── pitch/           # Stakeholder narrative
 │   └── api/             # analyze, countries, india/regions
 ├── components/          # Client UI (selectors, ReportView, play hub)
 └── lib/
-    ├── agents/          # Orchestrator + domain agents
+    ├── agents/          # Orchestrator + 8 domain agents
     ├── countries.ts     # Vulnerable countries & city presets
     ├── india-regions.ts # India tier/zone metadata
     ├── gamification.ts  # Age profiles, missions, badges
@@ -146,6 +154,30 @@ Outbound network from the demo pipeline is Open-Meteo (climate agent). Analysis 
   <img src="images/play-gamification.png" alt="Age-tiered play missions and browser-local progress" width="820" />
 </p>
 
+## Privacy, safety, and AI posture
+
+| Topic | Current design |
+|--------|----------------|
+| Child accounts | None required |
+| PII in core analyze flow | City/region selection only — no names, phones, school IDs, or health records |
+| Play progress | Device `localStorage` only |
+| Core “agentic” scoring | Deterministic TypeScript heuristics (audit-friendly); **not** generative LLM scoring |
+| Clinical claims | Non-diagnostic preparedness tool; caregiver/CHW framing + disclaimers |
+| Blockchain | Not used |
+
+Any future optional LLM assist would be adult-facing, sandboxed, and must not replace transparent CHIS / heuristic scores without evaluation.
+
+## Near-term product roadmap (investment period)
+
+Aligned with UNICEF Venture Fund design plan (see [UNGM_Template3_Product_Design_Plan.md](UNGM_Template3_Product_Design_Plan.md)):
+
+1. Multilingual UI (≥3 languages) and accessibility hardening  
+2. Offline-capable PWA shell + last-good climate cache  
+3. Public real-time investment KPI endpoint/dashboard + anonymised analytics (no child PII)  
+4. National met/AQ adapter interface (India IMD/CPCB-ready)  
+5. DHIS2 aggregate-indicator interoperability spike  
+6. School/CHW pilots with midline/endline evidence pack  
+
 ## Design notes for contributors
 
 - Prefer **deterministic, documented heuristics** over hidden model calls for core health scoring.
@@ -153,11 +185,15 @@ Outbound network from the demo pipeline is Open-Meteo (climate agent). Analysis 
 - When adding geography, update registries only — orchestrator and selectors pick them up automatically (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
 - Play mode must remain **privacy-light** (device-local progress, no required child accounts).
 - Regenerate diagrams after major pipeline changes: `python3 docs/generate_architecture_diagrams.py`.
+- After registry size changes, refresh counts in README, this file, [DATA_SOURCES_AND_GEOGRAPHY.md](DATA_SOURCES_AND_GEOGRAPHY.md), and the technical commendation source.
 
 ## Related docs
 
+- [README.md](README.md) — documentation index  
 - [DATA_SOURCES_AND_GEOGRAPHY.md](DATA_SOURCES_AND_GEOGRAPHY.md) — tiers, registry counts, validated sources, agent provenance  
 - [KGK_Technical_Commendation.pdf](KGK_Technical_Commendation.pdf) — rich-text technical commendation / capability statement  
-- [README.md](../README.md) — product overview, quick start, API table  
-- [CONTRIBUTING.md](../CONTRIBUTING.md) — how to add countries, cities, regions, agents  
+- [../README.md](../README.md) — product overview, quick start, API table  
+- [../CONTRIBUTING.md](../CONTRIBUTING.md) — how to add countries, cities, regions, agents  
+- [UNGM_Template3_Product_Design_Plan.md](UNGM_Template3_Product_Design_Plan.md) — 12-month design/data plan  
+- `images/tech-stack-annex1.png` · `curriculum-map-annex3.png` · `content-sample-annex4.png` — UNGM annex visuals  
 - `Training/` — longer narrative and additional presentation diagram assets  

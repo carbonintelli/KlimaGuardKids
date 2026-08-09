@@ -10,7 +10,8 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" /></a>
-  <a href="https://github.com/carbonintelli/ClimateResilienceChildHealth/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
+  <a href="https://github.com/carbonintelli/KlimaGuardKids/actions"><img src="https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg" alt="Open Source" /></a>
+  <a href="https://klimaguardkids.sustainow.in/"><img src="https://img.shields.io/badge/Demo-Live-orange.svg" alt="Live demo" /></a>
   <img src="https://img.shields.io/badge/Countries-159-blue.svg" alt="159 countries" />
   <img src="https://img.shields.io/badge/Cities-482-blue.svg" alt="482 cities" />
   <img src="https://img.shields.io/badge/Tiers-1%E2%80%933-blue.svg" alt="Urban tiers 1-3" />
@@ -21,7 +22,9 @@
 
 ---
 
-KlimaGuard Kids connects live climate data with health, nutrition, and disease intelligence through **eight cooperating AI agents** — turning raw forecasts into age-appropriate guidance and **quantified child health impact scores** for Indian regions.
+KlimaGuard Kids connects live climate data with health, nutrition, and disease intelligence through **eight cooperating software agents** (deterministic TypeScript modules — not opaque LLM calls) — turning raw forecasts into age-appropriate guidance and **quantified child health impact scores** for Indian regions.
+
+**Live demo:** [klimaguardkids.sustainow.in](https://klimaguardkids.sustainow.in/) · **Supplier:** [Sustainow Technologies](https://sustainow.in/)
 
 ## What it does
 
@@ -61,17 +64,18 @@ Progress (XP, badges, streaks) is stored in the browser only — no child accoun
 ## Quick start
 
 ```bash
-git clone https://github.com/carbonintelli/ClimateResilienceChildHealth.git
-cd ClimateResilienceChildHealth
+git clone https://github.com/carbonintelli/KlimaGuardKids.git
+cd KlimaGuardKids
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000):
+Open [http://localhost:3000](http://localhost:3000) (or the [live demo](https://klimaguardkids.sustainow.in/)):
 
 - **Kids play** — age-based missions, badges, and streaks (5–8 / 9–12 / 13–17)
 - **Dashboard** — global analysis across climate-vulnerable countries and cities
 - **India** — regional child health impact analysis across 77 Tier 1–3 cities
+- **Pitch** — stakeholder narrative overview
 
 ## API
 
@@ -80,6 +84,7 @@ Open [http://localhost:3000](http://localhost:3000):
 | `/api/countries` | GET | List supported countries with tiered city presets and source counts |
 | `/api/india/regions` | GET | List 77 Indian regions with tier and climate metadata |
 | `/api/analyze` | POST | Run full agent pipeline (`countryCode`, optional `cityId` or India `regionId`) |
+| `/api/analyze` | GET | Service metadata (agents, country/city/region/source counts) |
 
 ### Analyze a vulnerable city
 
@@ -123,12 +128,16 @@ Live weather/AQ comes from Open-Meteo. Reports cite a broader catalogue of **~50
 
 ## Tech stack
 
-- Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
+- Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4, Zod
 - Live data: Open-Meteo Forecast + Air Quality APIs (no API key required)
+- Agents: deterministic TypeScript modules under `src/lib/agents/` (no LLM in core scoring)
+- Persistence: no traditional database — in-repo registries + browser `localStorage` for play
 - Validated references: see `src/lib/sources.ts` and the geography/sources doc above
+- Full stack diagram: [docs/images/tech-stack-annex1.png](docs/images/tech-stack-annex1.png)
 
 ## Design & architecture
 
+- **[docs/README.md](docs/README.md)** — documentation index  
 - **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — concise design/architecture with diagrams  
 - **[docs/DATA_SOURCES_AND_GEOGRAPHY.md](docs/DATA_SOURCES_AND_GEOGRAPHY.md)** — countries, cities, tiers, and trusted sources  
 - **[docs/KGK_Technical_Commendation.pdf](docs/KGK_Technical_Commendation.pdf)** — rich-text technical commendation (capabilities, APIs, safeguarding, deployment, licensing); regenerate with `python3 docs/generate_kgk_technical_commendation.py`
