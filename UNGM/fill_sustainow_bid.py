@@ -350,13 +350,13 @@ def fill_template2() -> Path:
         ),
         (
             "Additionally, please provide written documentation explaining the diagram provided, outlining each element included in the diagram, its role and its status of development (complete, under development, expected date of completion, etc). Please clarify if these components are currently Open Source or proprietary, and in the case of the latter if you intend to release it as Open Source solution. Include links or documents outlining process documentation, system documentation, user documentation, and any instructions on API usage, if relevant. (5,000 characters limit)",
-            "Stack (all MIT OSS unless noted): Next.js 15 App Router + React 19 + TypeScript + Tailwind 4 (UI complete); "
-            "Route Handlers /api/analyze|/countries|/india/regions with Zod (complete); Orchestrator + 8 domain agents "
-            "(complete); Open-Meteo live fetch (complete, third-party); geographic registries countries/india-regions "
-            "(complete, expandable); sources provenance catalogue (complete); kids play localStorage gamification "
-            "(complete); CHIS formulas (complete, documented). Under development (investment): i18n, PWA offline, "
-            "national feed adapters, DHIS2 bridge. Docs: README, docs/ARCHITECTURE.md, "
-            "docs/DATA_SOURCES_AND_GEOGRAPHY.md, docs/KGK_Technical_Commendation.pdf. Repo: " + REPO,
+            "Diagram: docs/images/tech-stack-annex1.png (also system-layers/client-server/agent-pipeline). All KGK components MIT OSS unless third-party. No proprietary product IP; no blockchain; core agents are deterministic TypeScript (not GenAI).\n"
+            "CLIENT (COMPLETE): Next.js 15/React 19/TS/Tailwind; pages /dashboard|/india|/play|/pitch; ReportView/IndiaImpactPanel/KidsPlayHub; localStorage play only (no child accounts).\n"
+            "SERVER (COMPLETE): Route Handlers POST/GET /api/analyze, GET /api/countries, GET /api/india/regions; Zod; orchestrator.ts → SynthesisReport; no SQL/NoSQL DB (stateless + in-repo registries).\n"
+            "AGENTS/REGISTRIES (COMPLETE, expandable): Climate/Health/Nutrition/Disease/Natural Medicine/Synthesis; India Regional + CHIS (CHVI/CRBS/WDPI/VBDP/CNSI); countries (~159/482), india-regions (77), sources (~50), gamification.\n"
+            "EXTERNAL: Open-Meteo Forecast/AQ (third-party, complete); demo https://klimaguardkids.sustainow.in/; GitHub https://github.com/carbonintelli/KlimaGuardKids.\n"
+            "UNDER DEVELOPMENT (12-mo VF): i18n+a11y (Q1–Q3); PWA offline (Q2); public KPI+anonymised analytics (Q1–Q2); national met/AQ adapters (Q2); DHIS2 spike (Q2–Q3); school/CHW pilots+evidence (Q2–Q4); OSS v1.0+deploy playbook (Q4). Investment outputs remain MIT; learning content intended CC-BY.\n"
+            "DOCS: CONTRIBUTING.md; docs/ARCHITECTURE.md; docs/README.md; docs/DATA_SOURCES_AND_GEOGRAPHY.md; docs/KGK_Technical_Commendation.pdf; README.md API examples. API: POST /api/analyze {countryCode,cityId?} or {countryCode:\"IN\",regionId}; GET /api/countries; GET /api/india/regions; GET /api/analyze metadata.",
         ),
         (
             "Share here all GitHub / Bitbucket (or other) repositories for all components of your solution: (1,000 characters limit)",
