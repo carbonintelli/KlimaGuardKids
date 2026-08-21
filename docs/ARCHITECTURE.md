@@ -145,8 +145,8 @@ Outbound network from the demo pipeline is Open-Meteo (climate agent). Analysis 
 | Route | Purpose |
 |--------|---------|
 | `/` | Product entry, CTAs |
-| `/dashboard` | Country + city → full agent report |
-| `/india` | Region → CHIS + India panels |
+| `/dashboard` | Country + city → full agent report (tabbed: Overview / India / Agents / Care / Kids) |
+| `/india` | Region → CHIS + India panels (same tabbed report) |
 | `/play` | Age-tiered missions powered by guidance (optional climate unlock) |
 | `/pitch` | Narrative / stakeholder overview |
 
