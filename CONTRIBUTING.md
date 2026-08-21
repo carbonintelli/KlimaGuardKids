@@ -15,8 +15,11 @@ Thank you for helping protect children from climate-health risks! This project i
 npm run dev      # Start development server
 npm run build    # Production build
 npm run lint     # ESLint
+npm test         # Unit tests (vitest)
 npm start        # Run production server
 ```
+
+API contracts: [docs/API.md](docs/API.md). Geography checklist: [docs/ADDING_GEOGRAPHY.md](docs/ADDING_GEOGRAPHY.md). Privacy: `/privacy`. Security reporting: [SECURITY.md](SECURITY.md).
 
 ## Project structure
 
@@ -33,6 +36,8 @@ src/
     └── types.ts
 docs/
 ├── ARCHITECTURE.md                   # Design goals, pipeline, registries
+├── API.md                            # Analyze / KPI / registry endpoints
+├── ADDING_GEOGRAPHY.md               # Contributor checklist for cities/regions
 ├── DATA_SOURCES_AND_GEOGRAPHY.md     # Tiers, coverage counts, trusted sources
 ├── KGK_Technical_Commendation.pdf    # Rich-text technical commendation (published)
 ├── KGK_Technical_Commendation.source.md  # Editable source for the PDF
@@ -45,11 +50,15 @@ Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design goals, the analyze 
 
 ## Adding a new Indian region
 
+See the short checklist in [docs/ADDING_GEOGRAPHY.md](docs/ADDING_GEOGRAPHY.md). Summary:
+
 1. Add an entry to `src/lib/india-regions.ts` with lat/lon, climate zone, urban tier (`1` = metro, `2` = emerging hub, `3` = regional centre), and primary risks
 2. The India Regional Context Agent and Impact Agent will automatically include it
 3. Test via `/india` dashboard or `POST /api/analyze` with `regionId`
 
 ## Adding a new country or city
+
+See the short checklist in [docs/ADDING_GEOGRAPHY.md](docs/ADDING_GEOGRAPHY.md). Summary:
 
 1. Add the country to `COUNTRIES` in `src/lib/countries.ts` (ISO code, name, flag)
 2. Add one or more city presets under `CITIES_BY_COUNTRY` with `id`, coordinates, `tier` (`1` metro / `2` emerging / `3` regional), and `primaryRisks`

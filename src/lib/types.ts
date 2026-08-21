@@ -79,6 +79,10 @@ export interface ClimateSnapshot {
   heatIndex?: number;
   airQualityIndex?: number;
   forecastDays: ForecastDay[];
+  /** How the snapshot was obtained for this request */
+  dataQuality?: "live" | "cached";
+  /** ISO timestamp when the underlying feed was fetched */
+  fetchedAt?: string;
 }
 
 export interface ForecastDay {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { runAgentPipeline } from "@/lib/agents/orchestrator";
+import { analyzeBodySchema } from "@/lib/analyze-schema";
 import {
   CITY_COUNT,
   CITY_TIER_COUNTS,
@@ -37,10 +37,12 @@ const bodySchema = z
   });
 
 export async function POST(req: NextRequest) {
+  recordAnalyzeStart();
   try {
     const json = await req.json();
-    const parsed = bodySchema.safeParse(json);
+    const parsed = analyzeBodySchema.safeParse(json);
     if (!parsed.success) {
+      recordAnalyzeError();
       return NextResponse.json(
         { error: "Invalid request", details: parsed.error.flatten() },
         { status: 400 }
@@ -128,8 +130,13 @@ export async function POST(req: NextRequest) {
       regionId: code === "IN" ? resolvedRegionId : undefined,
     });
 
+    recordAnalyzeSuccess({
+      usedCachedClimate: report.climate.dataQuality === "cached",
+    });
+
     return NextResponse.json(report);
   } catch (e) {
+    recordAnalyzeError();
     console.error("Analyze error:", e);
     return NextResponse.json(
       {
