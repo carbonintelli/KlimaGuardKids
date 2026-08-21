@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Shield, Sparkles, Globe2, Bot, MapPin, Gamepad2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { PoweredBySustainow } from "@/components/SustainowWordmark";
 import { CITY_COUNT, CITY_TIER_COUNTS, COUNTRIES } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 import { TRUSTED_SOURCES } from "@/lib/sources";
@@ -9,8 +10,9 @@ export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <section className="text-center">
-        <div className="flex justify-center mb-6">
+        <div className="mb-6 flex flex-col items-center gap-3">
           <Logo size={140} />
+          <PoweredBySustainow logoHeight={16} />
         </div>
         <p className="inline-flex items-center gap-2 rounded-full bg-ocean/10 px-4 py-1 text-sm font-bold text-ocean">
           <Sparkles className="h-4 w-4" />
