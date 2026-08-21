@@ -83,8 +83,19 @@ Open [http://localhost:3000](http://localhost:3000) (or the [live demo](https://
 |----------|--------|-------------|
 | `/api/countries` | GET | List supported countries with tiered city presets and source counts |
 | `/api/india/regions` | GET | List 77 Indian regions with tier and climate metadata |
-| `/api/analyze` | POST | Run full agent pipeline (`countryCode`, optional `cityId` or India `regionId`) |
+| `/api/geocode` | GET | Search any place worldwide (`q=`, Open-Meteo geocoding) |
+| `/api/analyze` | POST | Run full agent pipeline (curated `cityId`/`regionId`, or custom `city`+`lat`+`lon`) |
 | `/api/analyze` | GET | Service metadata (agents, country/city/region/source counts) |
+
+### Analyze any place (custom coordinates)
+
+```bash
+curl -X POST http://localhost:3000/api/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"countryCode":"KE","country":"Kenya","city":"Nairobi","lat":-1.29,"lon":36.82}'
+```
+
+Search places first: `GET /api/geocode?q=Nairobi`. On the dashboard, use **Any place**, then **Share this place** to copy a deep link.
 
 ### Analyze a vulnerable city
 

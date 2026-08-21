@@ -7,6 +7,7 @@ import { AGE_PROFILES } from "@/lib/gamification";
 import { RiskBadge } from "./RiskBadge";
 import { AgentPanel } from "./AgentPanel";
 import { IndiaImpactPanel } from "./IndiaImpactPanel";
+import { ShareReportButton } from "./ShareReportButton";
 import {
   Droplets,
   Thermometer,
@@ -113,11 +114,17 @@ export function ReportView({
               Window: <strong>{report.disruptionWindow}</strong> · Updated{" "}
               {new Date(report.generatedAt).toLocaleString()}
             </p>
+            <p className="mt-1 text-xs text-ink/50">
+              {report.location.lat.toFixed(2)}°, {report.location.lon.toFixed(2)}°
+            </p>
           </div>
-          <RiskBadge
-            level={report.overallRisk}
-            label={`${report.overallRisk} risk`}
-          />
+          <div className="flex flex-col items-end gap-3">
+            <RiskBadge
+              level={report.overallRisk}
+              label={`${report.overallRisk} risk`}
+            />
+            <ShareReportButton report={report} />
+          </div>
         </div>
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <Stat

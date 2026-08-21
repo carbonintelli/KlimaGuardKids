@@ -7,17 +7,34 @@ import {
   COUNTRIES,
   getCityPreset,
 } from "@/lib/countries";
-import { INDIA_REGIONS } from "@/lib/india-regions";
+import {
+  findNearestIndiaRegion,
+  getIndiaRegion,
+  INDIA_REGIONS,
+} from "@/lib/india-regions";
 import { TRUSTED_SOURCES } from "@/lib/sources";
 
-const bodySchema = z.object({
-  countryCode: z.string().length(2),
-  cityId: z.string().optional(),
-  lat: z.number().optional(),
-  lon: z.number().optional(),
-  city: z.string().optional(),
-  regionId: z.string().optional(),
-});
+const bodySchema = z
+  .object({
+    countryCode: z.string().length(2),
+    country: z.string().min(1).max(120).optional(),
+    cityId: z.string().optional(),
+    city: z.string().min(1).max(120).optional(),
+    lat: z.number().min(-90).max(90).optional(),
+    lon: z.number().min(-180).max(180).optional(),
+    regionId: z.string().optional(),
+  })
+  .superRefine((val, ctx) => {
+    const hasCoords =
+      typeof val.lat === "number" && typeof val.lon === "number" && Boolean(val.city);
+    const hasPreset = Boolean(val.cityId) || Boolean(val.regionId);
+    if (!hasCoords && !hasPreset) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Provide cityId/regionId or city+lat+lon",
+      });
+    }
+  });
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,6 +49,7 @@ export async function POST(req: NextRequest) {
 
     const {
       countryCode,
+      country: countryNameOverride,
       cityId,
       lat,
       lon,
@@ -39,23 +57,75 @@ export async function POST(req: NextRequest) {
       regionId,
     } = parsed.data;
     const code = countryCode.toUpperCase();
-    const country = COUNTRIES.find((c) => c.code === code);
+    const registryCountry = COUNTRIES.find((c) => c.code === code);
     const preset = getCityPreset(code, cityId);
+    const hasCustom =
+      typeof lat === "number" &&
+      typeof lon === "number" &&
+      Boolean(cityOverride?.trim());
 
-    if (!country || !preset) {
+    if (!hasCustom && (!registryCountry || !preset)) {
       return NextResponse.json(
-        { error: "Country not supported in demo registry" },
+        {
+          error: "Location not found",
+          message:
+            "Choose a curated city from the registry, or search any place (city + coordinates).",
+        },
+        { status: 404 }
+      );
+    }
+
+    let resolvedCity = cityOverride ?? preset?.city;
+    let resolvedLat = lat ?? preset?.lat;
+    let resolvedLon = lon ?? preset?.lon;
+    let resolvedRegionId = regionId;
+
+    if (code === "IN") {
+      if (resolvedRegionId && getIndiaRegion(resolvedRegionId)) {
+        const region = getIndiaRegion(resolvedRegionId)!;
+        if (!hasCustom) {
+          resolvedCity = region.city;
+          resolvedLat = region.lat;
+          resolvedLon = region.lon;
+        }
+      } else if (hasCustom) {
+        const nearest = findNearestIndiaRegion(lat!, lon!);
+        resolvedRegionId = nearest?.id;
+      } else if (preset) {
+        const nearest = findNearestIndiaRegion(preset.lat, preset.lon);
+        resolvedRegionId = nearest?.id;
+      }
+    }
+
+    if (
+      resolvedCity == null ||
+      resolvedLat == null ||
+      resolvedLon == null
+    ) {
+      return NextResponse.json(
+        {
+          error: "Location not found",
+          message:
+            "Choose a curated city/region, or search any place (city + coordinates).",
+        },
+        { status: 404 }
+      );
+    }
+
+    if (resolvedRegionId && code === "IN" && !getIndiaRegion(resolvedRegionId)) {
+      return NextResponse.json(
+        { error: "Unknown India regionId" },
         { status: 404 }
       );
     }
 
     const report = await runAgentPipeline({
-      country: country.name,
+      country: countryNameOverride ?? registryCountry?.name ?? code,
       countryCode: code,
-      city: cityOverride ?? preset.city,
-      lat: lat ?? preset.lat,
-      lon: lon ?? preset.lon,
-      regionId,
+      city: resolvedCity,
+      lat: resolvedLat,
+      lon: resolvedLon,
+      regionId: code === "IN" ? resolvedRegionId : undefined,
     });
 
     return NextResponse.json(report);
@@ -74,7 +144,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   return NextResponse.json({
     service: "KlimaGuard Kids Agent API",
-    version: "0.3.0",
+    version: "0.3.1",
     agents: [
       "climate",
       "health",
@@ -90,5 +160,8 @@ export async function GET() {
     cities: CITY_COUNT,
     cityTiers: CITY_TIER_COUNTS,
     trustedSources: TRUSTED_SOURCES.length,
+    geocode: "/api/geocode?q=",
+    customLocation:
+      "POST /api/analyze with { countryCode, country?, city, lat, lon } for any place",
   });
 }
