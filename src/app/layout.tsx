@@ -41,12 +41,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunito.variable} font-sans antialiased`}>
         <header className="sticky top-0 z-50 border-b border-sky-200/60 bg-white/80 backdrop-blur-md">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:gap-4">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:py-3.5">
             <div className="flex shrink-0 flex-col items-start gap-1">
               <Link href="/" className="inline-flex" aria-label="KlimaGuard Kids home">
-                <Logo size={48} />
+                <Logo size={72} showText />
               </Link>
-              <PoweredBySustainow className="pl-0.5" logoHeight={12} />
+              <PoweredBySustainow className="pl-1" logoHeight={13} />
             </div>
             <SiteNav />
           </div>
