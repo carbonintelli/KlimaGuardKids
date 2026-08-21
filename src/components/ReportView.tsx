@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import type { SynthesisReport } from "@/lib/types";
+import type { AgeBand, SynthesisReport } from "@/lib/types";
 import { AGE_PROFILES } from "@/lib/gamification";
+import { AGE_BAND_VISUALS } from "@/lib/age-band-visuals";
 import { RiskBadge } from "./RiskBadge";
 import { AgentPanel } from "./AgentPanel";
 import { IndiaImpactPanel } from "./IndiaImpactPanel";
@@ -217,18 +219,37 @@ export function ReportView({
         aria-labelledby={`${tablistId}-${activeTab}`}
         className="min-h-[12rem] space-y-8"
       >
-        {activeTab === "overview" && <OverviewTab report={report} />}
+        {activeTab === "overview" && (
+          <OverviewTab
+            report={report}
+            onOpenGuidance={() => setActiveTab("guidance")}
+          />
+        )}
         {activeTab === "india" &&
           showIndia &&
           report.indiaRegional &&
           report.indiaImpact && (
-            <IndiaImpactPanel
-              regional={report.indiaRegional}
-              impact={report.indiaImpact}
-            />
+            <div className="space-y-6">
+              <KidsAgeSceneStrip
+                title="India climate scenes for kids"
+                subtitle="Heat, monsoon, and prep pictures by age — full tips live in the Kids tab."
+                bands={report.childGuidance.map((g) => g.ageBand)}
+                preferScene="action"
+                onOpenGuidance={() => setActiveTab("guidance")}
+              />
+              <IndiaImpactPanel
+                regional={report.indiaRegional}
+                impact={report.indiaImpact}
+              />
+            </div>
           )}
         {activeTab === "agents" && <AgentsTab report={report} />}
-        {activeTab === "care" && <CareTab report={report} />}
+        {activeTab === "care" && (
+          <CareTab
+            report={report}
+            onOpenGuidance={() => setActiveTab("guidance")}
+          />
+        )}
         {activeTab === "guidance" && <GuidanceTab report={report} />}
       </div>
 
@@ -253,9 +274,23 @@ export function ReportView({
   );
 }
 
-function OverviewTab({ report }: { report: SynthesisReport }) {
+function OverviewTab({
+  report,
+  onOpenGuidance,
+}: {
+  report: SynthesisReport;
+  onOpenGuidance: () => void;
+}) {
   return (
     <div className="space-y-6">
+      <KidsAgeSceneStrip
+        title="Climate pictures for kids"
+        subtitle="Age tabs below unlock full stories. Peek at shade, water, and prep scenes first."
+        bands={report.childGuidance.map((g) => g.ageBand)}
+        preferScene="safety"
+        onOpenGuidance={onOpenGuidance}
+      />
+
       <section className="rounded-3xl border border-amber-100 bg-amber-50/50 p-6">
         <h3 className="flex items-center gap-2 text-lg font-extrabold text-ink">
           <Link2 className="h-5 w-5 text-ocean" />
@@ -321,9 +356,23 @@ function AgentsTab({ report }: { report: SynthesisReport }) {
   );
 }
 
-function CareTab({ report }: { report: SynthesisReport }) {
+function CareTab({
+  report,
+  onOpenGuidance,
+}: {
+  report: SynthesisReport;
+  onOpenGuidance: () => void;
+}) {
   return (
     <div className="space-y-6">
+      <KidsAgeSceneStrip
+        title="Kid-friendly care pictures"
+        subtitle="Open the Kids tab for full age tips. These scenes match how children learn germ and heat safety."
+        bands={report.childGuidance.map((g) => g.ageBand)}
+        preferScene="hygiene"
+        onOpenGuidance={onOpenGuidance}
+      />
+
       <div className="grid gap-6 lg:grid-cols-2">
         <InsightCard
           icon={Bug}
@@ -457,7 +506,96 @@ function CareTab({ report }: { report: SynthesisReport }) {
   );
 }
 
+function KidsAgeSceneStrip({
+  title,
+  subtitle,
+  bands,
+  preferScene,
+  onOpenGuidance,
+}: {
+  title: string;
+  subtitle: string;
+  bands: AgeBand[];
+  preferScene: "hero" | "safety" | "hygiene" | "action";
+  onOpenGuidance: () => void;
+}) {
+  const uniqueBands = Array.from(new Set(bands));
+  if (!uniqueBands.length) return null;
+
+  return (
+    <section className="rounded-3xl border border-sky-100 bg-gradient-to-br from-white via-sky-50/70 to-leaf/10 p-5 shadow-sm sm:p-6">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h3 className="text-lg font-extrabold text-ink">{title}</h3>
+          <p className="mt-1 max-w-2xl text-sm text-ink/60">{subtitle}</p>
+        </div>
+        <button
+          type="button"
+          onClick={onOpenGuidance}
+          className="inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-sm font-bold text-white hover:bg-sky-600"
+        >
+          <Users className="h-4 w-4" />
+          Open Kids tab
+        </button>
+      </div>
+      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        {uniqueBands.map((band) => {
+          const visual = AGE_BAND_VISUALS[band];
+          const scene =
+            visual.scenes.find((s) => s.id === preferScene) ?? visual.scenes[0];
+          const profile = AGE_PROFILES[band];
+          return (
+            <button
+              key={band}
+              type="button"
+              onClick={onOpenGuidance}
+              className="overflow-hidden rounded-2xl border border-sky-100 bg-white text-left transition hover:border-ocean/40 hover:shadow-md"
+            >
+              <div className="relative aspect-[16/10]">
+                <Image
+                  src={scene.imageSrc}
+                  alt={scene.imageAlt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 280px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-3">
+                <p className="text-[11px] font-bold uppercase tracking-wide text-ocean">
+                  Ages {band} · {profile.label}
+                </p>
+                <p className="mt-1 text-sm font-bold text-ink">{scene.tipTitle}</p>
+                <p className="mt-1 text-xs text-ink/65">{scene.caption}</p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function GuidanceTab({ report }: { report: SynthesisReport }) {
+  const [activeAge, setActiveAge] = useState<AgeBand>(
+    report.childGuidance[0]?.ageBand ?? "5-8"
+  );
+
+  useEffect(() => {
+    if (!report.childGuidance.some((g) => g.ageBand === activeAge)) {
+      setActiveAge(report.childGuidance[0]?.ageBand ?? "5-8");
+    }
+  }, [report.childGuidance, activeAge]);
+
+  const activeGuidance =
+    report.childGuidance.find((g) => g.ageBand === activeAge) ??
+    report.childGuidance[0];
+
+  if (!activeGuidance) return null;
+
+  const profile = AGE_PROFILES[activeGuidance.ageBand];
+  const visual = AGE_BAND_VISUALS[activeGuidance.ageBand];
+  const sceneCards = visual.scenes.filter((s) => s.id !== "hero");
+
   return (
     <section>
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
@@ -466,7 +604,7 @@ function GuidanceTab({ report }: { report: SynthesisReport }) {
             Guidance for children (by age)
           </h3>
           <p className="mt-1 text-sm text-ink/60">
-            Turn these tips into age-matched quests, badges, and streaks.
+            Pick an age tab for pictures and tips that match how kids learn.
           </p>
         </div>
         <Link
@@ -477,57 +615,140 @@ function GuidanceTab({ report }: { report: SynthesisReport }) {
           Open kids play
         </Link>
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
+
+      <div
+        role="tablist"
+        aria-label="Child age bands"
+        className="mb-5 flex gap-2 overflow-x-auto pb-1"
+      >
         {report.childGuidance.map((g) => {
-          const profile = AGE_PROFILES[g.ageBand];
+          const p = AGE_PROFILES[g.ageBand];
+          const v = AGE_BAND_VISUALS[g.ageBand];
+          const selected = activeAge === g.ageBand;
           return (
-            <article
+            <button
               key={g.ageBand}
-              className="rounded-3xl border-2 border-sky-100 bg-white p-5 shadow-md"
+              type="button"
+              role="tab"
+              aria-selected={selected}
+              onClick={() => setActiveAge(g.ageBand)}
+              className={`inline-flex shrink-0 items-center gap-2 rounded-2xl border-2 px-3 py-2 text-sm font-bold transition-colors ${
+                selected
+                  ? "border-ocean bg-ocean text-white shadow-sm"
+                  : "border-sky-100 bg-white text-ink/70 hover:border-ocean/40"
+              }`}
             >
-              <span className="text-3xl">{g.emoji}</span>
-              <p className="mt-2 text-xs font-bold text-ocean">
-                Ages {g.ageBand} · {profile.label}
-              </p>
-              <h4 className="mt-1 font-extrabold text-ink">{g.headline}</h4>
-              <p className="mt-2 text-sm text-ink/75">{g.simpleExplanation}</p>
-              <p className="mt-2 text-xs font-semibold text-ink/50">
-                Earn {profile.currencyEmoji} {profile.currencyName} in play mode
-              </p>
-
-              <div className="mt-4 rounded-xl bg-sky-50/80 p-3">
-                <p className="text-xs font-bold uppercase text-ocean">
-                  How climate affects you
-                </p>
-                <p className="mt-1 text-sm text-ink/80">
-                  {g.howClimateAffectsYou}
-                </p>
-              </div>
-
-              <GuidanceList
-                title="Beating the disruption"
-                items={g.beatingTheDisruption}
-              />
-              <GuidanceList
-                title="Stay healthy from germs"
-                items={g.stayHealthyFromGerms}
-              />
-              <GuidanceList
-                title="Natural help at home (with an adult)"
-                items={g.naturalHelpFromHome}
-              />
-              <GuidanceList title="Prepare today" items={g.prepareToday} />
-              <GuidanceList title="Ask a caring adult" items={g.askAdultFor} />
-
-              {g.funFact && (
-                <p className="mt-3 rounded-xl bg-sky-50 p-3 text-xs font-medium text-ocean">
-                  💡 {g.funFact}
-                </p>
-              )}
-            </article>
+              <span className="relative h-8 w-8 overflow-hidden rounded-full border border-white/40">
+                <Image
+                  src={v.imageSrc}
+                  alt=""
+                  fill
+                  sizes="32px"
+                  className="object-cover"
+                />
+              </span>
+              Ages {g.ageBand}
+              <span className="hidden sm:inline">· {p.label}</span>
+            </button>
           );
         })}
       </div>
+
+      <article className="overflow-hidden rounded-3xl border-2 border-sky-100 bg-white shadow-md">
+        <div
+          className={`relative aspect-[16/9] max-h-72 w-full bg-gradient-to-br ${visual.accentClass}`}
+        >
+          <Image
+            src={visual.imageSrc}
+            alt={visual.imageAlt}
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 800px"
+            className="object-cover object-center"
+          />
+        </div>
+
+        <div className="p-5 sm:p-6">
+          <p className="text-xs font-bold uppercase tracking-wide text-ocean">
+            {visual.badgeLabel} · {profile.currencyEmoji} {profile.currencyName}
+          </p>
+          <span className="mt-2 inline-block text-3xl">{activeGuidance.emoji}</span>
+          <p className="mt-2 text-xs font-bold text-ocean">
+            Ages {activeGuidance.ageBand} · {profile.label}
+          </p>
+          <h4 className="mt-1 text-xl font-extrabold text-ink">
+            {activeGuidance.headline}
+          </h4>
+          <p className="mt-2 text-sm text-ink/75">
+            {activeGuidance.simpleExplanation}
+          </p>
+
+          <div className="mt-4 rounded-xl bg-sky-50/80 p-3">
+            <p className="text-xs font-bold uppercase text-ocean">
+              How climate affects you
+            </p>
+            <p className="mt-1 text-sm text-ink/80">
+              {activeGuidance.howClimateAffectsYou}
+            </p>
+          </div>
+
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            {sceneCards.map((scene) => (
+              <figure
+                key={scene.id}
+                className="overflow-hidden rounded-2xl border border-sky-100 bg-sky-50/40"
+              >
+                <div className="relative aspect-[16/10]">
+                  <Image
+                    src={scene.imageSrc}
+                    alt={scene.imageAlt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 240px"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="p-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ocean">
+                    {scene.tipTitle}
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-ink/70">
+                    {scene.caption}
+                  </p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <GuidanceList
+              title="Beating the disruption"
+              items={activeGuidance.beatingTheDisruption}
+            />
+            <GuidanceList
+              title="Stay healthy from germs"
+              items={activeGuidance.stayHealthyFromGerms}
+            />
+            <GuidanceList
+              title="Natural help at home (with an adult)"
+              items={activeGuidance.naturalHelpFromHome}
+            />
+            <GuidanceList
+              title="Prepare today"
+              items={activeGuidance.prepareToday}
+            />
+            <GuidanceList
+              title="Ask a caring adult"
+              items={activeGuidance.askAdultFor}
+            />
+          </div>
+
+          {activeGuidance.funFact && (
+            <p className="mt-4 rounded-xl bg-sky-50 p-3 text-xs font-medium text-ocean">
+              💡 {activeGuidance.funFact}
+            </p>
+          )}
+        </div>
+      </article>
     </section>
   );
 }
