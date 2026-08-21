@@ -92,8 +92,19 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md):
 4. Refresh counts in README / this file / `KGK_Technical_Commendation.source.md` (and UNGM bid templates if needed) when registry size changes materially.
 5. Optionally regenerate architecture diagrams: `python3 docs/generate_architecture_diagrams.py`.
 
+## Operational vs reference data
+
+| Kind | Examples | Behaviour today |
+|------|----------|-----------------|
+| **Operational (fetched)** | Open-Meteo Forecast, Open-Meteo Air Quality | Called on each `/api/analyze` |
+| **Reference / provenance** | WHO, UNICEF, IMD, NFHS, FAO/IPC, Copernicus, … | Cited in agent status and report UI; not all fetched live |
+| **Static registries** | `countries.ts`, `india-regions.ts` | Shipped in-repo; updated via release |
+
+There is **no application database** for geography or user profiles in the demo. Pilot analytics planned under investment will remain anonymised (e.g. region_id, latency, feature use) without child PII.
+
 ## Related documentation
 
+- [README.md](README.md) — documentation index  
 - [ARCHITECTURE.md](ARCHITECTURE.md) — system design and pipeline  
 - [KGK_Technical_Commendation.pdf](KGK_Technical_Commendation.pdf) — technical commendation (§6 sources & geography)  
-- [README.md](../README.md) — product overview and badges  
+- [../README.md](../README.md) — product overview and badges  

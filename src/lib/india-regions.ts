@@ -1020,6 +1020,31 @@ export function getIndiaRegion(id: string): IndiaRegion | undefined {
   return INDIA_REGIONS.find((r) => r.id === id);
 }
 
+/** Nearest curated India region by great-circle distance (for custom lat/lon). */
+export function findNearestIndiaRegion(
+  lat: number,
+  lon: number
+): IndiaRegion | undefined {
+  if (!INDIA_REGIONS.length) return undefined;
+  let best = INDIA_REGIONS[0];
+  let bestDist = Number.POSITIVE_INFINITY;
+  for (const region of INDIA_REGIONS) {
+    const dLat = (region.lat - lat) * Math.PI / 180;
+    const dLon = (region.lon - lon) * Math.PI / 180;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((lat * Math.PI) / 180) *
+        Math.cos((region.lat * Math.PI) / 180) *
+        Math.sin(dLon / 2) ** 2;
+    const dist = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = region;
+    }
+  }
+  return best;
+}
+
 export function getDefaultIndiaRegion(): IndiaRegion {
   return INDIA_REGIONS[0];
 }

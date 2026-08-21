@@ -350,13 +350,13 @@ def fill_template2() -> Path:
         ),
         (
             "Additionally, please provide written documentation explaining the diagram provided, outlining each element included in the diagram, its role and its status of development (complete, under development, expected date of completion, etc). Please clarify if these components are currently Open Source or proprietary, and in the case of the latter if you intend to release it as Open Source solution. Include links or documents outlining process documentation, system documentation, user documentation, and any instructions on API usage, if relevant. (5,000 characters limit)",
-            "Stack (all MIT OSS unless noted): Next.js 15 App Router + React 19 + TypeScript + Tailwind 4 (UI complete); "
-            "Route Handlers /api/analyze|/countries|/india/regions with Zod (complete); Orchestrator + 8 domain agents "
-            "(complete); Open-Meteo live fetch (complete, third-party); geographic registries countries/india-regions "
-            "(complete, expandable); sources provenance catalogue (complete); kids play localStorage gamification "
-            "(complete); CHIS formulas (complete, documented). Under development (investment): i18n, PWA offline, "
-            "national feed adapters, DHIS2 bridge. Docs: README, docs/ARCHITECTURE.md, "
-            "docs/DATA_SOURCES_AND_GEOGRAPHY.md, docs/KGK_Technical_Commendation.pdf. Repo: " + REPO,
+            "Diagram: docs/images/tech-stack-annex1.png (also system-layers/client-server/agent-pipeline). All KGK components MIT OSS unless third-party. No proprietary product IP; no blockchain; core agents are deterministic TypeScript (not GenAI).\n"
+            "CLIENT (COMPLETE): Next.js 15/React 19/TS/Tailwind; pages /dashboard|/india|/play|/pitch; ReportView/IndiaImpactPanel/KidsPlayHub; localStorage play only (no child accounts).\n"
+            "SERVER (COMPLETE): Route Handlers POST/GET /api/analyze, GET /api/countries, GET /api/india/regions; Zod; orchestrator.ts → SynthesisReport; no SQL/NoSQL DB (stateless + in-repo registries).\n"
+            "AGENTS/REGISTRIES (COMPLETE, expandable): Climate/Health/Nutrition/Disease/Natural Medicine/Synthesis; India Regional + CHIS (CHVI/CRBS/WDPI/VBDP/CNSI); countries (~159/482), india-regions (77), sources (~50), gamification.\n"
+            "EXTERNAL: Open-Meteo Forecast/AQ (third-party, complete); demo https://klimaguardkids.sustainow.in/; GitHub https://github.com/carbonintelli/KlimaGuardKids.\n"
+            "UNDER DEVELOPMENT (12-mo VF): i18n+a11y (Q1–Q3); PWA offline (Q2); public KPI+anonymised analytics (Q1–Q2); national met/AQ adapters (Q2); DHIS2 spike (Q2–Q3); school/CHW pilots+evidence (Q2–Q4); OSS v1.0+deploy playbook (Q4). Investment outputs remain MIT; learning content intended CC-BY.\n"
+            "DOCS: CONTRIBUTING.md; docs/ARCHITECTURE.md; docs/README.md; docs/DATA_SOURCES_AND_GEOGRAPHY.md; docs/KGK_Technical_Commendation.pdf; README.md API examples. API: POST /api/analyze {countryCode,cityId?} or {countryCode:\"IN\",regionId}; GET /api/countries; GET /api/india/regions; GET /api/analyze metadata.",
         ),
         (
             "Share here all GitHub / Bitbucket (or other) repositories for all components of your solution: (1,000 characters limit)",
@@ -832,32 +832,32 @@ def fill_template6() -> Path:
         rev = doc.tables[0]
         rows = [
             (
-                "Implementation / pilot support",
+                "Implementation / pilot support (schools, NGOs, CSR-funded pilots)",
                 "0 (pre-revenue prototype year)",
-                "25000",
-                "40%",
-                "MoUs before build; fixed-scope SOWs; open demo reduces sales friction",
+                "8000",
+                "50%",
+                "MoUs before delivery; fixed-scope SOWs; facilitator kits; open live demo",
             ),
             (
-                "CSR / ESG community programmes",
+                "CSR / ESG community climate-health programmes",
                 "0",
-                "20000",
-                "30%",
-                "Outcome dashboards (CHIS); school packs; brand-safe OSS story",
+                "6000",
+                "38%",
+                "CHIS/outcome dashboards; school packs; brand-safe MIT OSS story; multi-sponsor pipeline",
             ),
             (
-                "Government / UN adaptation contracts",
+                "Government / UN adaptation & programme contracts (early pipeline)",
                 "0",
-                "15000",
-                "20%",
-                "In-country deploy playbooks; MIT auditability; VF reference",
+                "2000",
+                "12%",
+                "In-country deploy playbook; MIT auditability; VF reference; start with small paid pilots",
             ),
             (
-                "Potential: API/hosting SLA & training",
+                "Potential: API/hosting SLA, training & integration support",
                 "0",
-                "10000",
-                "10%",
-                "Tiered support menu; start with self-serve OSS",
+                "4000 (upside)",
+                "n/a (potential)",
+                "Tiered support menu; self-serve OSS first; paid SLA only after pilot proof",
             ),
         ]
         for i, row in enumerate(rows, start=1):
@@ -890,9 +890,9 @@ def fill_template6() -> Path:
         fin = doc.tables[3]
         fdata = [
             ("Founder capital / sweat equity", "Current", "In-kind R&D", "N/A", "Ongoing"),
-            ("UNICEF Venture Fund seed", "Anticipated", "100000", "This RFPS submission", "Aug–Sep 2026 award window"),
-            ("CSR pilot contracts", "Anticipated", "30000", "Pilot proposals to corporates/NGOs", "Q2–Q4 investment year"),
-            ("India climate-health grants", "Anticipated", "25000", "Applications to aligned funds", "Q2–Q4"),
+            ("UNICEF Venture Fund seed", "Anticipated", "60000", "This RFPS submission", "Aug–Sep 2026 award window"),
+            ("CSR / programme pilot contracts", "Anticipated", "6000–10000", "Pilot proposals to corporates/NGOs; school packs", "Q2–Q4 investment year"),
+            ("India climate-health grants", "Anticipated", "10000–15000", "Applications to aligned funds", "Q2–Q4"),
             ("VF Growth Funding (later)", "Anticipated", "200000–400000", "Post-seed evidence pack", "After month 12"),
         ]
         for i, row in enumerate(fdata, start=1):
@@ -915,120 +915,97 @@ def fill_template7() -> Path:
     ws = wb["Tab 1 Project Design Budget"]
     ws["B2"] = COMPANY
     ws["C5"] = "USD"
-    # Clear template sample amounts before writing our USD-only budget (target 100,000).
-    for r in range(6, 90):
-        ws.cell(r, 3).value = None
-        ws.cell(r, 4).value = None
+    # Clear template sample amounts before writing our USD-only budget (target 60,000).
+    def _set(ws, row, col, value):
+        cell = ws.cell(row, col)
+        for rng in ws.merged_cells.ranges:
+            if cell.coordinate in rng:
+                ws.cell(rng.min_row, rng.min_col).value = value
+                return
+        cell.value = value
 
+    for r in range(6, 90):
+        _set(ws, r, 3, None)
+        _set(ws, r, 4, None)
+
+    # Activity rows only (Template 7 structure): Q1 8-9/12-13/16-17/20-21, etc.
     allocations = {
-        8: ("Pilot MoUs & protocol", 4000),
-        9: ("Partner onboarding", 3000),
-        10: ("Baseline survey design", 2000),
-        11: ("i18n foundation", 5000),
-        12: ("String extraction/l10n", 3000),
-        13: ("Accessibility pass", 2000),
-        14: ("KPI/data feed", 3000),
-        15: ("Analytics pipeline", 2000),
-        16: ("Registry expansion", 0),
-        25: ("PWA offline shell", 6000),
-        26: ("SW + cache", 3000),
-        28: ("National feed adapters", 5000),
-        29: ("IMD/CPCB design", 2000),
-        31: ("School pilot wave 1", 5000),
-        32: ("CHW workshops", 3000),
-        34: ("DHIS2 spike", 3000),
-        35: ("Indicator mapping", 2000),
+        8: ("Pilot site MoUs & ethics-light protocol", 2000),
+        9: ("Partner onboarding packs (schools/CHWs)", 1500),
+        12: ("Multilingual foundation (i18n)", 2500),
+        13: ("String extraction, l10n & accessibility pass", 2000),
+        16: ("Real-time investment KPI feed/dashboard", 2000),
+        17: ("Anonymised usage analytics (no child PII)", 1000),
+        20: ("Registry & trusted-sources expansion", 500),
+        21: ("India CHIS expert validation", 500),
+        25: ("PWA offline shell", 4500),
+        26: ("Service worker & last-good climate cache", 2000),
+        29: ("National met/AQ adapter interface", 2000),
+        30: ("IMD/CPCB reference integration design", 1000),
+        33: ("School pilot wave 1", 6000),
+        34: ("CHW briefing workshops", 3000),
+        37: ("DHIS2 interoperability spike (lean)", 500),
+        38: ("Aggregate indicator mapping", 1000),
+        42: ("Midline evaluation", 3000),
+        43: ("Comparative site analysis", 1500),
+        46: ("Language pack completion (3 languages)", 3500),
+        47: ("Community OSS contributor sprint", 1000),
+        50: ("Safeguarding & privacy review", 2500),
+        51: ("Child-data policy pack", 1000),
+        54: ("Partner API integration pilots", 2000),
+        55: ("Pilot operations scale-up", 1500),
+        59: ("Endline evaluation & public brief", 3000),
+        60: ("UNICEF learning package / case study", 1500),
+        63: ("Scale-ready OSS release v1.0", 3000),
+        64: ("Gov-cloud / in-country deployment playbook", 1500),
+        67: ("Growth Funding / LTAS readiness", 500),
+        68: ("Business model validation update", 500),
+        71: ("Knowledge transfer & handoff", 1000),
+        72: ("Final UX/a11y polish + public KPI finalize", 1000),
     }
     for row, (task, amt) in allocations.items():
-        ws.cell(row, 2).value = task
-        ws.cell(row, 3).value = amt
+        _set(ws, row, 2, task)
+        _set(ws, row, 3, amt)
+        _set(ws, row, 4, None)
 
-    for r in range(1, 90):
-        a = ws.cell(r, 1).value
-        if a and str(a).strip() == "Quarter 3 total":
-            q3 = r
-            items = [
-                (q3 + 1, "Midline evaluation", 4000),
-                (q3 + 2, "Cross-site analysis", 2000),
-                (q3 + 3, "Language pack completion", 4000),
-                (q3 + 4, "OSS contributor sprint", 2000),
-                (q3 + 5, "Safeguarding/privacy review", 4000),
-                (q3 + 6, "Child-data policy pack", 2000),
-                (q3 + 7, "Partner API integration", 4000),
-                (q3 + 8, "Pilot operations Q3", 2000),
-            ]
-            for row, task, amt in items:
-                ws.cell(row, 2).value = task
-                ws.cell(row, 3).value = amt
-        if a and str(a).strip() == "Quarter 4 total":
-            q4 = r
-            items = [
-                (q4 + 1, "Endline & public brief", 4000),
-                (q4 + 2, "UNICEF learning package", 3000),
-                (q4 + 3, "v1.0 scale-ready release", 4000),
-                (q4 + 4, "Gov-cloud playbook", 3000),
-                (q4 + 5, "Follow-on pipeline", 2000),
-                (q4 + 6, "Business model update", 2000),
-                (q4 + 7, "Knowledge transfer", 3000),
-                (q4 + 8, "Final UX/a11y polish", 2000),
-            ]
-            for row, task, amt in items:
-                ws.cell(row, 2).value = task
-                ws.cell(row, 3).value = amt
-
-    # Ensure template sample milestone amount is gone; keep USD-only.
-    ws.cell(7, 3).value = None
-    ws.cell(7, 4).value = None
-    for r in range(6, 90):
-        ws.cell(r, 4).value = None
-
-    # Drop zero-amount placeholder rows from the funding request total.
-    for r in range(6, 90):
-        if ws.cell(r, 3).value == 0:
-            ws.cell(r, 3).value = None
-
-    line_total = sum(
-        ws.cell(r, 3).value
-        for r in range(1, 100)
-        if isinstance(ws.cell(r, 3).value, (int, float))
-    )
+    line_total = sum(amt for _, amt in allocations.values())
     print(f"Project design budget line total: USD {line_total}")
 
     ws2 = wb["Tab 2  Company 1-YR Budget"]
     ws2["A2"] = "Budget Period: September 2026 to August 2027"
     ws2["A3"] = COMPANY
-    # Income
+    # Income (scaled to USD 60k VF seed)
     ws2["A7"] = "Pilot / implementation support revenue"
-    ws2["B7"] = 10000
-    ws2["C7"] = 15000
+    ws2["B7"] = 8000
+    ws2["C7"] = 12000
     ws2["A8"] = "CSR programme fees"
-    ws2["B8"] = 5000
-    ws2["C8"] = 15000
+    ws2["B8"] = 4000
+    ws2["C8"] = 10000
     ws2["A17"] = "UNICEF Venture Fund seed"
-    ws2["B17"] = 50000
-    ws2["C17"] = 50000
+    ws2["B17"] = 30000
+    ws2["C17"] = 30000
     ws2["A18"] = "Founder capital contribution"
-    ws2["B18"] = 10000
-    ws2["C18"] = 10000
+    ws2["B18"] = 8000
+    ws2["C18"] = 8000
     # Expenses
     ws2["A29"] = "Salaries & director stipends (KGK)"
-    ws2["B29"] = 35000
-    ws2["C29"] = 35000
+    ws2["B29"] = 22000
+    ws2["C29"] = 22000
     ws2["A30"] = "Contractors (FE, field, M&E)"
-    ws2["B30"] = 15000
-    ws2["C30"] = 20000
+    ws2["B30"] = 10000
+    ws2["C30"] = 12000
     ws2["A31"] = "Cloud hosting, tooling, CI"
-    ws2["B31"] = 3000
-    ws2["C31"] = 3000
+    ws2["B31"] = 2000
+    ws2["C31"] = 2000
     ws2["A32"] = "Pilot travel & workshops"
-    ws2["B32"] = 5000
-    ws2["C32"] = 8000
+    ws2["B32"] = 4000
+    ws2["C32"] = 6000
     ws2["A33"] = "General & administration"
-    ws2["B33"] = 4000
-    ws2["C33"] = 4000
+    ws2["B33"] = 2500
+    ws2["C33"] = 2500
     ws2["A34"] = "Marketing & community OSS"
-    ws2["B34"] = 3000
-    ws2["C34"] = 5000
+    ws2["B34"] = 1500
+    ws2["C34"] = 3000
 
     wb.save(dst)
     return dst
@@ -1070,7 +1047,7 @@ def write_cover_letter() -> Path:
     )
     story.append(
         Paragraph(
-            "We request equity-free seed investment of <b>USD 100,000</b> for a 12-month programme to (1) generate "
+            "We request equity-free seed investment of <b>USD 60,000</b> for a 12-month programme to (1) generate "
             "field evidence with schools and community health partners, (2) harden the product for multilingual, "
             "accessible, offline-capable deployment, and (3) deepen open-source interoperability and documentation "
             "for UNICEF and country partners.",
@@ -1126,7 +1103,7 @@ def write_readme() -> Path:
 **Supplier:** {COMPANY} (CIN {CIN})  
 **Solution:** {SOLUTION}  
 **Country:** {COUNTRY} (UNICEF programme country)  
-**Request:** USD 100,000 (equity-free seed), 12 months  
+**Request:** USD 60,000 (equity-free seed), 12 months  
 **Deadline:** 10 August 2026, 23:59 CEST (queries by 3 August 2026)  
 **Contact:** {EMAIL}
 

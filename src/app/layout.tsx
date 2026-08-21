@@ -60,7 +60,7 @@ export default function RootLayout({
               Privacy
             </Link>
             <a
-              href="https://github.com/carbonintelli/ClimateResilienceChildHealth"
+              href="https://github.com/carbonintelli/KlimaGuardKids"
               className="text-ocean hover:underline"
               target="_blank"
               rel="noopener noreferrer"

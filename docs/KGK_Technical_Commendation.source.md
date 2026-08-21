@@ -6,11 +6,13 @@
 | **Document title** | KlimaGuard Kids — KGK Technical Commendation |
 | **Product name** | KlimaGuard Kids |
 | **Supplier / developer** | Sustainow Technologies |
-| **Document version** | 1.0 |
+| **Document version** | 1.1 |
 | **Software version** | 0.2.0 |
 | **License** | MIT (open source) |
 | **Primary repository** | https://github.com/carbonintelli/KlimaGuardKids |
-| **Document date** | 2026-08-02 |
+| **Live demo** | https://klimaguardkids.sustainow.in/ |
+| **Supplier contact** | contact@sustainow.in · https://sustainow.in/ |
+| **Document date** | 2026-08-09 |
 | **Classification (indicative UNSPSC)** | 43230000 Software; 81112200 Software maintenance and support; 77101500 Environmental management; 85101705 Public health administration |
 
 > **Purpose of this document**  
@@ -116,6 +118,10 @@ Browser UI  →  HTTPS JSON APIs  →  Orchestrator  →  Agents  →  Synthesis
 
 ### 4.2 Technology stack
 
+<p align="center">
+  <img src="images/tech-stack-annex1.png" alt="Tech stack annex diagram" width="720" />
+</p>
+
 | Layer | Technology | Rationale |
 |--------|------------|-----------|
 | Application framework | Next.js 15 (App Router) | Unified UI + API, strong TypeScript support |
@@ -123,8 +129,11 @@ Browser UI  →  HTTPS JSON APIs  →  Orchestrator  →  Agents  →  Synthesis
 | Language | TypeScript (strict) | Type-safe contracts for reports and APIs |
 | Validation | Zod | Explicit request schemas for `/api/analyze` |
 | Live climate data | Open-Meteo Forecast & Air Quality APIs | Public, no API key required for demo scale |
+| Persistence | No SQL/NoSQL DB in demo; in-repo registries + browser `localStorage` for play | Privacy-light, low ops cost, easy audit/fork |
 | Quality gates | ESLint + `next build` via GitHub Actions CI | Automated lint/build on every push/PR |
 | License | MIT | Permissive reuse by UN system and partners |
+
+**AI posture:** “Agentic” means cooperating deterministic software agents. Core scoring does **not** use generative LLMs or classical ML models today. This choice prioritises interpretability, child safeguarding, and reproducible public-sector review.
 
 ### 4.3 Agent pipeline (eight agents)
 
@@ -397,13 +406,17 @@ Training assets are also available under `Training/` (marketing/training manual 
 - Multilingual UI and offline-first modes are roadmap items  
 - Production authentication, RBAC, and enterprise SSO are not in the public demo  
 
-### 12.2 Indicative roadmap
+### 12.2 Indicative roadmap (12-month investment focus)
 
-1. Local language packs and accessibility hardening  
-2. Optional authenticated national weather/AQ feeds  
-3. Expanded non-India quantitative impact modules  
-4. Partner SMS/USSD or WhatsApp bridges via middleware (privacy-reviewed)  
-5. Field evaluation with ministries of health/education and UN programme partners  
+1. Multilingual UI (≥3 languages) and WCAG-oriented accessibility hardening  
+2. Offline-capable PWA shell with last-good climate/guidance cache  
+3. Public real-time investment KPI dashboard + anonymised usage analytics (no child PII)  
+4. National met/AQ adapter interface (India IMD/CPCB-ready stubs)  
+5. DHIS2 aggregate-indicator interoperability spike / evaluation  
+6. School and CHW field pilots with midline/endline evidence pack (≥500 guided sessions target)  
+7. Scale-ready OSS v1.0 release + in-country deployment playbook  
+
+Longer-term (post-seed): expanded non-India quantitative modules; privacy-reviewed messaging bridges; Growth Funding / LTAS pathway.
 
 ---
 
@@ -412,12 +425,14 @@ Training assets are also available under `Training/` (marketing/training manual 
 | Document | Contents |
 |----------|----------|
 | **This file** (`docs/KGK_Technical_Commendation.pdf`) | KGK technical commendation / capability statement |
+| [`docs/README.md`](README.md) | Documentation index |
 | [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) | Concise design/architecture with diagrams |
 | [`docs/DATA_SOURCES_AND_GEOGRAPHY.md`](DATA_SOURCES_AND_GEOGRAPHY.md) | Tiers, registry counts, validated sources, agent provenance |
-| [`docs/images/`](images/) | Technical diagrams (system layers, pipeline, CHIS, etc.) |
+| [`docs/images/`](images/) | Technical diagrams (system layers, pipeline, CHIS, tech stack, etc.) |
 | [`README.md`](../README.md) | Product overview and quick start |
 | [`CONTRIBUTING.md`](../CONTRIBUTING.md) | How to extend geography, sources, and agents |
 | [`LICENSE`](../LICENSE) | MIT licence text |
+| [`UNGM/submission/`](../UNGM/submission/) | UNICEF Venture Fund bid pack (RFPS-NYH-2026-503931) |
 | `Training/` | Longer narrative and presentation assets |
 
 ### 13.1 Diagram index
@@ -432,11 +447,20 @@ Training assets are also available under `Training/` (marketing/training manual 
 | `docs/images/chis-dimensions.png` | CHIS five dimensions |
 | `docs/images/play-gamification.png` | Age-tiered play model |
 | `docs/images/repo-map.png` | Code ownership map |
+| `docs/images/tech-stack-annex1.png` | Full tech-stack annex (client/server/external/meta) |
+| `docs/images/curriculum-map-annex3.png` | Content / curriculum hierarchy |
+| `docs/images/content-sample-annex4.png` | Sample Ages 5–8 mission pack |
 
-Regenerate diagrams:
+Regenerate core architecture diagrams:
 
 ```bash
 python3 docs/generate_architecture_diagrams.py
+```
+
+Regenerate this PDF after editing the `.source.md`:
+
+```bash
+python3 docs/generate_kgk_technical_commendation.py
 ```
 
 ---
@@ -445,9 +469,11 @@ python3 docs/generate_architecture_diagrams.py
 
 | Item | Detail |
 |------|--------|
-| Supplier | Sustainow Technologies |
+| Supplier | Sustainow Technologies Private Limited |
 | Product | KlimaGuard Kids |
+| Live demo | https://klimaguardkids.sustainow.in/ |
 | Repository | https://github.com/carbonintelli/KlimaGuardKids |
+| Contact | contact@sustainow.in |
 | Licence | MIT |
 
 **Distribution guidance:** Use this PDF (`docs/KGK_Technical_Commendation.pdf`) as the official KlimaGuard Kids technical commendation for partner, procurement, and programme submissions. Diagrams in `docs/images/` are embedded below where relevant.

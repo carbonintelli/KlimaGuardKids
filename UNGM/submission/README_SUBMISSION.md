@@ -4,7 +4,7 @@
 **Supplier:** Sustainow Technologies Private Limited (CIN U72200KA2025PTC199691)  
 **Solution:** KlimaGuard Kids  
 **Country:** India (UNICEF programme country)  
-**Request:** USD 100,000 (equity-free seed), 12 months  
+**Request:** USD 60,000 (equity-free seed), 12 months  
 **Deadline:** 10 August 2026, 23:59 CEST (queries by 3 August 2026)  
 **Contact:** contact@sustainow.in
 

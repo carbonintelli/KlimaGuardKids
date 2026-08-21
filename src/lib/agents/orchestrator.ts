@@ -90,9 +90,9 @@ export async function runAgentPipeline(params: {
     },
   ];
 
-  const lat = indiaRegion?.lat ?? params.lat;
-  const lon = indiaRegion?.lon ?? params.lon;
-  const city = indiaRegion?.city ?? params.city;
+  const lat = params.lat;
+  const lon = params.lon;
+  const city = params.city;
 
   let climate;
   try {

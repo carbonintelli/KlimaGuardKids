@@ -1,0 +1,46 @@
+Diagram reference: docs/images/tech-stack-annex1.png (also system-layers.png, client-server.png, agent-pipeline.png). All KlimaGuard Kids components below are Open Source under the MIT License unless marked third-party. No proprietary product components; no blockchain; core scoring is deterministic TypeScript agents (not GenAI/LLM).
+
+CLIENT-SIDE (Browser) — COMPLETE
+• Next.js 15 App Router + React 19 + TypeScript + Tailwind CSS 4 + lucide-react: presentation UI.
+• Pages /dashboard, /india, /play, /pitch: country/city/India analysis, age-banded kids play, stakeholder narrative.
+• Selectors + ReportView + IndiaImpactPanel + KidsPlayHub: render SynthesisReport and missions.
+• localStorage play progress only: XP/badges/streaks; no child accounts or client DB.
+• Tooling: ESLint, next build, GitHub Actions CI.
+
+SERVER-SIDE (Node.js) — COMPLETE
+• Next.js Route Handlers: POST/GET /api/analyze; GET /api/countries; GET /api/india/regions.
+• Zod validation of analyze requests.
+• orchestrator.ts meta-layer: sequences agents, India gate, agent status, SynthesisReport JSON contract.
+• Persistence: no SQL/NoSQL database in demo — stateless analyze + in-repo TypeScript registries.
+
+DOMAIN AGENTS + REGISTRIES — COMPLETE (expandable)
+• Global agents: Climate, Health, Nutrition, Disease, Natural Medicine, Synthesis (age bands 5–8 / 9–12 / 13–17).
+• India agents (when countryCode=IN): Regional Context; Child Health Impact / CHIS (CHVI, CRBS, WDPI, VBDP, CNSI).
+• Registries: countries.ts (~159 countries / ~482 Tier 1–3 cities); india-regions.ts (77); sources.ts (~50); gamification.ts (missions/badges).
+• Linkage: UI → HTTPS JSON API → Orchestrator → Agents → SynthesisReport → UI (ReportView / Play).
+
+EXTERNAL / SERVICES
+• Open-Meteo Forecast + Air Quality APIs — COMPLETE (third-party public service; not our IP; cited provenance).
+• Hosting HTTPS Node/container — COMPLETE for demo (https://klimaguardkids.sustainow.in/).
+• GitHub + Actions — COMPLETE (https://github.com/carbonintelli/KlimaGuardKids).
+
+UNDER DEVELOPMENT (UNICEF VF investment period; target within 12 months)
+• Multilingual UI (≥3 languages) & accessibility hardening — expected Q1–Q3.
+• PWA offline shell + last-good climate cache — expected Q2.
+• Public real-time investment KPI dashboard + anonymised analytics (no child PII) — expected Q1–Q2.
+• National met/AQ adapter interface (IMD/CPCB-ready) — expected Q2.
+• DHIS2 aggregate-indicator interoperability spike — expected Q2–Q3.
+• School/CHW pilots + midline/endline evidence — expected Q2–Q4.
+• Scale-ready OSS v1.0 + in-country deploy playbook — expected Q4.
+All investment-funded components will remain/be released MIT OSS; learning content objects intended CC-BY.
+
+DOCUMENTATION & API
+• Process / contributing: CONTRIBUTING.md
+• System design: docs/ARCHITECTURE.md; docs/README.md (index); docs/images/* diagrams
+• Data/geography/provenance: docs/DATA_SOURCES_AND_GEOGRAPHY.md
+• Capability statement: docs/KGK_Technical_Commendation.pdf (source: docs/KGK_Technical_Commendation.source.md)
+• User/product overview: README.md; live UI at /dashboard, /india, /play
+• API usage: POST /api/analyze with JSON {countryCode, cityId?} or {countryCode:"IN", regionId}; GET /api/countries; GET /api/india/regions; GET /api/analyze for service metadata. Examples in README.md.
+• Bid design plan: docs/UNGM_Template3_Product_Design_Plan.md
+
+Third-party services (Open-Meteo, optional hosting) remain external; KlimaGuard Kids code and investment outputs are open source.
