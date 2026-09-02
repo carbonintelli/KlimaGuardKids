@@ -1,5 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getIndiaOverview } from "@/lib/dashboard-stats";
+import {
+  getIndiaOverview,
+  type IndiaOverview,
+} from "@/lib/dashboard-stats";
 import { KpiCardGrid } from "@/components/dashboard/KpiCards";
 import { ChisMapCard } from "@/components/dashboard/ChisMapCard";
 import { RiskTableCard } from "@/components/dashboard/RiskTableCard";
@@ -8,17 +14,67 @@ import {
   TrendLineCard,
 } from "@/components/dashboard/ChartCards";
 
+type LiveIndia = IndiaOverview & {
+  mode?: "live" | "seed";
+  probed?: number;
+  failed?: number;
+  error?: string;
+};
+
 export function IndiaOverviewPanel() {
-  const data = getIndiaOverview();
+  const [data, setData] = useState<LiveIndia>(() => ({
+    ...getIndiaOverview(),
+    mode: "seed",
+  }));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/overview?scope=india");
+        if (!res.ok) throw new Error(`Overview HTTP ${res.status}`);
+        const json = (await res.json()) as LiveIndia;
+        if (!cancelled) setData(json);
+      } catch {
+        if (!cancelled) {
+          setData({ ...getIndiaOverview(), mode: "seed" });
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const live = data.mode === "live";
 
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-100 bg-white/80 px-4 py-3 shadow-sm">
         <p className="text-sm text-ink/70">
-          India CHIS average <strong>{data.avgChis}</strong> ·{" "}
-          <strong>{data.kpis[1].value}</strong> regions ·{" "}
-          <strong>{data.sources}</strong> sources. Run a region analysis for
-          live agents.
+          {loading ? (
+            <>Running India Overview Agent across metro hubs…</>
+          ) : live ? (
+            <>
+              Live agent CHIS average <strong>{data.avgChis}</strong> ·{" "}
+              <strong>{data.probed ?? data.mapPoints.length}</strong> metros ·{" "}
+              <strong>{data.sources}</strong> sources
+              {typeof data.failed === "number" && data.failed > 0
+                ? ` · ${data.failed} hub(s) failed`
+                : ""}
+              .
+            </>
+          ) : (
+            <>
+              Seeded India CHIS average <strong>{data.avgChis}</strong> · live
+              Overview Agent unavailable. Run a region analysis for agents.
+            </>
+          )}
         </p>
         <Link
           href="/india?view=analyze"
@@ -32,7 +88,11 @@ export function IndiaOverviewPanel() {
 
       <ChisMapCard
         title="India CHIS map"
-        subtitle="State and metro hubs colored by Child Health Impact Score"
+        subtitle={
+          live
+            ? "Metro hubs colored by live agent Child Health Impact Score"
+            : "State and metro hubs colored by Child Health Impact Score"
+        }
         points={data.mapPoints}
         mode="india"
       />
