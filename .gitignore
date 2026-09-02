@@ -34,3 +34,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo__pycache__/
 *.pyc
+tsconfig.tsbuildinfo

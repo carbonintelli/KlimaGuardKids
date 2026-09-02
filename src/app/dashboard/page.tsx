@@ -1,16 +1,16 @@
 import { Suspense } from "react";
-import DashboardClient from "./DashboardClient";
+import DashboardConsole from "./DashboardConsole";
 
 export default function DashboardPage() {
   return (
     <Suspense
       fallback={
-        <div className="mx-auto max-w-6xl px-4 py-10 text-ink/70">
+        <div className="flex min-h-screen items-center justify-center bg-[#eef2f7] text-ink/70">
           Loading dashboard…
         </div>
       }
     >
-      <DashboardClient />
+      <DashboardConsole />
     </Suspense>
   );
 }
