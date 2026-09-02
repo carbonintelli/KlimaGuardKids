@@ -28,7 +28,11 @@ type CountriesResponse = {
 
 type LocationMode = "curated" | "anywhere";
 
-export default function DashboardClient() {
+export default function DashboardClient({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -227,32 +231,34 @@ export default function DashboardClient() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <div className="mb-8">
-        <h1 className="flex items-center gap-3 text-3xl font-extrabold text-ink">
-          <Logo size={56} />
-          Global climate-health dashboard
-        </h1>
-        <p className="mt-2 max-w-2xl text-ink/70">
-          Analyze a curated climate-vulnerable city, or search{" "}
-          <strong>any city or country worldwide</strong>
-          {registryCounts.countries
-            ? ` · registry covers ${registryCounts.countries} countries / ${registryCounts.cities} cities`
-            : ""}
-          {registryCounts.trustedSources
-            ? ` · ${registryCounts.trustedSources} validated sources`
-            : ""}
-          . Share a link to reopen the same place and guidance.
-        </p>
-        {isIndia && mode === "curated" && (
-          <Link
-            href="/india"
-            className="mt-3 inline-block text-sm font-bold text-saffron hover:underline"
-          >
-            → Open dedicated India dashboard with full impact panel
-          </Link>
-        )}
-      </div>
+    <div className={embedded ? "space-y-6" : "mx-auto max-w-6xl px-4 py-10"}>
+      {!embedded ? (
+        <div className="mb-8">
+          <h1 className="flex items-center gap-3 text-3xl font-extrabold text-ink">
+            <Logo size={56} />
+            Global climate-health dashboard
+          </h1>
+          <p className="mt-2 max-w-2xl text-ink/70">
+            Analyze a curated climate-vulnerable city, or search{" "}
+            <strong>any city or country worldwide</strong>
+            {registryCounts.countries
+              ? ` · registry covers ${registryCounts.countries} countries / ${registryCounts.cities} cities`
+              : ""}
+            {registryCounts.trustedSources
+              ? ` · ${registryCounts.trustedSources} validated sources`
+              : ""}
+            . Share a link to reopen the same place and guidance.
+          </p>
+          {isIndia && mode === "curated" && (
+            <Link
+              href="/india"
+              className="mt-3 inline-block text-sm font-bold text-saffron hover:underline"
+            >
+              → Open dedicated India dashboard with full impact panel
+            </Link>
+          )}
+        </div>
+      ) : null}
 
       <div className="max-w-xl rounded-3xl border border-sky-100 bg-white p-6 shadow-lg">
         <div
