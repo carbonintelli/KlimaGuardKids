@@ -128,6 +128,16 @@ export async function fetchClimateData(
   lat: number,
   lon: number
 ): Promise<ClimateSnapshot> {
+  // Prefer TTL cache so overview batch probes and analyze share climate reads.
+  const fresh = getCached(lat, lon);
+  if (fresh) {
+    return {
+      ...fresh,
+      dataQuality: "cached",
+      fetchedAt: fresh.fetchedAt ?? new Date().toISOString(),
+    };
+  }
+
   try {
     const data = await fetchForecastRaw(lat, lon);
     const forecastDays: ForecastDay[] = data.daily.time.map((date, i) => ({
