@@ -104,9 +104,18 @@ export function DashboardShell({
 
   useEffect(() => {
     setHash(window.location.hash);
-    const onHash = () => setHash(window.location.hash);
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
+    const scrollToHash = () => {
+      const next = window.location.hash;
+      setHash(next);
+      if (!next) return;
+      const el = document.querySelector(next);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+    scrollToHash();
+    window.addEventListener("hashchange", scrollToHash);
+    return () => window.removeEventListener("hashchange", scrollToHash);
   }, [pathname, search]);
 
   const nav = variant === "india" ? INDIA_NAV : GLOBAL_NAV;

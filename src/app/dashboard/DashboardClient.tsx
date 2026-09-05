@@ -181,12 +181,13 @@ export default function DashboardClient({
       const city = searchParams.get("city");
       const lat = Number(searchParams.get("lat"));
       const lon = Number(searchParams.get("lon"));
-      if (code && city && Number.isFinite(lat) && Number.isFinite(lon)) {
+      if (city && Number.isFinite(lat) && Number.isFinite(lon)) {
+        const resolvedCode = (code || "XX").toUpperCase();
         const place: PlaceSelection = {
           name: city,
-          label: `${city}, ${country ?? code}`,
-          countryCode: code.toUpperCase(),
-          country: country ?? code,
+          label: `${city}, ${country ?? code ?? "Custom"}`,
+          countryCode: resolvedCode,
+          country: country ?? code ?? "Custom",
           lat,
           lon,
         };

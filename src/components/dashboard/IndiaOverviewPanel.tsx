@@ -90,11 +90,12 @@ export function IndiaOverviewPanel() {
         title="India CHIS map"
         subtitle={
           live
-            ? "Metro hubs colored by live agent Child Health Impact Score"
-            : "State and metro hubs colored by Child Health Impact Score"
+            ? "India outline · metro hubs from live Overview Agent"
+            : "India outline · state and metro hubs by Child Health Impact Score"
         }
         points={data.mapPoints}
         mode="india"
+        live={live}
       />
 
       <div className="grid gap-5 lg:grid-cols-3">

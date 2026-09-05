@@ -86,11 +86,12 @@ export function GlobalOverviewPanel() {
         title="Global CHIS map"
         subtitle={
           live
-            ? "Child Health Impact Score from live agent hubs"
-            : "Child Health Impact Score by monitored country hubs"
+            ? "Real-world map · Child Health Impact Score from live agent hubs"
+            : "Real-world map · Child Health Impact Score by monitored country hubs"
         }
         points={data.mapPoints}
         mode="global"
+        live={live}
       />
 
       <div className="grid gap-5 lg:grid-cols-2">
