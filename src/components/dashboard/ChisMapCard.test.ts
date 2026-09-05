@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { mapAgentBriefing } from "@/components/dashboard/ChisMapCard";
+import { INDIA_MAP } from "@/components/dashboard/maps/india-map";
 import type { MapPoint } from "@/lib/dashboard-stats";
 
 const sample: MapPoint[] = [
@@ -40,5 +41,17 @@ describe("mapAgentBriefing", () => {
 
   it("handles empty india hubs", () => {
     expect(mapAgentBriefing([], "india")).toMatch(/no India hubs/i);
+  });
+});
+
+describe("INDIA_MAP Survey of India boundary", () => {
+  it("credits Survey of India and covers full national extent", () => {
+    expect(INDIA_MAP.source.name).toMatch(/Survey of India/i);
+    expect(INDIA_MAP.source.attribution).toMatch(/Government of India/i);
+    // SoI external boundary includes northern Ladakh / Aksai Chin (~37°N)
+    // and eastern Arunachal (~97°E).
+    expect(INDIA_MAP.bounds.maxLat).toBeGreaterThanOrEqual(37);
+    expect(INDIA_MAP.bounds.maxLon).toBeGreaterThanOrEqual(97);
+    expect(INDIA_MAP.paths.length).toBeGreaterThan(0);
   });
 });
