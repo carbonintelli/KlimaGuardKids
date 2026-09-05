@@ -1,9 +1,16 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { MapPin, Sparkles } from "lucide-react";
 import {
   chisBandColor,
   chisBandLabel,
   type ChisBand,
   type MapPoint,
 } from "@/lib/dashboard-stats";
+import { WORLD_MAP } from "@/components/dashboard/maps/world-map";
+import { INDIA_MAP } from "@/components/dashboard/maps/india-map";
 
 function project(
   lon: number,
@@ -32,23 +39,81 @@ const BANDS: ChisBand[] = [
   "critical",
 ];
 
+function analyzeHref(mode: "global" | "india", point: MapPoint): string {
+  if (mode === "india") {
+    return `/india?view=analyze&regionId=${encodeURIComponent(point.id)}`;
+  }
+  const city = point.name.split(",")[0]?.trim() || point.name;
+  const countryHint = point.name.includes(",")
+    ? point.name.split(",").slice(1).join(",").trim()
+    : undefined;
+  const codeFromId = point.id.includes("-")
+    ? point.id.split("-")[0]?.toUpperCase()
+    : undefined;
+  const params = new URLSearchParams({
+    view: "analyze",
+    mode: "custom",
+    city,
+    lat: String(point.lat),
+    lon: String(point.lon),
+  });
+  if (codeFromId && codeFromId.length === 2) {
+    params.set("countryCode", codeFromId);
+  }
+  if (countryHint) params.set("country", countryHint);
+  return `/dashboard?${params.toString()}`;
+}
+
+/** Lightweight map briefing from agent hub scores (deterministic, not LLM). */
+export function mapAgentBriefing(
+  points: MapPoint[],
+  mode: "global" | "india"
+): string {
+  if (!points.length) {
+    return mode === "india"
+      ? "Overview Agent has no India hubs yet — try Analyze for a region."
+      : "Overview Agent has no global hubs yet — try Analyze for a place.";
+  }
+  const ranked = [...points].sort((a, b) => a.chis - b.chis);
+  const worst = ranked.slice(0, 3);
+  const best = ranked[ranked.length - 1];
+  const avg = Math.round(
+    points.reduce((s, p) => s + p.chis, 0) / Math.max(1, points.length)
+  );
+  const place = mode === "india" ? "metros" : "country hubs";
+  return `Map Agent read ${points.length} ${place} (avg CHIS ${avg}). Highest concern: ${worst
+    .map((p) => `${p.name} (${p.chis})`)
+    .join(" · ")}. Strongest signal: ${best.name} (${best.chis}). Tap a marker for details.`;
+}
+
 export function ChisMapCard({
   title,
   subtitle,
   points,
   mode,
+  live = false,
 }: {
   title: string;
   subtitle: string;
   points: MapPoint[];
   mode: "global" | "india";
+  live?: boolean;
 }) {
-  const width = 920;
-  const height = 420;
-  const bounds =
-    mode === "india"
-      ? { minLon: 68, maxLon: 97, minLat: 6, maxLat: 36 }
-      : { minLon: -170, maxLon: 190, minLat: -55, maxLat: 75 };
+  const basemap = mode === "india" ? INDIA_MAP : WORLD_MAP;
+  const { width, height, bounds, paths } = basemap;
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const selected =
+    points.find((p) => p.id === selectedId) ??
+    [...points].sort((a, b) => a.chis - b.chis)[0] ??
+    null;
+
+  const briefing = useMemo(
+    () => mapAgentBriefing(points, mode),
+    [points, mode]
+  );
+
+  const pad = mode === "india" ? 28 : 24;
 
   return (
     <section
@@ -70,80 +135,215 @@ export function ChisMapCard({
                 className="h-2.5 w-2.5 rounded-full"
                 style={{ background: chisBandColor(band) }}
               />
-              {chisBandLabel(band)}
+              <span className="capitalize">{band}</span>
+              <span className="text-ink/40">{chisBandLabel(band)}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="overflow-hidden rounded-xl bg-gradient-to-b from-slate-100 to-sky-50 ring-1 ring-slate-200/70">
-        <svg
-          viewBox={`0 0 ${width} ${height}`}
-          className="h-auto w-full"
-          role="img"
-          aria-label={title}
-        >
-          <defs>
-            <pattern
-              id="map-grid"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 40 0 L 0 0 0 40"
-                fill="none"
-                stroke="#cbd5e1"
-                strokeWidth="0.6"
-                opacity="0.45"
-              />
-            </pattern>
-          </defs>
-          <rect width={width} height={height} fill="url(#map-grid)" />
-          {mode === "global" ? (
-            <g opacity="0.35" fill="#94a3b8">
-              <ellipse cx="180" cy="160" rx="110" ry="70" />
-              <ellipse cx="280" cy="250" rx="70" ry="100" />
-              <ellipse cx="470" cy="150" rx="90" ry="55" />
-              <ellipse cx="520" cy="230" rx="55" ry="80" />
-              <ellipse cx="620" cy="180" rx="120" ry="75" />
-              <ellipse cx="750" cy="280" rx="80" ry="50" />
-              <ellipse cx="820" cy="320" rx="55" ry="35" />
-            </g>
-          ) : (
-            <path
-              d="M430 70 L510 90 L560 140 L580 210 L540 300 L480 350 L420 360 L360 320 L330 250 L350 170 L390 100 Z"
-              fill="#94a3b8"
-              opacity="0.28"
-            />
-          )}
-          {points.map((p) => {
-            const { x, y } = project(p.lon, p.lat, bounds, width, height);
-            const color = chisBandColor(p.band);
-            return (
-              <g key={p.id}>
-                <circle cx={x} cy={y} r="10" fill={color} opacity="0.2" />
-                <circle
-                  cx={x}
-                  cy={y}
-                  r="5.5"
-                  fill={color}
-                  stroke="#fff"
-                  strokeWidth="1.5"
-                >
-                  <title>
-                    {p.name}: CHIS {p.chis}
-                  </title>
-                </circle>
-              </g>
-            );
-          })}
-        </svg>
+      <div className="mb-3 flex gap-2 rounded-xl border border-sky-100 bg-sky-50/70 px-3 py-2.5 text-sm text-ink/75">
+        <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-sky-600" aria-hidden />
+        <p>
+          <span className="font-bold text-sky-800">
+            {live ? "Live Overview Agent" : "Overview preview"} ·{" "}
+          </span>
+          {briefing}
+        </p>
       </div>
-      <p className="mt-2 text-xs text-ink/45">
-        Marker colors show relative Child Health Impact Score (CHIS) bands from
-        the open registry model — open Analyze for live agent runs.
-      </p>
+
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px]">
+        <div className="overflow-hidden rounded-xl bg-gradient-to-b from-slate-100 via-sky-50 to-emerald-50/40 ring-1 ring-slate-200/70">
+          <svg
+            viewBox={`0 0 ${width} ${height}`}
+            className="h-auto w-full"
+            role="img"
+            aria-label={title}
+          >
+            <defs>
+              <pattern
+                id={`map-grid-${mode}`}
+                width="40"
+                height="40"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 40 0 L 0 0 0 40"
+                  fill="none"
+                  stroke="#cbd5e1"
+                  strokeWidth="0.6"
+                  opacity="0.4"
+                />
+              </pattern>
+              <filter
+                id={`glow-${mode}`}
+                x="-50%"
+                y="-50%"
+                width="200%"
+                height="200%"
+              >
+                <feGaussianBlur stdDeviation="2.2" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <rect
+              width={width}
+              height={height}
+              fill={`url(#map-grid-${mode})`}
+            />
+            <g
+              fill="#94a3b8"
+              fillOpacity="0.38"
+              stroke="#64748b"
+              strokeOpacity="0.35"
+              strokeWidth="0.6"
+            >
+              {paths.map((d, i) => (
+                <path key={`${mode}-land-${i}`} d={d} />
+              ))}
+            </g>
+
+            {points.map((p) => {
+              const { x, y } = project(
+                p.lon,
+                p.lat,
+                bounds,
+                width,
+                height,
+                pad
+              );
+              const color = chisBandColor(p.band);
+              const active = selected?.id === p.id;
+              return (
+                <g
+                  key={p.id}
+                  className="cursor-pointer"
+                  onClick={() => setSelectedId(p.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedId(p.id);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${p.name}, CHIS ${p.chis}, ${p.band}`}
+                >
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={active ? 16 : 11}
+                    fill={color}
+                    opacity={active ? 0.28 : 0.18}
+                  />
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={active ? 7.5 : 5.5}
+                    fill={color}
+                    stroke="#fff"
+                    strokeWidth={active ? 2.2 : 1.5}
+                    filter={active ? `url(#glow-${mode})` : undefined}
+                  />
+                  {active ? (
+                    <text
+                      x={x}
+                      y={y - 14}
+                      textAnchor="middle"
+                      className="fill-ink text-[11px] font-bold"
+                      style={{ fontWeight: 700, fontSize: 11 }}
+                    >
+                      {p.chis}
+                    </text>
+                  ) : null}
+                  <title>
+                    {p.name}: CHIS {p.chis} ({p.band})
+                  </title>
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        <aside className="flex flex-col justify-between rounded-xl border border-slate-200 bg-slate-50/80 p-4">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-ink/45">
+              Selected hub
+            </p>
+            {selected ? (
+              <>
+                <div className="mt-2 flex items-start gap-2">
+                  <MapPin
+                    className="mt-0.5 h-4 w-4 shrink-0 text-ocean"
+                    aria-hidden
+                  />
+                  <div>
+                    <h3 className="text-base font-extrabold text-ink">
+                      {selected.name}
+                    </h3>
+                    {selected.state ? (
+                      <p className="text-xs text-ink/55">{selected.state}</p>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  <div className="rounded-lg bg-white p-2.5 ring-1 ring-slate-200/80">
+                    <p className="text-[10px] font-bold uppercase text-ink/45">
+                      CHIS
+                    </p>
+                    <p
+                      className="mt-1 text-2xl font-extrabold"
+                      style={{ color: chisBandColor(selected.band) }}
+                    >
+                      {selected.chis}
+                    </p>
+                  </div>
+                  <div className="rounded-lg bg-white p-2.5 ring-1 ring-slate-200/80">
+                    <p className="text-[10px] font-bold uppercase text-ink/45">
+                      Band
+                    </p>
+                    <p className="mt-1 text-sm font-extrabold capitalize text-ink">
+                      {selected.band}
+                    </p>
+                    <p className="text-[11px] text-ink/50">
+                      {chisBandLabel(selected.band)}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs leading-relaxed text-ink/60">
+                  {selected.chis < 40
+                    ? "Higher child climate-health concern. Run Analyze for agent guidance on heat, air, water, disease, and nutrition."
+                    : selected.chis < 60
+                      ? "Moderate pressure. Agents can pinpoint which dimensions need action first."
+                      : "Relatively stronger wellbeing signal. Still useful to run Analyze before heatwaves or monsoon peaks."}
+                </p>
+              </>
+            ) : (
+              <p className="mt-3 text-sm text-ink/55">
+                No hubs to show yet. Open Analyze to run the agent pipeline.
+              </p>
+            )}
+          </div>
+
+          {selected ? (
+            <Link
+              href={analyzeHref(mode, selected)}
+              className="mt-4 inline-flex items-center justify-center rounded-full bg-ocean px-4 py-2.5 text-sm font-bold text-white hover:bg-sky-600"
+            >
+              Run agents on this hub →
+            </Link>
+          ) : null}
+
+          <p className="mt-3 text-[11px] leading-relaxed text-ink/45">
+            {mode === "india"
+              ? "India outline with metro hubs placed by real coordinates. Lower CHIS (warmer colors) means higher child health burden."
+              : "World land outline with country hubs placed by real coordinates. Lower CHIS (warmer colors) means higher child health burden."}
+          </p>
+        </aside>
+      </div>
     </section>
   );
 }

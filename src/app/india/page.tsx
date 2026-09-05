@@ -11,7 +11,13 @@ import { IndiaOverviewPanel } from "@/components/dashboard/IndiaOverviewPanel";
 import { Loader2 } from "lucide-react";
 
 function IndiaAnalyzePanel() {
-  const [regionId, setRegionId] = useState("delhi-ncr");
+  const searchParams = useSearchParams();
+  const regionFromUrl = searchParams.get("regionId");
+  const initialRegion =
+    regionFromUrl && INDIA_REGIONS.some((r) => r.id === regionFromUrl)
+      ? regionFromUrl
+      : "delhi-ncr";
+  const [regionId, setRegionId] = useState(initialRegion);
   const [report, setReport] = useState<SynthesisReport | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
