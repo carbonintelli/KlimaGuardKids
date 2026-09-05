@@ -1,5 +1,6 @@
 import { ArrowDownRight, ArrowRight, ArrowUpRight } from "lucide-react";
 import { chisBandColor, type RegionRiskRow } from "@/lib/dashboard-stats";
+import { Abbr } from "@/components/Abbr";
 
 function TrendIcon({ trend }: { trend: RegionRiskRow["trend"] }) {
   if (trend === "rising") {
@@ -31,7 +32,7 @@ export function RiskTableCard({
   footerLabel,
 }: {
   id: string;
-  title: string;
+  title: React.ReactNode;
   rows: RegionRiskRow[];
   footerHref?: string;
   footerLabel?: string;
@@ -47,7 +48,9 @@ export function RiskTableCard({
           <thead>
             <tr className="border-b border-slate-100 text-xs uppercase tracking-wide text-ink/45">
               <th className="pb-2 font-bold">Region</th>
-              <th className="pb-2 font-bold">CHIS</th>
+              <th className="pb-2 font-bold">
+                <Abbr of="CHIS" />
+              </th>
               <th className="pb-2 font-bold">Trend</th>
             </tr>
           </thead>

@@ -49,6 +49,9 @@ export function AppChrome({ children }: { children: React.ReactNode }) {
           <Link href="/impact" className="text-ocean hover:underline">
             Impact
           </Link>
+          <Link href="/pitch" className="text-ocean hover:underline">
+            Acronym guide
+          </Link>
           <Link href="/privacy" className="text-ocean hover:underline">
             Privacy
           </Link>

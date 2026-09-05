@@ -11,6 +11,8 @@ import {
 } from "@/lib/dashboard-stats";
 import { WORLD_MAP } from "@/components/dashboard/maps/world-map";
 import { INDIA_MAP } from "@/components/dashboard/maps/india-map";
+import { Abbr } from "@/components/Abbr";
+import { acronymTitle } from "@/lib/acronyms";
 
 function project(
   lon: number,
@@ -93,7 +95,7 @@ export function ChisMapCard({
   mode,
   live = false,
 }: {
-  title: string;
+  title: React.ReactNode;
   subtitle: string;
   points: MapPoint[];
   mode: "global" | "india";
@@ -102,6 +104,10 @@ export function ChisMapCard({
   const basemap = mode === "india" ? INDIA_MAP : WORLD_MAP;
   const { width, height, bounds, paths } = basemap;
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const mapAriaLabel =
+    mode === "india"
+      ? "India Child Health Impact Score map"
+      : "Global Child Health Impact Score map";
 
   const selected =
     points.find((p) => p.id === selectedId) ??
@@ -132,7 +138,10 @@ export function ChisMapCard({
           </div>
           <p className="text-sm text-ink/55">{subtitle}</p>
         </div>
-        <ul className="flex flex-wrap gap-2" aria-label="CHIS score legend">
+        <ul
+          className="flex flex-wrap gap-2"
+          aria-label={acronymTitle("CHIS")}
+        >
           {BANDS.map((band) => (
             <li
               key={band}
@@ -165,7 +174,7 @@ export function ChisMapCard({
             viewBox={`0 0 ${width} ${height}`}
             className="h-auto w-full"
             role="img"
-            aria-label={title}
+            aria-label={mapAriaLabel}
           >
             <defs>
               <pattern
@@ -237,7 +246,7 @@ export function ChisMapCard({
                   }}
                   role="button"
                   tabIndex={0}
-                  aria-label={`${p.name}, CHIS ${p.chis}, ${p.band}`}
+                  aria-label={`${p.name}, Child Health Impact Score ${p.chis}, ${p.band}`}
                 >
                   <circle
                     cx={x}
@@ -267,7 +276,8 @@ export function ChisMapCard({
                     </text>
                   ) : null}
                   <title>
-                    {p.name}: CHIS {p.chis} ({p.band})
+                    {p.name}: Child Health Impact Score (CHIS) {p.chis} (
+                    {p.band})
                   </title>
                 </g>
               );
@@ -299,7 +309,7 @@ export function ChisMapCard({
                 <div className="mt-4 grid grid-cols-2 gap-2">
                   <div className="rounded-lg bg-white p-2.5 ring-1 ring-slate-200/80">
                     <p className="text-[10px] font-bold uppercase text-ink/45">
-                      CHIS
+                      <Abbr of="CHIS" />
                     </p>
                     <p
                       className="mt-1 text-2xl font-extrabold"
@@ -345,9 +355,19 @@ export function ChisMapCard({
           ) : null}
 
           <p className="mt-3 text-[11px] leading-relaxed text-ink/45">
-            {mode === "india"
-              ? "Metro hubs placed by real coordinates. Lower CHIS (warmer colors) means higher child health burden."
-              : "World land outline with country hubs placed by real coordinates. Lower CHIS (warmer colors) means higher child health burden."}
+            {mode === "india" ? (
+              <>
+                Metro hubs placed by real coordinates. Lower{" "}
+                <Abbr of="CHIS" /> (warmer colors) means higher child health
+                burden.
+              </>
+            ) : (
+              <>
+                World land outline with country hubs placed by real coordinates.
+                Lower <Abbr of="CHIS" /> (warmer colors) means higher child
+                health burden.
+              </>
+            )}
           </p>
         </aside>
       </div>

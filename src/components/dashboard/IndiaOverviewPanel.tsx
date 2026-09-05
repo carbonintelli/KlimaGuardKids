@@ -13,6 +13,8 @@ import {
   DimensionsDonutCard,
   TrendLineCard,
 } from "@/components/dashboard/ChartCards";
+import { AcronymGlossary } from "@/components/AcronymGlossary";
+import { Abbr } from "@/components/Abbr";
 
 type LiveIndia = IndiaOverview & {
   mode?: "live" | "seed";
@@ -61,7 +63,7 @@ export function IndiaOverviewPanel() {
             <>Running India Overview Agent across metro hubs…</>
           ) : live ? (
             <>
-              Live agent CHIS average <strong>{data.avgChis}</strong> ·{" "}
+              Live agent <Abbr of="CHIS" /> average <strong>{data.avgChis}</strong> ·{" "}
               <strong>{data.probed ?? data.mapPoints.length}</strong> metros ·{" "}
               <strong>{data.sources}</strong> sources
               {typeof data.failed === "number" && data.failed > 0
@@ -71,8 +73,9 @@ export function IndiaOverviewPanel() {
             </>
           ) : (
             <>
-              Seeded India CHIS average <strong>{data.avgChis}</strong> · live
-              Overview Agent unavailable. Run a region analysis for agents.
+              Seeded India <Abbr of="CHIS" /> average{" "}
+              <strong>{data.avgChis}</strong> · live Overview Agent unavailable.
+              Run a region analysis for agents.
             </>
           )}
         </p>
@@ -87,7 +90,11 @@ export function IndiaOverviewPanel() {
       <KpiCardGrid items={data.kpis} />
 
       <ChisMapCard
-        title="India CHIS map"
+        title={
+          <>
+            India <Abbr of="CHIS" /> map
+          </>
+        }
         subtitle={
           live
             ? "India outline · metro hubs from live Overview Agent"
@@ -101,14 +108,18 @@ export function IndiaOverviewPanel() {
       <div className="grid gap-5 lg:grid-cols-3">
         <RiskTableCard
           id="top-states"
-          title="Top 5 states by CHIS risk"
+          title={
+            <>
+              Top 5 states by <Abbr of="CHIS" /> risk
+            </>
+          }
           rows={data.topStates}
           footerHref="/india?view=analyze"
           footerLabel="View all regions →"
         />
         <TrendLineCard
           id="trend"
-          title="CHIS score trend (India)"
+          title="Child Health Impact Score (CHIS) trend (India)"
           points={data.trend}
         />
         <DimensionsDonutCard
@@ -117,6 +128,12 @@ export function IndiaOverviewPanel() {
           slices={data.dimensions}
         />
       </div>
+
+      <AcronymGlossary
+        groups={["score", "climate", "health", "data"]}
+        compact
+        title="What do these acronyms mean?"
+      />
     </div>
   );
 }

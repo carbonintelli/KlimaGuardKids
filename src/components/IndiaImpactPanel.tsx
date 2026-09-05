@@ -2,6 +2,8 @@
 
 import type { IndiaImpactInsight, IndiaRegionalInsight } from "@/lib/types";
 import { RiskBadge } from "./RiskBadge";
+import { Abbr } from "./Abbr";
+import { AcronymGlossary } from "./AcronymGlossary";
 import {
   Activity,
   MapPin,
@@ -28,6 +30,23 @@ const trendColor = {
   stable: "text-sun",
   easing: "text-leaf",
 };
+
+const DIM_ACRONYMS = ["CHVI", "CRBS", "WDPI", "VBDP", "CNSI"] as const;
+
+function DimensionName({ name }: { name: string }) {
+  for (const short of DIM_ACRONYMS) {
+    const suffix = ` (${short})`;
+    if (name.endsWith(suffix)) {
+      const base = name.slice(0, -suffix.length);
+      return (
+        <>
+          {base} (<Abbr of={short} />)
+        </>
+      );
+    }
+  }
+  return <>{name}</>;
+}
 
 export function IndiaImpactPanel({ regional, impact }: Props) {
   return (
@@ -77,7 +96,7 @@ export function IndiaImpactPanel({ regional, impact }: Props) {
           <div>
             <p className="inline-flex items-center gap-2 text-sm font-bold text-ocean uppercase tracking-wide">
               <BarChart3 className="h-4 w-4" />
-              Child Health Impact Score (CHIS)
+              <Abbr of="CHIS" showExpansion />
             </p>
             <h3 className="mt-1 text-3xl font-extrabold text-ink">
               {impact.compositeScore}
@@ -111,7 +130,7 @@ export function IndiaImpactPanel({ regional, impact }: Props) {
               >
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-xs font-bold text-ocean uppercase">
-                    {dim.name}
+                    <DimensionName name={dim.name} />
                   </p>
                   <Trend className={`h-4 w-4 ${trendColor[dim.trend]}`} />
                 </div>
@@ -183,6 +202,12 @@ export function IndiaImpactPanel({ regional, impact }: Props) {
           ))}
         </ul>
       </section>
+
+      <AcronymGlossary
+        groups={["score", "climate", "health", "data"]}
+        compact
+        title="Score acronyms explained"
+      />
     </div>
   );
 }

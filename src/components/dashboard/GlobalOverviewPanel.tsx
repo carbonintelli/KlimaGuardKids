@@ -10,6 +10,8 @@ import { KpiCardGrid } from "@/components/dashboard/KpiCards";
 import { ChisMapCard } from "@/components/dashboard/ChisMapCard";
 import { RiskTableCard } from "@/components/dashboard/RiskTableCard";
 import { AlertsDonutCard } from "@/components/dashboard/ChartCards";
+import { AcronymGlossary } from "@/components/AcronymGlossary";
+import { Abbr } from "@/components/Abbr";
 
 type LiveGlobal = GlobalOverview & {
   mode?: "live" | "seed";
@@ -83,7 +85,11 @@ export function GlobalOverviewPanel() {
       <KpiCardGrid items={data.kpis} />
 
       <ChisMapCard
-        title="Global CHIS map"
+        title={
+          <>
+            Global <Abbr of="CHIS" /> map
+          </>
+        }
         subtitle={
           live
             ? "Real-world map · Child Health Impact Score from live agent hubs"
@@ -108,6 +114,12 @@ export function GlobalOverviewPanel() {
           slices={data.alerts}
         />
       </div>
+
+      <AcronymGlossary
+        groups={["score", "climate", "governance"]}
+        compact
+        title="What do these acronyms mean?"
+      />
     </div>
   );
 }

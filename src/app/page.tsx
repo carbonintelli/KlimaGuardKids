@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Shield, Sparkles, Globe2, Bot, MapPin, Gamepad2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { PoweredBySustainow } from "@/components/SustainowWordmark";
+import { Abbr } from "@/components/Abbr";
 import { CITY_COUNT, CITY_TIER_COUNTS, COUNTRIES } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 import { TRUSTED_SOURCES } from "@/lib/sources";
@@ -66,8 +67,13 @@ export default function HomePage() {
         <Feature
           icon={MapPin}
           title={`${INDIA_REGIONS.length} India regions`}
-          text="Tier 1–3 metros to district centres — CHIS scores measure heat, air, waterborne, vector, and nutrition burden for children."
-        />
+          text={
+            <>
+              Tier 1–3 metros to district centres —{" "}
+              <Abbr of="CHIS" showExpansion /> measures heat, air, waterborne,
+              vector, and nutrition burden for children.
+            </>
+          }        />
         <Feature
           icon={Globe2}
           title="Global coverage"
@@ -93,7 +99,7 @@ export default function HomePage() {
           {[
             ["1", "Climate Agent", "Open-Meteo live feed"],
             ["2", "Health + Disease", "Risk mapping & profiles"],
-            ["3", "India Agents", "Regional context + CHIS"],
+            ["3", "India Agents", "Regional context + Child Health Impact Score"],
             ["4", "Synthesis", "Child guidance by age"],
           ].map(([step, name, desc]) => (
             <li key={step} className="rounded-2xl bg-sky-50 p-4">
@@ -110,9 +116,10 @@ export default function HomePage() {
           Measuring child health impact from climate change in India
         </h2>
         <p className="mt-3 max-w-2xl mx-auto text-white/90 text-sm">
-          The India Child Health Impact Agent computes a transparent CHIS score
-          (0–100) across five dimensions — helping communities, schools, and
-          health workers anticipate and act before hospitals fill.
+          The India Child Health Impact Agent computes a transparent{" "}
+          <Abbr of="CHIS" showExpansion /> (0–100) across five dimensions —
+          helping communities, schools, and health workers anticipate and act
+          before hospitals fill.
         </p>
         <Link
           href="/india"
@@ -132,7 +139,7 @@ function Feature({
 }: {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
-  text: string;
+  text: React.ReactNode;
 }) {
   return (
     <div className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm">

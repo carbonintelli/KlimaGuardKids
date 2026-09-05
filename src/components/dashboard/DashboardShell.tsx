@@ -17,10 +17,11 @@ import {
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { PoweredBySustainow } from "@/components/SustainowWordmark";
+import { Abbr } from "@/components/Abbr";
 
 type NavItem = {
   id: string;
-  label: string;
+  label: React.ReactNode;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
 };
@@ -28,7 +29,16 @@ type NavItem = {
 const GLOBAL_NAV: NavItem[] = [
   { id: "overview", label: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { id: "map", label: "Global map", href: "/dashboard#chis-map", icon: Globe2 },
-  { id: "chis", label: "CHIS index", href: "/dashboard#high-risk", icon: BarChart3 },
+  {
+    id: "chis",
+    label: (
+      <>
+        <Abbr of="CHIS" tone="onDark" /> index
+      </>
+    ),
+    href: "/dashboard#high-risk",
+    icon: BarChart3,
+  },
   { id: "alerts", label: "Alerts", href: "/dashboard#alerts", icon: AlertTriangle },
   { id: "analyze", label: "Analyze", href: "/dashboard?view=analyze", icon: Activity },
   { id: "reports", label: "Impact", href: "/impact", icon: FileText },
@@ -212,12 +222,27 @@ export function DashboardShell({
                 {variant === "india" ? "2. India dashboard" : "1. Global dashboard"}
               </p>
               <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
-                {variant === "india" ? "India CHIS dashboard" : "Global overview"}
+                {variant === "india" ? (
+                  <>
+                    India <Abbr of="CHIS" /> dashboard
+                  </>
+                ) : (
+                  "Global overview"
+                )}
               </h1>
               <p className="mt-1 text-sm text-ink/60">
-                {variant === "india"
-                  ? "Climate-health intelligence for Indian regions."
-                  : "Real-time climate-health intelligence for children."}
+                {variant === "india" ? (
+                  <>
+                    Climate-health intelligence for Indian regions —{" "}
+                    <Abbr of="CHIS" showExpansion /> tracks child climate-health
+                    burden (0–100).
+                  </>
+                ) : (
+                  <>
+                    Real-time climate-health intelligence for children. Scores
+                    use <Abbr of="CHIS" showExpansion /> where available.
+                  </>
+                )}
               </p>
             </div>
             <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-ink/70 shadow-sm">
