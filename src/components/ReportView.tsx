@@ -10,6 +10,7 @@ import { RiskBadge } from "./RiskBadge";
 import { AgentPanel } from "./AgentPanel";
 import { IndiaImpactPanel } from "./IndiaImpactPanel";
 import { ShareReportButton } from "./ShareReportButton";
+import { Abbr } from "./Abbr";
 import {
   Droplets,
   Thermometer,
@@ -152,7 +153,7 @@ export function ReportView({
         </div>
         {report.climate.airQualityIndex != null && (
           <p className="mt-4 text-sm text-ink/70">
-            Air quality index (US AQI):{" "}
+            Air quality index (US <Abbr of="AQI" />):{" "}
             <strong>{report.climate.airQualityIndex}</strong>
           </p>
         )}
@@ -338,8 +339,8 @@ function OverviewTab({
       </div>
 
       <p className="rounded-2xl border border-sky-100 bg-sky-50/70 px-4 py-3 text-sm text-ink/70">
-        Use the tabs above for India CHIS scores, full agent pipeline details,
-        disease/care tips, and age-banded child guidance.
+        Use the tabs above for India <Abbr of="CHIS" /> scores, full agent
+        pipeline details, disease/care tips, and age-banded child guidance.
       </p>
     </div>
   );

@@ -6,10 +6,13 @@ import {
   HeartHandshake,
   TrendingUp,
   Lock,
+  BookOpen,
 } from "lucide-react";
 import { CITY_COUNT, COUNTRIES } from "@/lib/countries";
 import { INDIA_REGIONS } from "@/lib/india-regions";
 import { TRUSTED_SOURCES } from "@/lib/sources";
+import { AcronymGlossary } from "@/components/AcronymGlossary";
+import { Abbr } from "@/components/Abbr";
 
 export default function PitchPage() {
   return (
@@ -54,7 +57,7 @@ export default function PitchPage() {
         <ul className="mt-4 list-disc pl-6 space-y-2 text-ink/80">
           <li>
             <strong>Climate Data Agent</strong> — live 7-day forecast, heat
-            index, AQI
+            index, <Abbr of="AQI" showExpansion />
           </li>
           <li>
             <strong>Health Risk Agent</strong> — heat stress, respiratory, flood,
@@ -81,8 +84,11 @@ export default function PitchPage() {
             zone-specific child vulnerability across {INDIA_REGIONS.length} regions
           </li>
           <li>
-            <strong>India Child Health Impact Agent</strong> — CHIS score (0–100)
-            across five transparent dimensions
+            <strong>India Child Health Impact Agent</strong> —{" "}
+            <Abbr of="CHIS" showExpansion /> (0–100) across five transparent
+            dimensions (
+            <Abbr of="CHVI" />, <Abbr of="CRBS" />, <Abbr of="WDPI" />,{" "}
+            <Abbr of="VBDP" />, <Abbr of="CNSI" />)
           </li>
         </ul>
       </Section>
@@ -92,39 +98,60 @@ export default function PitchPage() {
           Children, caregivers, teachers, community health workers, and local
           authorities worldwide — starting with {COUNTRIES.length} climate-vulnerable
           countries, {CITY_COUNT} Tier 1–3 city presets, and{" "}
-          {INDIA_REGIONS.length} India CHIS regions, grounded by{" "}
+          {INDIA_REGIONS.length} India <Abbr of="CHIS" /> regions, grounded by{" "}
           {TRUSTED_SOURCES.length} validated data sources. Extensible to any
-          coordinates via API. Languages and offline modes are on the roadmap;
-          architecture is Open Source (MIT) for local adaptation.
+          coordinates via <Abbr of="API" />. Languages and offline modes are on
+          the roadmap; architecture is Open Source (MIT) for local adaptation.
         </p>
       </Section>
 
       <Section icon={HeartHandshake} title="Impact & SDG alignment">
         <ul className="list-disc pl-6 space-y-2 text-ink/80">
-          <li>SDG 3 — Good health: anticipatory action for climate-sensitive risks</li>
-          <li>SDG 13 — Climate action: child-centred early warning</li>
-          <li>SDG 2 — Zero hunger: nutrition & food security inference</li>
-          <li>SDG 4 — Quality education: school-ready heat/flood guidance</li>
+          <li>
+            <Abbr of="SDG" /> 3 — Good health: anticipatory action for
+            climate-sensitive risks
+          </li>
+          <li>
+            <Abbr of="SDG" /> 13 — Climate action: child-centred early warning
+          </li>
+          <li>
+            <Abbr of="SDG" /> 2 — Zero hunger: nutrition & food security
+            inference
+          </li>
+          <li>
+            <Abbr of="SDG" /> 4 — Quality education: school-ready heat/flood
+            guidance
+          </li>
         </ul>
       </Section>
 
       <Section icon={TrendingUp} title="Traction & prototype">
         <p>
           Functional web prototype with live Open-Meteo integration, eight-agent
-          orchestration API, India CHIS dashboard, age-based kids play missions
-          (stars / points / Impact XP), global country selector, and product
-          overview. Ready for field pilots with ministries of health and
-          education partners.
+          orchestration <Abbr of="API" />, India <Abbr of="CHIS" /> dashboard,
+          age-based kids play missions (stars / points / Impact{" "}
+          <Abbr of="XP" />
+          ), global country selector, and product overview. Ready for field
+          pilots with ministries of health and education partners.
         </p>
       </Section>
 
       <Section icon={Lock} title="Safeguarding & data ethics">
         <p>
           No child accounts required for demo. Location is country/city level
-          only. Agents cite provenance. Future work: COPPA/GDPR-K compliance,
-          local language models hosted in-region, and partnership with national
-          meteorological services for authenticated enterprise feeds.
+          only. Agents cite provenance. Future work:{" "}
+          <Abbr of="COPPA" />/<Abbr of="GDPR" />-K compliance, local language
+          models hosted in-region, and partnership with national meteorological
+          services for authenticated enterprise feeds.
         </p>
+      </Section>
+
+      <Section icon={BookOpen} title="Acronym guide">
+        <p className="mb-4">
+          Scores and agency names appear throughout KlimaGuard Kids. Expand any
+          dotted label for a tip, or browse the full guide below.
+        </p>
+        <AcronymGlossary defaultOpen />
       </Section>
 
       <section className="mt-12 text-center">

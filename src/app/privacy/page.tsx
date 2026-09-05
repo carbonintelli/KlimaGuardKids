@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Shield, Lock, Baby, FileWarning } from "lucide-react";
+import { Abbr } from "@/components/Abbr";
 
 export const metadata = {
   title: "Privacy & child safeguarding — KlimaGuard Kids",
@@ -35,7 +36,7 @@ export default function PrivacyPage() {
             </li>
             <li>
               Live climate fields from Open-Meteo (temperature, humidity, precipitation,
-              wind, optional AQI).
+              wind, optional <Abbr of="AQI" showExpansion />).
             </li>
             <li>
               Derived risk scores and age-banded guidance generated on the server for
