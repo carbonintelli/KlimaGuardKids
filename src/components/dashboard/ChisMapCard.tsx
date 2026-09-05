@@ -122,7 +122,14 @@ export function ChisMapCard({
     >
       <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-lg font-extrabold text-ink">{title}</h2>
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-lg font-extrabold text-ink">{title}</h2>
+            {mode === "india" ? (
+              <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-800 ring-1 ring-amber-200/80">
+                Survey of India boundary
+              </span>
+            ) : null}
+          </div>
           <p className="text-sm text-ink/55">{subtitle}</p>
         </div>
         <ul className="flex flex-wrap gap-2" aria-label="CHIS score legend">
@@ -339,11 +346,29 @@ export function ChisMapCard({
 
           <p className="mt-3 text-[11px] leading-relaxed text-ink/45">
             {mode === "india"
-              ? "India outline with metro hubs placed by real coordinates. Lower CHIS (warmer colors) means higher child health burden."
+              ? "Metro hubs placed by real coordinates. Lower CHIS (warmer colors) means higher child health burden."
               : "World land outline with country hubs placed by real coordinates. Lower CHIS (warmer colors) means higher child health burden."}
           </p>
         </aside>
       </div>
+
+      {mode === "india" && "source" in basemap && basemap.source ? (
+        <p className="mt-3 text-[11px] leading-relaxed text-ink/50">
+          <span className="font-semibold text-ink/65">Map boundary: </span>
+          {basemap.source.attribution}{" "}
+          <a
+            href={basemap.source.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-ocean underline-offset-2 hover:underline"
+          >
+            Survey of India
+          </a>
+          . External boundary of India as published by Survey of India
+          (Government of India); not a Natural Earth / third-party political
+          sketch.
+        </p>
+      ) : null}
     </section>
   );
 }
