@@ -1,7 +1,36 @@
 import { describe, expect, it } from "vitest";
 import { mapAgentBriefing } from "@/components/dashboard/ChisMapCard";
 import { INDIA_MAP } from "@/components/dashboard/maps/india-map";
+import { WORLD_MAP } from "@/components/dashboard/maps/world-map";
 import type { MapPoint } from "@/lib/dashboard-stats";
+
+function pathPointBounds(d: string) {
+  const nums = [...d.matchAll(/[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?/g)].map(
+    (m) => +m[0]
+  );
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  let maxJump = 0;
+  let prevX: number | null = null;
+  for (let i = 0; i < nums.length; i += 2) {
+    const x = nums[i];
+    const y = nums[i + 1];
+    if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+    minX = Math.min(minX, x);
+    maxX = Math.max(maxX, x);
+    minY = Math.min(minY, y);
+    maxY = Math.max(maxY, y);
+    if (prevX != null) maxJump = Math.max(maxJump, Math.abs(x - prevX));
+    prevX = x;
+  }
+  return {
+    w: maxX - minX,
+    h: maxY - minY,
+    maxJump,
+  };
+}
 
 const sample: MapPoint[] = [
   {
@@ -53,5 +82,18 @@ describe("INDIA_MAP Survey of India boundary", () => {
     expect(INDIA_MAP.bounds.maxLat).toBeGreaterThanOrEqual(37);
     expect(INDIA_MAP.bounds.maxLon).toBeGreaterThanOrEqual(97);
     expect(INDIA_MAP.paths.length).toBeGreaterThan(0);
+  });
+});
+
+describe("WORLD_MAP antimeridian hygiene", () => {
+  it("has land paths without full-width wrap strips", () => {
+    expect(WORLD_MAP.paths.length).toBeGreaterThan(50);
+    for (const d of WORLD_MAP.paths) {
+      const { w, h, maxJump } = pathPointBounds(d);
+      // Thin bands that span nearly the full canvas are date-line artifacts.
+      expect(w > 800 && h < 8).toBe(false);
+      // Consecutive vertices should not leap across the map.
+      expect(maxJump).toBeLessThan(400);
+    }
   });
 });
